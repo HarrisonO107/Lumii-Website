@@ -294,22 +294,19 @@ function Hero() {
           transition={{ duration: 1, ease: EASE, delay: 0.15 }}
           className="max-w-[760px]"
         >
-          <div className="mono-label flex items-center gap-3 mb-6" style={{ color: "rgba(244,238,228,0.7)" }}>
-            <span style={{ color: C.rosePale }}>Vol. 01</span>
-            <span className="w-8 h-px" style={{ background: "rgba(244,238,228,0.35)" }} />
-            <span>The science of your face</span>
-          </div>
           <h1 className="font-display leading-[0.9] tracking-[-0.03em]" style={{ color: C.paper, fontSize: "clamp(3rem, 9vw, 7.5rem)" }}>
             <span className="block">Your face,</span>
             <span className="block">by the <span className="italic" style={{ color: C.rosePale }}>numbers.</span></span>
           </h1>
-          <p className="mt-6 max-w-[460px] text-[15px] md:text-[17px] leading-[1.7]" style={{ color: "rgba(244,238,228,0.82)" }}>
-            584 landmarks. 75 measurements. The most precise beauty read ever put in a pocket, with Suki to walk you
-            through every number.
-          </p>
-          <div className="mt-9 flex flex-wrap items-center gap-3">
+          <div className="mt-7 flex flex-wrap items-center gap-3">
             <AppleBadge light />
             <GoogleBadge light />
+          </div>
+          <div className="mt-6 flex items-center gap-3 text-[13px]" style={{ color: "rgba(244,238,228,0.78)" }}>
+            <span style={{ color: C.rosePale, letterSpacing: "0.1em" }}>★★★★★</span>
+            <span><strong style={{ color: C.paper, fontWeight: 600 }}>5.0</strong> on the App Store</span>
+            <span style={{ opacity: 0.4 }}>·</span>
+            <span><strong style={{ color: C.paper, fontWeight: 600 }}>300+</strong> glowing up</span>
           </div>
         </motion.div>
       </div>
@@ -457,9 +454,8 @@ function NativeBuild() {
             <motion.h2 className="font-display leading-[0.98] tracking-[-0.02em]" style={{ color: C.ink, fontSize: "clamp(2.2rem,5vw,3.8rem)", opacity: k1o, y: k1y }}>
               Engineered like the <span className="italic" style={{ color: C.rose }}>phone</span> it runs on.
             </motion.h2>
-            <motion.p className="mt-6 max-w-[440px] text-[15px] leading-[1.75]" style={{ color: C.ink60, opacity: k2o, y: k2y }}>
-              584 landmarks. 75+ measurements. Lumii turns the iPhone in your pocket into the most precise mirror ever
-              made, then builds you the routine to raise the number.
+            <motion.p className="mt-6 max-w-[420px] text-[15px] leading-[1.7]" style={{ color: C.ink60, opacity: k2o, y: k2y }}>
+              Lumii turns your iPhone into the most precise mirror ever made.
             </motion.p>
             <motion.p className="mono-label mt-7" style={{ opacity: k3o, y: k3y }}>
               Built for iPhone · Free on iOS &amp; Android
@@ -500,22 +496,22 @@ const SHOWCASE: { src: string; fig: string; cap: string; kick: string; title: Re
   {
     src: "/screenshots/breakdown.jpg", fig: "Fig. 01", cap: "Every trait, ranked", kick: "The read",
     title: <>A score that finally <span className="italic" style={{ color: C.rose }}>means</span> something.</>,
-    body: "Eight categories scored on their own, symmetry, harmony, eyes, nose, lips, jaw, skin and proportions, measured against clinically-studied ideals with the exact numbers behind every line.",
+    body: "Eight categories, each measured against clinically-studied ideals, with the exact numbers behind every line.",
   },
   {
     src: "/screenshots/tips.jpg", fig: "Fig. 02", cap: "Quick wins, from your numbers", kick: "The routine", flip: true,
     title: <>Advice tied to your <span className="italic" style={{ color: C.rose }}>actual</span> measurements.</>,
-    body: "Every tip traces back to a number on your report. The why behind it, the steps to do it, and a one-tap add to your daily ritual. No generic listicles.",
+    body: "Every tip traces back to a number on your report. One tap adds it to your daily ritual.",
   },
   {
     src: "/screenshots/suki.jpg", fig: "Fig. 03", cap: "Your Lumii kitten", kick: "Suki",
     title: <>Meet <span className="italic" style={{ color: C.rose }}>Suki.</span></>,
-    body: "Honest, never cold. Suki reads your scan and talks you through it, cheers every streak, and grows with you. Name her, level her up, keep her close.",
+    body: "Honest, never cold. Suki reads your scan, talks you through it, and grows with you.",
   },
   {
     src: "/screenshots/circle.jpg", fig: "Fig. 04", cap: "Glow with your friends", kick: "The circle", flip: true,
     title: <>Better with your <span className="italic" style={{ color: C.rose }}>girls.</span></>,
-    body: "Build a private Circle, run a 7-day glow sprint together, share the proof of a good day. Only the people you invite ever see it, no public feed, no strangers.",
+    body: "Build a private Circle, run a 7-day glow sprint, share the proof. Only your people ever see it.",
   },
 ];
 
@@ -600,9 +596,8 @@ function Premium() {
           <h2 className="font-display leading-[0.94] tracking-[-0.02em]" style={{ fontSize: "clamp(2.6rem,6.4vw,5rem)" }}>
             Go Pro on the <span className="italic" style={{ color: C.rosePale }}>web.</span>
           </h2>
-          <p className="mt-6 max-w-[460px] text-[15px] md:text-[16px] leading-[1.75]" style={{ color: "rgba(244,238,228,0.75)" }}>
-            Same Pro, bought straight from us, no app-store middleman. Your subscription unlocks instantly across iPhone
-            and Android, billed securely on the web and managed in one place.
+          <p className="mt-6 max-w-[420px] text-[15px] md:text-[16px] leading-[1.7]" style={{ color: "rgba(244,238,228,0.75)" }}>
+            Same Pro, straight from us. Unlocks instantly on iPhone and Android.
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-3">
             <motion.a
@@ -666,9 +661,8 @@ function Creators() {
               </h2>
             </Reveal>
             <Reveal delay={0.12}>
-              <p className="mt-6 max-w-[460px] text-[15px] md:text-[16px] leading-[1.75]" style={{ color: C.ink60 }}>
-                We pay creators to make Lumii edits. Join the Discord, grab the brief, post your edit, get paid. The
-                community lives there, the briefs drop there, and the team is right there with you.
+              <p className="mt-6 max-w-[420px] text-[15px] md:text-[16px] leading-[1.7]" style={{ color: C.ink60 }}>
+                We pay creators to make Lumii edits. Grab a brief, post, get paid.
               </p>
             </Reveal>
             <Reveal delay={0.18}>
@@ -734,6 +728,14 @@ function Download() {
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
             <AppleBadge />
             <GoogleBadge />
+          </div>
+        </Reveal>
+        <Reveal delay={0.3}>
+          <div className="mt-6 flex items-center justify-center gap-3 text-[13px]" style={{ color: C.ink60 }}>
+            <span style={{ color: C.rose, letterSpacing: "0.1em" }}>★★★★★</span>
+            <span><strong style={{ color: C.ink, fontWeight: 600 }}>5.0</strong> rating</span>
+            <span style={{ opacity: 0.4 }}>·</span>
+            <span><strong style={{ color: C.ink, fontWeight: 600 }}>300+</strong> glowing up</span>
           </div>
         </Reveal>
       </div>
