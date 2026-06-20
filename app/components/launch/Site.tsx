@@ -304,7 +304,7 @@ function Hero() {
           </div>
           <div className="mt-6 flex items-center gap-3 text-[13px]" style={{ color: "rgba(244,238,228,0.78)" }}>
             <span style={{ color: C.rosePale, letterSpacing: "0.1em" }}>★★★★★</span>
-            <span><strong style={{ color: C.paper, fontWeight: 600 }}>5.0</strong> on the App Store</span>
+            <span><strong style={{ color: C.paper, fontWeight: 600 }}>5.0</strong></span>
             <span style={{ opacity: 0.4 }}>·</span>
             <span><strong style={{ color: C.paper, fontWeight: 600 }}>300+</strong> glowing up</span>
           </div>
@@ -553,8 +553,8 @@ function Showcase() {
           </div>
         </Reveal>
         <Reveal delay={0.06}>
-          <h2 className="font-display leading-[0.96] tracking-[-0.02em] max-w-[16ch] mb-16 md:mb-24" style={{ color: C.ink, fontSize: "clamp(2.4rem,6vw,4.6rem)" }}>
-            Everything your face has been <span className="italic" style={{ color: C.rose }}>trying to tell you.</span>
+          <h2 className="font-display leading-[0.96] tracking-[-0.02em] mb-16 md:mb-24" style={{ color: C.ink, fontSize: "clamp(2.4rem,6vw,4.6rem)" }}>
+            See it <span className="italic" style={{ color: C.rose }}>work.</span>
           </h2>
         </Reveal>
 
@@ -570,7 +570,6 @@ function Showcase() {
                   <span className="w-8 h-px" style={{ background: C.line }} />
                 </div>
                 <h3 className="font-display leading-[1.0] tracking-[-0.02em]" style={{ color: C.ink, fontSize: "clamp(2rem,4.4vw,3.2rem)" }}>{s.title}</h3>
-                <p className="mt-5 max-w-[440px] text-[15px] leading-[1.75]" style={{ color: C.ink60 }}>{s.body}</p>
               </Reveal>
             </div>
           ))}
@@ -601,12 +600,12 @@ function Showcase() {
 
 function Premium() {
   const perks = [
-    "Unlimited scans, scan as often as you glow",
-    "The full 8-category breakdown, every number unlocked",
-    "Suki coaching, real talk on every result",
-    "Your Circle, sprints and glow proof with friends",
-    "Cycle insight, skin read against your phase",
-    "Progress history, every photo and trend kept",
+    "Unlimited scans",
+    "Full 8-category breakdown",
+    "Suki coaching",
+    "Your Circle",
+    "Cycle insight",
+    "Progress history",
   ];
   return (
     <section id="premium" className="relative py-28 md:py-40 overflow-hidden" style={{ background: C.ink, color: C.paper }}>
@@ -623,7 +622,7 @@ function Premium() {
             Go Pro on the <span className="italic" style={{ color: C.rosePale }}>web.</span>
           </h2>
           <p className="mt-6 max-w-[420px] text-[15px] md:text-[16px] leading-[1.7]" style={{ color: "rgba(244,238,228,0.75)" }}>
-            Same Pro, straight from us. Unlocks instantly on iPhone and Android.
+            Same Pro. No app-store middleman.
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-3">
             <motion.a
@@ -665,9 +664,9 @@ function Premium() {
 
 function Creators() {
   const perks = [
-    ["Get paid per post", "Earn for every Lumii edit that goes live. The more it performs, the more you make."],
-    ["Early everything", "First access to new features, drops and assets, straight from the team."],
-    ["A direct line", "Pitch ideas, request edits, and shape the app in our creator channels."],
+    ["Get paid per post", "Earn for every edit that goes live."],
+    ["Early everything", "First access to features and drops."],
+    ["A direct line", "Pitch ideas straight to the team."],
   ];
   return (
     <section id="creators" className="py-28 md:py-40" style={{ background: C.paperDeep }}>
@@ -688,7 +687,7 @@ function Creators() {
             </Reveal>
             <Reveal delay={0.12}>
               <p className="mt-6 max-w-[420px] text-[15px] md:text-[16px] leading-[1.7]" style={{ color: C.ink60 }}>
-                We pay creators to make Lumii edits. Grab a brief, post, get paid.
+                Grab a brief. Post. Get paid.
               </p>
             </Reveal>
             <Reveal delay={0.18}>
@@ -744,11 +743,6 @@ function Download() {
           <h2 className="font-display leading-[0.92] tracking-[-0.03em]" style={{ color: C.ink, fontSize: "clamp(2.8rem,8vw,6rem)" }}>
             Read your <span className="italic" style={{ color: C.rose }}>face.</span>
           </h2>
-        </Reveal>
-        <Reveal delay={0.16}>
-          <p className="mt-6 max-w-[440px] mx-auto text-[15px] leading-[1.7]" style={{ color: C.ink60 }}>
-            See what 584 landmarks reveal, and the routine to raise your score. Free to download.
-          </p>
         </Reveal>
         <Reveal delay={0.24}>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
