@@ -86,6 +86,13 @@ export const metadata: Metadata = {
   },
   appleWebApp: { capable: true, title: "Lumii", statusBarStyle: "black-translucent" },
   itunes: { appId: "6769432089" }, // Safari/Spotlight smart app banner for the iOS app
+  icons: {
+    icon: [
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+    ],
+    shortcut: "/icon.png",
+    apple: "/icon.png",
+  },
 };
 
 export default function RootLayout({
