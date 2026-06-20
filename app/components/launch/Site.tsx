@@ -398,53 +398,82 @@ function NativeBuild() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
 
-  const railY = useTransform(scrollYProgress, [0.05, 0.3], [180, 0]);
-  const railRot = useTransform(scrollYProgress, [0.05, 0.3], [9, 0]);
-  const railOp = useTransform(scrollYProgress, [0.05, 0.22], [0, 1]);
-  const screenY = useTransform(scrollYProgress, [0.12, 0.4], [-200, 0]);
-  const screenOp = useTransform(scrollYProgress, [0.12, 0.32], [0, 1]);
-  const islandScale = useTransform(scrollYProgress, [0.3, 0.44], [0, 1]);
-  const lBtnX = useTransform(scrollYProgress, [0.24, 0.46], [-90, 0]);
-  const rBtnX = useTransform(scrollYProgress, [0.24, 0.46], [90, 0]);
-  const btnOp = useTransform(scrollYProgress, [0.24, 0.42], [0, 1]);
-  const flash = useTransform(scrollYProgress, [0.42, 0.5, 0.6], [0, 0.85, 0]);
-  const appOp = useTransform(scrollYProgress, [0.48, 0.64], [0, 1]);
-  const appScale = useTransform(scrollYProgress, [0.48, 0.64], [1.08, 1]);
-  const k1o = useTransform(scrollYProgress, [0.58, 0.7], [0, 1]);
-  const k1y = useTransform(scrollYProgress, [0.58, 0.7], [28, 0]);
-  const k2o = useTransform(scrollYProgress, [0.7, 0.84], [0, 1]);
-  const k2y = useTransform(scrollYProgress, [0.7, 0.84], [28, 0]);
-  const k3o = useTransform(scrollYProgress, [0.8, 0.92], [0, 1]);
-  const k3y = useTransform(scrollYProgress, [0.8, 0.92], [28, 0]);
+  // body assembles, camera pops onto the back, phone spins to front, screen boots.
+  const bodyOp = useTransform(scrollYProgress, [0.03, 0.16], [0, 1]);
+  const bodyY = useTransform(scrollYProgress, [0.03, 0.18], [90, 0]);
+  const camScale = useTransform(scrollYProgress, [0.14, 0.3], [0.4, 1]);
+  const camOp = useTransform(scrollYProgress, [0.14, 0.28], [0, 1]);
+  const spin = useTransform(scrollYProgress, [0.34, 0.62], [180, 360]); // back -> front
+  const islandScale = useTransform(scrollYProgress, [0.6, 0.72], [0, 1]);
+  const flash = useTransform(scrollYProgress, [0.6, 0.7, 0.82], [0, 0.9, 0]);
+  const appOp = useTransform(scrollYProgress, [0.64, 0.8], [0, 1]);
+  const k1o = useTransform(scrollYProgress, [0.6, 0.72], [0, 1]);
+  const k1y = useTransform(scrollYProgress, [0.6, 0.72], [28, 0]);
+  const k2o = useTransform(scrollYProgress, [0.72, 0.86], [0, 1]);
+  const k2y = useTransform(scrollYProgress, [0.72, 0.86], [28, 0]);
 
   const PHW = "clamp(220px, 50vw, 286px)";
+  const titanium = "linear-gradient(150deg,#dad6d0 0%,#a8a49d 22%,#cfcbc4 47%,#8f8b84 73%,#c3bfb8 100%)";
+  const lens =
+    "radial-gradient(circle at 38% 32%, #4a4e57 0%, #20222a 42%, #0a0b0e 72%)";
+
+  // one camera lens: dark glass + metallic ring + specular dot
+  const Lens = ({ top, left }: { top: string; left: string }) => (
+    <div
+      className="absolute rounded-full"
+      style={{ top, left, width: "14cqw", height: "14cqw", background: lens, border: "0.8cqw solid #2b2d33", boxShadow: "inset 0 0 1.5cqw rgba(0,0,0,0.8), 0 0.4cqw 1cqw rgba(0,0,0,0.4)" }}
+    >
+      <span className="absolute rounded-full" style={{ top: "20%", left: "24%", width: "26%", height: "26%", background: "radial-gradient(circle, rgba(255,255,255,0.7), transparent 70%)" }} />
+    </div>
+  );
 
   return (
-    <section id="build" ref={ref} className="relative" style={{ height: "360vh", background: C.paperDeep }}>
+    <section id="build" ref={ref} className="relative" style={{ height: "400vh", background: C.paperDeep }}>
       <div className="ruler-x absolute top-0 inset-x-0 h-[10px] opacity-50" />
       <div className="sticky top-0 h-screen overflow-hidden flex items-center">
         <div className="w-full max-w-[1320px] mx-auto px-6 md:px-10 grid lg:grid-cols-2 gap-12 items-center">
-          <div className="flex justify-center order-2 lg:order-1" style={{ perspective: 1200 }}>
-            <div className="device relative" style={{ width: PHW, aspectRatio: "1206 / 2622", transformStyle: "preserve-3d" }}>
-              <motion.span className="device-btn action" style={{ x: lBtnX, opacity: btnOp }} />
-              <motion.span className="device-btn vol-up" style={{ x: lBtnX, opacity: btnOp }} />
-              <motion.span className="device-btn vol-dn" style={{ x: lBtnX, opacity: btnOp }} />
-              <motion.span className="device-btn power" style={{ x: rBtnX, opacity: btnOp }} />
-              <motion.div className="device-rail absolute inset-0" style={{ y: railY, rotateZ: railRot, opacity: railOp }}>
-                <div className="device-bezel">
-                  <motion.div className="device-screen" style={{ y: screenY, opacity: screenOp }}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <motion.img src="/screenshots/home.jpg" alt="Lumii on iPhone" style={{ opacity: appOp, scale: appScale }} />
-                    <motion.div className="absolute inset-0" style={{ background: "#FBF7EF", opacity: flash }} />
-                    <motion.div
-                      className="absolute left-1/2 -translate-x-1/2"
-                      style={{ top: "2.6%", width: "32%", height: "3.4%", background: "#050506", borderRadius: "999px", scale: islandScale }}
-                    />
-                  </motion.div>
-                </div>
-              </motion.div>
+          <div className="flex justify-center order-2 lg:order-1" style={{ perspective: 1400 }}>
+            <div className="relative">
+              {/* ground shadow */}
+              <div className="absolute left-1/2 -translate-x-1/2 -bottom-8 pointer-events-none" style={{ width: "62%", height: "26px", background: "radial-gradient(ellipse, rgba(60,30,40,0.28), transparent 70%)", filter: "blur(4px)" }} />
+              <div className="atelier-float">
+                <motion.div
+                  className="device relative"
+                  style={{ width: PHW, aspectRatio: "1206 / 2622", transformStyle: "preserve-3d", rotateY: spin, opacity: bodyOp, y: bodyY }}
+                >
+                  {/* BACK FACE: titanium body + camera plateau */}
+                  <div className="absolute inset-0" style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transform: "rotateY(180deg)", borderRadius: "16cqw", background: titanium, border: "0.6cqw solid rgba(255,255,255,0.35)", boxShadow: "inset 0 0 4cqw rgba(255,255,255,0.4), inset 0 0 8cqw rgba(0,0,0,0.18), 0 50px 90px -40px rgba(60,40,50,0.5)" }}>
+                    <motion.div className="absolute" style={{ top: "5%", left: "7%", width: "42cqw", height: "42cqw", borderRadius: "12cqw", background: "linear-gradient(150deg,#3a3a40,#141417)", border: "0.5cqw solid rgba(255,255,255,0.12)", boxShadow: "inset 0 0 3cqw rgba(0,0,0,0.7), 0 1cqw 3cqw rgba(0,0,0,0.35)", scale: camScale, opacity: camOp }}>
+                      <Lens top="6%" left="6%" />
+                      <Lens top="6%" left="52%" />
+                      <Lens top="52%" left="6%" />
+                      {/* flash */}
+                      <span className="absolute rounded-full" style={{ top: "60%", left: "60%", width: "8cqw", height: "8cqw", background: "radial-gradient(circle,#fff8e6,#c9a24a 70%)", boxShadow: "0 0 1cqw rgba(255,240,200,0.6)" }} />
+                      {/* lidar */}
+                      <span className="absolute rounded-full" style={{ top: "30%", left: "70%", width: "5cqw", height: "5cqw", background: "radial-gradient(circle,#2a2c33,#0a0b0e)" }} />
+                    </motion.div>
+                    {/* etched wordmark */}
+                    <span className="absolute left-1/2 -translate-x-1/2 font-display italic" style={{ top: "46%", color: "rgba(60,55,52,0.45)", fontSize: "9cqw" }}>L</span>
+                  </div>
+
+                  {/* FRONT FACE: screen powers on */}
+                  <div className="absolute inset-0" style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}>
+                    <div className="device-rail absolute inset-0">
+                      <div className="device-bezel">
+                        <div className="device-screen">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <motion.img src="/screenshots/home.jpg" alt="Lumii on iPhone" style={{ opacity: appOp }} />
+                          <motion.div className="absolute inset-0" style={{ background: "#FBF7EF", opacity: flash }} />
+                          <motion.div className="absolute left-1/2 -translate-x-1/2" style={{ top: "2.6%", width: "32%", height: "3.4%", background: "#050506", borderRadius: "999px", scale: islandScale }} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
             </div>
           </div>
+
           <div className="order-1 lg:order-2">
             <div className="mono-label flex items-center gap-3 mb-6">
               <span style={{ color: C.rose }}>The build</span>
@@ -454,10 +483,7 @@ function NativeBuild() {
             <motion.h2 className="font-display leading-[0.98] tracking-[-0.02em]" style={{ color: C.ink, fontSize: "clamp(2.2rem,5vw,3.8rem)", opacity: k1o, y: k1y }}>
               Engineered like the <span className="italic" style={{ color: C.rose }}>phone</span> it runs on.
             </motion.h2>
-            <motion.p className="mt-6 max-w-[420px] text-[15px] leading-[1.7]" style={{ color: C.ink60, opacity: k2o, y: k2y }}>
-              Lumii turns your iPhone into the most precise mirror ever made.
-            </motion.p>
-            <motion.p className="mono-label mt-7" style={{ opacity: k3o, y: k3y }}>
+            <motion.p className="mono-label mt-7" style={{ opacity: k2o, y: k2y }}>
               Built for iPhone · Free on iOS &amp; Android
             </motion.p>
           </div>
