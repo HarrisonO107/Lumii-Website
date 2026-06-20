@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView, useMotionValue, useSpring, useTransform, animate } from "framer-motion";
+import { motion, useInView, useMotionValue, useSpring, useTransform, useScroll, animate } from "framer-motion";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -191,38 +191,6 @@ function Plate({
   );
 }
 
-/* Pointer-reactive 3D tilt, gentle parallax on the hero plate (desktop only,
-   honours prefers-reduced-motion via the no-op when the pointer never moves). */
-function Tilt({ children, max = 9 }: { children: React.ReactNode; max?: number }) {
-  const rx = useSpring(useMotionValue(0), { stiffness: 150, damping: 18 });
-  const ry = useSpring(useMotionValue(0), { stiffness: 150, damping: 18 });
-  const rotateX = useTransform(rx, (v) => `${v}deg`);
-  const rotateY = useTransform(ry, (v) => `${v}deg`);
-
-  function onMove(e: React.PointerEvent<HTMLDivElement>) {
-    if (e.pointerType !== "mouse") return;
-    const r = e.currentTarget.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width - 0.5;
-    const py = (e.clientY - r.top) / r.height - 0.5;
-    rx.set(-py * max * 2);
-    ry.set(px * max * 2);
-  }
-  function reset() {
-    rx.set(0);
-    ry.set(0);
-  }
-
-  return (
-    <motion.div
-      onPointerMove={onMove}
-      onPointerLeave={reset}
-      style={{ rotateX, rotateY, transformStyle: "preserve-3d", perspective: 900 }}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
 /* ─────────────────────────  MASTHEAD  ───────────────────────── */
 
 function Masthead() {
@@ -286,6 +254,97 @@ function Masthead() {
    is the masthead copy; the right is one developed read plate, same visual
    language as every Plate below (crop marks, fig caption, mono labels). */
 
+/* Suki video portal, she parallax-follows the cursor so she appears to watch you.
+   The baked video can't move its own eyes, so the whole portal leans toward the
+   pointer (3D tilt + counter-parallax on the footage) to read as "watching". */
+function SukiPortal() {
+  const mx = useMotionValue(0); // -1..1 across the viewport
+  const my = useMotionValue(0);
+  const sx = useSpring(mx, { stiffness: 80, damping: 16 });
+  const sy = useSpring(my, { stiffness: 80, damping: 16 });
+
+  const rotY = useTransform(sx, [-1, 1], [10, -10]);
+  const rotX = useTransform(sy, [-1, 1], [-7, 7]);
+  const vidX = useTransform(sx, [-1, 1], [16, -16]); // footage drifts opposite the tilt
+  const vidY = useTransform(sy, [-1, 1], [12, -12]);
+
+  useEffect(() => {
+    const onMove = (e: PointerEvent) => {
+      mx.set((e.clientX / window.innerWidth) * 2 - 1);
+      my.set((e.clientY / window.innerHeight) * 2 - 1);
+    };
+    window.addEventListener("pointermove", onMove, { passive: true });
+    return () => window.removeEventListener("pointermove", onMove);
+  }, [mx, my]);
+
+  return (
+    <div className="relative flex justify-center lg:justify-end" style={{ perspective: 1100 }}>
+      {/* soft rose halo */}
+      <div
+        className="absolute inset-0 -m-10 pointer-events-none"
+        style={{ background: "radial-gradient(ellipse 60% 55% at 50% 45%, rgba(194,86,111,0.18) 0%, transparent 70%)" }}
+      />
+      <motion.div
+        className="atelier-float relative"
+        style={{ rotateX: rotX, rotateY: rotY, transformStyle: "preserve-3d" } as never}
+      >
+        <div
+          className="relative overflow-hidden"
+          style={{
+            width: "clamp(280px, 34vw, 420px)",
+            aspectRatio: "4 / 5",
+            borderRadius: "2.6rem",
+            border: "1px solid rgba(28,24,21,0.14)",
+            boxShadow: "0 50px 90px -40px rgba(120,40,60,0.45), 0 8px 24px rgba(120,40,60,0.14)",
+          }}
+        >
+          {/* the looping footage, scaled up so parallax drift never reveals an edge */}
+          <motion.video
+            src="/video/suki-hero.mp4"
+            poster="/video/suki-hero-poster.jpg"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ x: vidX, y: vidY, scale: 1.18 }}
+          />
+          {/* paper-tone vignette + grain edge to seat it in the broadsheet */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{ boxShadow: "inset 0 0 60px 12px rgba(244,238,228,0.55)", borderRadius: "2.6rem" }}
+          />
+          {/* score chip, ties the mascot to the app's read */}
+          <div
+            className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full px-3 py-2"
+            style={{ background: "rgba(28,24,21,0.78)", color: C.paper, backdropFilter: "blur(6px)" }}
+          >
+            <span className="font-display text-[20px] leading-none">86</span>
+            <span className="mono-label" style={{ color: "rgba(244,238,228,0.7)" }}>Radiant</span>
+          </div>
+        </div>
+
+        {/* corner crop marks, same editorial motif as the plates */}
+        {[
+          "top-[-14px] left-[-14px] border-l border-t",
+          "top-[-14px] right-[-14px] border-r border-t",
+          "bottom-[-14px] left-[-14px] border-l border-b",
+          "bottom-[-14px] right-[-14px] border-r border-b",
+        ].map((c) => (
+          <span key={c} className={`absolute w-3 h-3 ${c}`} style={{ borderColor: C.ink30 }} />
+        ))}
+      </motion.div>
+
+      <figcaption className="mono-label absolute -bottom-9 right-0 flex items-center gap-2" style={{ width: "clamp(280px, 34vw, 420px)" }}>
+        <span style={{ color: C.rose }}>Fig. 00</span>
+        <span className="h-px flex-1" style={{ background: C.line }} />
+        <span>Suki, your companion</span>
+      </figcaption>
+    </div>
+  );
+}
+
 function Hero() {
   return (
     <section id="top" className="relative flex items-center" style={{ background: C.paper, minHeight: "100svh" }}>
@@ -320,27 +379,101 @@ function Hero() {
           <p className="mono-label mt-7">Free to download · Live now on iOS &amp; Android</p>
         </div>
 
-        {/* plate, the real score screen, same frame as every plate below */}
-        <div className="relative flex justify-center lg:justify-end">
-          <motion.span
-            className="font-display absolute select-none italic pointer-events-none"
-            style={{ color: C.rosePale, fontSize: "clamp(8rem,18vw,15rem)", top: "-7%", right: "-3%", lineHeight: 1, zIndex: 0 }}
-            initial={{ opacity: 0, scale: 0.92 }}
-            animate={{ opacity: [0.32, 0.42, 0.32], scale: [1, 1.03, 1] }}
-            transition={{ opacity: { duration: 6, repeat: Infinity, ease: "easeInOut" }, scale: { duration: 6, repeat: Infinity, ease: "easeInOut" } }}
-          >
-            86
-          </motion.span>
-          <div className="relative" style={{ zIndex: 1 }}>
-            <Tilt>
-              <Plate
-                src="/screenshots/home.jpg"
-                fig="Fig. 01"
-                caption="The read, 86 · radiant"
-                rotate={-2}
-                width="clamp(240px, 30vw, 310px)"
-              />
-            </Tilt>
+        {/* Suki, the looping companion video that watches your cursor */}
+        <SukiPortal />
+      </div>
+    </section>
+  );
+}
+
+/* ─────────────────────────  BUILD SCENE  ───────────────────────── */
+/* Scroll-scrubbed iPhone 17 assembly: titanium rail rises, the screen drops in,
+   buttons and Dynamic Island lock on, then the Lumii app powers onto the glass
+   and the claim lands. All driven by this section's scroll progress. */
+function BuildScene() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+
+  const railY = useTransform(scrollYProgress, [0.05, 0.3], [180, 0]);
+  const railRot = useTransform(scrollYProgress, [0.05, 0.3], [9, 0]);
+  const railOp = useTransform(scrollYProgress, [0.05, 0.22], [0, 1]);
+
+  const screenY = useTransform(scrollYProgress, [0.12, 0.4], [-200, 0]);
+  const screenOp = useTransform(scrollYProgress, [0.12, 0.32], [0, 1]);
+
+  const islandScale = useTransform(scrollYProgress, [0.3, 0.44], [0, 1]);
+  const lBtnX = useTransform(scrollYProgress, [0.24, 0.46], [-90, 0]);
+  const rBtnX = useTransform(scrollYProgress, [0.24, 0.46], [90, 0]);
+  const btnOp = useTransform(scrollYProgress, [0.24, 0.42], [0, 1]);
+
+  const flash = useTransform(scrollYProgress, [0.42, 0.5, 0.6], [0, 0.85, 0]);
+  const appOp = useTransform(scrollYProgress, [0.48, 0.64], [0, 1]);
+  const appScale = useTransform(scrollYProgress, [0.48, 0.64], [1.08, 1]);
+
+  const k1o = useTransform(scrollYProgress, [0.58, 0.7], [0, 1]);
+  const k1y = useTransform(scrollYProgress, [0.58, 0.7], [28, 0]);
+  const k2o = useTransform(scrollYProgress, [0.7, 0.84], [0, 1]);
+  const k2y = useTransform(scrollYProgress, [0.7, 0.84], [28, 0]);
+  const k3o = useTransform(scrollYProgress, [0.8, 0.92], [0, 1]);
+  const k3y = useTransform(scrollYProgress, [0.8, 0.92], [28, 0]);
+
+  const PHW = "clamp(220px, 50vw, 286px)";
+
+  return (
+    <section ref={ref} className="relative" style={{ height: "360vh", background: C.paperDeep }}>
+      <div className="ruler-x absolute top-0 inset-x-0 h-[10px] opacity-50" />
+      <div className="sticky top-0 h-screen overflow-hidden flex items-center">
+        <div className="w-full max-w-[1320px] mx-auto px-6 md:px-10 grid lg:grid-cols-2 gap-12 items-center">
+          {/* phone */}
+          <div className="flex justify-center order-2 lg:order-1" style={{ perspective: 1200 }}>
+            <div className="device relative" style={{ width: PHW, aspectRatio: "1206 / 2622", transformStyle: "preserve-3d" }}>
+              {/* side buttons */}
+              <motion.span className="device-btn action" style={{ x: lBtnX, opacity: btnOp }} />
+              <motion.span className="device-btn vol-up" style={{ x: lBtnX, opacity: btnOp }} />
+              <motion.span className="device-btn vol-dn" style={{ x: lBtnX, opacity: btnOp }} />
+              <motion.span className="device-btn power" style={{ x: rBtnX, opacity: btnOp }} />
+
+              {/* titanium rail */}
+              <motion.div className="device-rail absolute inset-0" style={{ y: railY, rotateZ: railRot, opacity: railOp }}>
+                <div className="device-bezel">
+                  {/* screen panel drops in */}
+                  <motion.div className="device-screen" style={{ y: screenY, opacity: screenOp }}>
+                    {/* Lumii app powers on */}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <motion.img src="/screenshots/home.jpg" alt="Lumii on iPhone" style={{ opacity: appOp, scale: appScale }} />
+                    {/* power-on flash */}
+                    <motion.div className="absolute inset-0" style={{ background: "#FBF7EF", opacity: flash }} />
+                    {/* Dynamic Island locks on */}
+                    <motion.div
+                      className="absolute left-1/2 -translate-x-1/2"
+                      style={{ top: "2.6%", width: "32%", height: "3.4%", background: "#050506", borderRadius: "999px", scale: islandScale }}
+                    />
+                  </motion.div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* claim */}
+          <div className="order-1 lg:order-2">
+            <div className="mono-label flex items-center gap-3 mb-6">
+              <span style={{ color: C.rose }}>The build</span>
+              <span className="w-10 h-px" style={{ background: C.line }} />
+              <span>Scroll to assemble</span>
+            </div>
+            <motion.h2
+              className="font-display leading-[0.98] tracking-[-0.02em]"
+              style={{ color: C.ink, fontSize: "clamp(2.2rem,5vw,3.8rem)", opacity: k1o, y: k1y }}
+            >
+              Engineered like the <span className="italic" style={{ color: C.rose }}>phone</span> it runs on.
+            </motion.h2>
+            <motion.p className="mt-6 max-w-[440px] text-[15px] leading-[1.75]" style={{ color: C.ink60, opacity: k2o, y: k2y }}>
+              584 landmarks. 75+ measurements. Lumii turns the iPhone in your pocket into the most precise mirror ever
+              made, then builds you the routine to raise the number.
+            </motion.p>
+            <motion.p className="mono-label mt-7" style={{ opacity: k3o, y: k3y }}>
+              Built for iPhone · Free on iOS &amp; Android
+            </motion.p>
           </div>
         </div>
       </div>
@@ -748,6 +881,7 @@ export default function Site() {
     <main className="relative overflow-x-clip">
       <Masthead />
       <Hero />
+      <BuildScene />
       <MetricsBand />
       <TheRead />
       <PullQuote />
