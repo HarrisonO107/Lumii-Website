@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LegalLayout from "../LegalLayout";
 
 export const metadata: Metadata = {
-  title: "Terms of Service — Lumii",
+  title: "Terms of Service, Lumii",
   description:
     "The terms and conditions that govern your use of the Lumii app and services, operated by HFJO&CO LIMITED.",
 };
@@ -36,7 +36,7 @@ export default function TermsOfServicePage() {
       <h2>1. Eligibility</h2>
       <ul>
         <li>You must be at least <strong>13 years old</strong> to use Lumii.</li>
-        <li>If you are between 13 and 17, you should use Lumii only with the consent of a parent or legal guardian. We do not currently operate an in-app parental-verification flow — see Section 11 of our <a href="/legal/privacy-policy">Privacy Policy</a> for how this works and how a parent or guardian can exercise rights on your behalf.</li>
+        <li>If you are between 13 and 17, you should use Lumii only with the consent of a parent or legal guardian. We do not currently operate an in-app parental-verification flow, see Section 11 of our <a href="/legal/privacy-policy">Privacy Policy</a> for how this works and how a parent or guardian can exercise rights on your behalf.</li>
         <li>You confirm that the information you provide when you sign up is accurate and that you are not barred from using the Service under any applicable law.</li>
       </ul>
       <p>We may refuse, suspend or terminate accounts that do not meet these requirements.</p>
@@ -141,7 +141,7 @@ export default function TermsOfServicePage() {
         comment and profile includes tools to <strong>block</strong> the person and to <strong>report</strong>{" "}
         the content to us with a reason. We review reports against these Terms and our content rules, and
         we may <strong>remove or hide content, warn, suspend, or permanently terminate</strong> any account
-        we reasonably believe has breached the acceptable-use rules above — with or without notice. We aim
+        we reasonably believe has breached the acceptable-use rules above, with or without notice. We aim
         to act promptly on reports of serious harm, such as sexual content involving minors, threats, or
         harassment. You can also reach our team at <strong>office@hfjo.co.uk</strong>.
       </p>
@@ -154,9 +154,9 @@ export default function TermsOfServicePage() {
         algorithms and AI language models. They are inherently:
       </p>
       <ul>
-        <li><strong>probabilistic and approximate</strong> — results vary with lighting, photo quality, angle, expression and other factors;</li>
-        <li><strong>not measurements of objective worth, beauty, health or attractiveness</strong> — they are pattern outputs based on a model we have trained;</li>
-        <li><strong>not personalised medical or psychological advice</strong> — see section 2.</li>
+        <li><strong>probabilistic and approximate</strong>, results vary with lighting, photo quality, angle, expression and other factors;</li>
+        <li><strong>not measurements of objective worth, beauty, health or attractiveness</strong>, they are pattern outputs based on a model we have trained;</li>
+        <li><strong>not personalised medical or psychological advice</strong>, see section 2.</li>
       </ul>
       <p>We have designed Lumii to feel supportive and to nudge healthy self-care behaviours. We strongly recommend you:</p>
       <ul>
@@ -189,14 +189,19 @@ export default function TermsOfServicePage() {
           </thead>
           <tbody>
             <tr>
-              <td>Weekly</td>
-              <td><strong>£3.99 / week</strong></td>
-              <td>Auto-renews each week unless cancelled</td>
+              <td>Pay-as-you-go scan</td>
+              <td><strong>Price shown in the App before you confirm</strong></td>
+              <td>One-time, charged per scan, does not renew</td>
             </tr>
             <tr>
               <td>Annual</td>
               <td><strong>£39.99 / year</strong></td>
               <td>Auto-renews each year unless cancelled</td>
+            </tr>
+            <tr>
+              <td>Weekly (legacy)</td>
+              <td><strong>£3.99 / week</strong></td>
+              <td>No longer offered to new subscribers; existing weekly subscriptions continue to auto-renew unless cancelled</td>
             </tr>
           </tbody>
         </table>
@@ -211,16 +216,6 @@ export default function TermsOfServicePage() {
         least <strong>24 hours before</strong> the end of the current period. Renewal is charged to your
         Apple ID payment method.
       </p>
-      <p>
-        <strong>Free trial.</strong> New annual subscribers may be offered a <strong>3-day free
-        trial</strong>. The weekly plan has no trial and bills immediately. If you start the annual free
-        trial and do not cancel at least <strong>24 hours before it ends</strong>, it automatically
-        converts to a paid annual subscription at <strong>£39.99 / year</strong> and your Apple ID is
-        charged. You can cancel during the trial at no cost (iOS Settings → your name → Subscriptions →
-        Lumii). Whether a trial is offered, and its exact length, is shown in the App before you confirm
-        and is governed by Apple&apos;s introductory-offer rules — an introductory offer is available only
-        once per Apple ID.
-      </p>
 
       <h3>7.2 How payment works</h3>
       <p>
@@ -231,7 +226,7 @@ export default function TermsOfServicePage() {
       <p>
         We use <strong>RevenueCat, Inc.</strong> to verify your subscription status and apply
         promotional grants. RevenueCat receives your Lumii user ID and an anonymous Apple subscriber
-        identifier (a randomised ID Apple gives to apps — not your Apple ID or your email). See our
+        identifier (a randomised ID Apple gives to apps, not your Apple ID or your email). See our
         Privacy Policy for more on RevenueCat&apos;s role.
       </p>
 
@@ -258,7 +253,7 @@ export default function TermsOfServicePage() {
         14-day promotional grant of Lumii Pro for each validated friend.
       </p>
       <ul>
-        <li><strong>What &quot;validated&quot; means.</strong> A referral is validated when the friend completes the in-app onboarding steps we require for a referral to count. We display the current requirements at the point of redemption — at the date of this version, this is signup and the first scan. We may change these requirements (within reason and with notice in this document) to deter fraud or abuse.</li>
+        <li><strong>What &quot;validated&quot; means.</strong> A referral is validated when the friend completes the in-app onboarding steps we require for a referral to count. We display the current requirements at the point of redemption, at the date of this version, this is signup and the first scan. We may change these requirements (within reason and with notice in this document) to deter fraud or abuse.</li>
         <li><strong>Maximum banked referrals.</strong> You can bank up to <strong>12 validated referrals</strong> at a time. We may temporarily raise or lower this cap to manage promotional periods or deter abuse.</li>
         <li><strong>Anti-abuse.</strong> We may delay, decline or reverse a referral grant if we reasonably believe the referral was generated through fraud, multiple accounts, disposable emails, device emulators, code-sharing rings or any other abuse pattern. Rejection reasons we currently apply include: self-referral, code unknown or already redeemed, the bank cap, the friend not completing a scan, suspicious device fingerprinting, and rate limits.</li>
         <li><strong>Stacking.</strong> Promotional grants from referrals stack additively with each other and run consecutively. They do not extend or convert a paid subscription, and they do not auto-renew. When the grant period ends, your account returns to the free tier unless you have an active paid subscription.</li>
@@ -275,7 +270,7 @@ export default function TermsOfServicePage() {
         error.
       </p>
       <p>
-        Waitlist codes are also promotional entitlements delivered through RevenueCat — they are not
+        Waitlist codes are also promotional entitlements delivered through RevenueCat, they are not
         Apple In-App Purchases and do not charge you.
       </p>
 
@@ -291,7 +286,7 @@ export default function TermsOfServicePage() {
 
       <h2>8. Intellectual property</h2>
       <p>
-        Lumii, the App, the cat mascot (&quot;Momo&quot;), the design, the scoring system, the underlying
+        Lumii, the App, the cat mascot (&quot;Suki&quot;), the design, the scoring system, the underlying
         code, all text, graphics, logos and audio, and any improvements to any of the above, are owned by
         HFJO&amp;CO LIMITED (or our licensors) and are protected by copyright, trademark and other
         intellectual-property laws.
@@ -473,7 +468,7 @@ export default function TermsOfServicePage() {
       </ul>
       <p>
         A dedicated <strong>privacy@lumiiapp.com</strong> alias is being set up. Until it is live, please
-        use <strong>office@hfjo.co.uk</strong> — your message will reach the same person.
+        use <strong>office@hfjo.co.uk</strong>, your message will reach the same person.
       </p>
     </LegalLayout>
   );

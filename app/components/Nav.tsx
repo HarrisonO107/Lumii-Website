@@ -68,7 +68,7 @@ function WaitlistModal({ onClose }: { onClose: () => void }) {
                   <span className="text-[10px] font-medium tracking-[0.2em] text-white/40 uppercase">Android waitlist open</span>
                 </div>
                 <h2 className="text-[28px] font-light text-white leading-[1.1] tracking-[-0.02em] mb-2">Reserve your spot.</h2>
-                <p className="text-[13px] text-white/35 font-light leading-[1.7] mb-7">iOS founding-member codes are all claimed. We&apos;re building the Android release now — join the waitlist to get it first. Free at launch, no card needed.</p>
+                <p className="text-[13px] text-white/35 font-light leading-[1.7] mb-7">iOS founding-member codes are all claimed. We&apos;re building the Android release now, join the waitlist to get it first. Free at launch, no card needed.</p>
                 <div className="flex flex-col gap-3">
                   <input
                     type="email" value={email}
@@ -145,7 +145,7 @@ export default function Nav() {
               : "1px solid transparent",
           }}
         >
-          {/* Logo — "Lumii+" wordmark matching live site */}
+          {/* Logo, "Lumii+" wordmark matching live site */}
           <Link href="/" className="flex items-center group">
             <span
               style={{
@@ -175,7 +175,7 @@ export default function Nav() {
             </span>
           </Link>
 
-          {/* Single CTA — waitlist only */}
+          {/* Single CTA, waitlist only */}
           <motion.button
             onClick={openModal}
             whileHover={{ scale: 1.02, boxShadow: "0 6px 28px rgba(0,0,0,0.35)" }}

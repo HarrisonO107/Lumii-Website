@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LegalLayout from "../LegalLayout";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — Lumii",
+  title: "Privacy Policy, Lumii",
   description:
     "How Lumii (HFJO&CO LIMITED) collects, uses and protects your personal data, including face photos, biometric metrics and account information.",
 };
@@ -48,12 +48,12 @@ export default function PrivacyPolicyPage() {
         optional cycle data). Here is the plain-English summary:
       </p>
       <ul>
-        <li><strong>Your face photos</strong> are uploaded to our server only to be analysed. They are <strong>automatically deleted within 24 hours</strong> of upload. We never sell them, share them with advertisers, or use them to train any third-party AI model.</li>
-        <li><strong>Your scan results</strong> (scores, grades, tips) are kept mostly <strong>on your device</strong>. The server keeps only quota timestamps and cached tips against your profile — not the full scan history.</li>
+        <li><strong>Your face photos</strong> are uploaded to our server only to be analysed, then deleted automatically within <strong>24 hours</strong> of upload (in practice, as soon as the analysis finishes). We never sell them, share them with advertisers, or use them to train any third-party AI model.</li>
+        <li><strong>Your scan results</strong> (scores, grades, tips) are kept mostly <strong>on your device</strong>. The server keeps only quota timestamps and cached tips against your profile, not the full scan history.</li>
         <li><strong>Your account</strong> (name, email, password) is stored by our authentication provider, Supabase, so you can sign back in.</li>
-        <li><strong>Lumii Pro is an optional subscription</strong> (£3.99/week or £39.99/year). Payments are handled entirely by Apple In-App Purchase — <strong>your card details never touch our servers</strong>. We use RevenueCat to confirm your subscription status and apply promotional rewards.</li>
-        <li>We use <strong>Anthropic&apos;s Claude API</strong> to generate personalised tips and to power the in-app cat-mascot chat. <strong>We do not send Anthropic your face photos, your facial landmarks, your email, or your name</strong> — only your numerical scores and your typed chat messages. Under our agreement with Anthropic, your data is not used to train Anthropic&apos;s models.</li>
-        <li>We use <strong>Sentry</strong> to keep the app reliable. Sentry collects crash reports and performance data on every session. It also records screen-recording samples — about 10% of all sessions, and 100% of sessions in which an error occurs — to help us reproduce bugs. Sentry data is processed in Frankfurt, Germany.</li>
+        <li><strong>Lumii Pro is an optional purchase:</strong> a one-time unlock for a single scan&apos;s full report, or £39.99/year for everything. The exact price is shown in the App before you confirm. Payments are handled entirely by Apple In-App Purchase, so <strong>your card details never touch our servers</strong>. We use RevenueCat to confirm your subscription status and apply promotional rewards.</li>
+        <li>We use <strong>Anthropic&apos;s Claude API</strong> to generate personalised tips and to power the in-app cat-mascot chat. <strong>We do not send Anthropic your face photos, your facial landmarks, your email, or your name</strong>, only your numerical scores and your typed chat messages. Under our agreement with Anthropic, your data is not used to train Anthropic&apos;s models.</li>
+        <li>We use <strong>Sentry</strong> to keep the app reliable. Sentry collects crash reports and performance data on every session. It also records screen-recording samples, about 10% of all sessions, and 100% of sessions in which an error occurs, to help us reproduce bugs. Sentry data is processed in Frankfurt, Germany.</li>
         <li>We do <strong>not</strong> show ads, track you across other apps, or sell your personal data.</li>
         <li>You can <strong>delete your account and all associated data</strong> from inside the App at any time. We act on the request immediately and finish deleting any backups within 30 days, except for a small number of pseudonymised audit records we keep for fraud-prevention (with your identity removed).</li>
         <li><strong>California residents</strong> have additional rights to know, access, delete, correct, and limit how we use sensitive personal information. See Section 17 for a Notice at Collection summary and Section 10.2 for the full rights breakdown.</li>
@@ -66,7 +66,7 @@ export default function PrivacyPolicyPage() {
       <p>
         Lumii is intended for users <strong>aged 13 and over</strong>. Users between the ages of 13 and
         17 should use Lumii only with the consent of a parent or legal guardian. We do not currently
-        operate an in-app parental-verification flow — see Section 11 for details on how this works,
+        operate an in-app parental-verification flow, see Section 11 for details on how this works,
         including how a parent or guardian can exercise rights on behalf of a 13–17 year old.
       </p>
       <p>
@@ -113,7 +113,7 @@ export default function PrivacyPolicyPage() {
       <p>When you complete a scan we run computer-vision analysis on the photos and generate:</p>
       <ul>
         <li><strong>Facial landmarks:</strong> up to 584 numerical points describing the geometry of your face (positions of eyes, nose, lips, jawline, etc.).</li>
-        <li><strong>Facial metrics:</strong> approximately 75 measurements derived from those landmarks (proportions, symmetry, skin metrics).</li>
+        <li><strong>Facial metrics:</strong> a set of measurements derived from those landmarks (proportions, symmetry, skin metrics).</li>
         <li><strong>A &quot;glow score&quot; and grade label</strong> (e.g. &quot;Luminous&quot;), plus written tips and a personalised routine generated by an AI model.</li>
         <li><strong>A referral code</strong> (6 characters) generated automatically when you sign up, so friends can credit you when they join.</li>
       </ul>
@@ -165,15 +165,17 @@ export default function PrivacyPolicyPage() {
 
       <h3>3.7 Circle (social features)</h3>
       <p>
-        Lumii includes an optional social feature called <strong>Circle</strong>. If you choose to use
+        Lumii includes an optional social feature called <strong>Circle</strong>. Circle is rolling out
+        in stages, so some features described below may not yet be available in your version of the App.
+        If you choose to use
         it, we process additional information so you can connect with friends and share progress:
       </p>
       <ul>
         <li><strong>Friend connections.</strong> The accepted friend relationships you create, and any pending friend requests you send or receive. We store these so we can show you your friends&apos; shared activity.</li>
-        <li><strong>Content you share to your Circle.</strong> When you post a &quot;Glow Proof&quot;, we store what you choose to include: the habits you completed or missed that day, your current streak, an optional caption, and an optional photo. Photos you share to Circle are uploaded to our server, stripped of location (EXIF/GPS) metadata, downscaled, and stored privately — they are shown only to your accepted friends, never publicly and never to advertisers.</li>
+        <li><strong>Content you share to your Circle.</strong> When you post a &quot;Glow Proof&quot;, we store what you choose to include: the habits you completed or missed that day, your current streak, an optional caption, and an optional photo. Photos you share to Circle are uploaded to our server, stripped of location (EXIF/GPS) metadata, downscaled, and stored privately, they are shown only to your accepted friends, never publicly and never to advertisers.</li>
         <li><strong>Reactions and comments.</strong> Reactions you add to friends&apos; posts, and any comments, together with who made them.</li>
         <li><strong>Challenges.</strong> If you join or create a challenge, we store your membership, your daily check-ins, and aggregated leaderboard counts visible to other members of that challenge.</li>
-        <li><strong>Safety data.</strong> If you block a user we record the block so we can keep you apart in the feed. If you report content or a user, we record the report — the target, the reason you selected, and the time — so our team can review it.</li>
+        <li><strong>Safety data.</strong> If you block a user we record the block so we can keep you apart in the feed. If you report content or a user, we record the report, the target, the reason you selected, and the time, so our team can review it.</li>
       </ul>
       <p>
         Circle content is shared only with the friends you accept; Lumii has no public feed. You can
@@ -202,7 +204,7 @@ export default function PrivacyPolicyPage() {
             <tr>
               <td>Provide the core scan and analysis feature</td>
               <td>Face photos, facial landmarks, facial metrics</td>
-              <td>Contract (Art. 6(1)(b)) — and for the biometric category, your <strong>explicit consent</strong> (Art. 9(2)(a))</td>
+              <td>Contract (Art. 6(1)(b)), and for the biometric category, your <strong>explicit consent</strong> (Art. 9(2)(a))</td>
             </tr>
             <tr>
               <td>Generate personalised tips and the cat-mascot chat</td>
@@ -369,7 +371,7 @@ export default function PrivacyPolicyPage() {
           <tbody>
             <tr>
               <td>Uploaded face photos on our backend</td>
-              <td>Automatically deleted within <strong>24 hours</strong> of upload</td>
+              <td>Deleted automatically within <strong>24 hours</strong> of upload (in practice, as soon as the analysis finishes)</td>
             </tr>
             <tr>
               <td>Cached tips, scan timestamps, quota anchors on your profile</td>
@@ -448,7 +450,7 @@ export default function PrivacyPolicyPage() {
             <tr>
               <td><strong>Lumii backend (operated by HFJO&amp;CO LIMITED, hosted on Railway, Inc.)</strong></td>
               <td>Computer-vision analysis of your scan photos to generate facial landmarks, metrics, and your glow score; storage of your profile; quota and subscription checks</td>
-              <td>Active multi-region deployment on Railway: <strong>California (US West)</strong>, <strong>Virginia (US East)</strong>, <strong>Amsterdam (Netherlands)</strong>, and <strong>Singapore</strong>. Your request is routed to the nearest region — your personal data may be processed in any of these regions during a request.</td>
+              <td>Active multi-region deployment on Railway: <strong>California (US West)</strong>, <strong>Virginia (US East)</strong>, <strong>Amsterdam (Netherlands)</strong>, and <strong>Singapore</strong>. Your request is routed to the nearest region, your personal data may be processed in any of these regions during a request.</td>
               <td>This Privacy Policy applies; Railway&apos;s policy at railway.app/legal/privacy</td>
             </tr>
             <tr>
@@ -471,7 +473,7 @@ export default function PrivacyPolicyPage() {
             </tr>
             <tr>
               <td><strong>RevenueCat, Inc.</strong></td>
-              <td>Verifying your Lumii Pro subscription status, applying promotional grants (e.g. referral rewards). Receives your Lumii user ID and your anonymous Apple subscriber identifier (a randomised ID Apple gives Lumii — not your Apple ID or email). <strong>Never receives your payment card details.</strong></td>
+              <td>Verifying your Lumii Pro subscription status, applying promotional grants (e.g. referral rewards). Receives your Lumii user ID and your anonymous Apple subscriber identifier (a randomised ID Apple gives Lumii, not your Apple ID or email). <strong>Never receives your payment card details.</strong></td>
               <td>United States</td>
               <td>revenuecat.com/privacy</td>
             </tr>
@@ -488,26 +490,26 @@ export default function PrivacyPolicyPage() {
               <td>apple.com/legal/privacy</td>
             </tr>
             <tr>
-              <td><strong>Google LLC — Sign in with Google</strong></td>
+              <td><strong>Google LLC, Sign in with Google</strong></td>
               <td>Authenticating you when you choose &quot;Sign in with Google&quot;. Google returns your name and email to us.</td>
               <td>United States</td>
               <td>policies.google.com/privacy</td>
             </tr>
             <tr>
-              <td><strong>Google LLC — YouTube Data API</strong></td>
+              <td><strong>Google LLC, YouTube Data API</strong></td>
               <td>Returning tutorial-video search results inside the App</td>
               <td>United States</td>
               <td>policies.google.com/privacy</td>
             </tr>
             <tr>
-              <td><strong>Google LLC — ML Kit Face Detection</strong></td>
-              <td>On-device face tracking during the scan flow (runs locally on your device — no network calls)</td>
+              <td><strong>Google LLC, ML Kit Face Detection</strong></td>
+              <td>On-device face tracking during the scan flow (runs locally on your device, no network calls)</td>
               <td>On-device only</td>
               <td>policies.google.com/privacy</td>
             </tr>
             <tr>
               <td><strong>Sentry (Functional Software, Inc.)</strong></td>
-              <td>Crash reports, performance metrics, sampled session replay, in-app feedback widget. <strong>Always on in production builds.</strong> Session-replay default field masking is enabled — password inputs and sensitive form fields are automatically obscured.</td>
+              <td>Crash reports, performance metrics, sampled session replay, in-app feedback widget. <strong>Always on in production builds.</strong> Session-replay default field masking is enabled, password inputs and sensitive form fields are automatically obscured.</td>
               <td><strong>Frankfurt, Germany</strong> (Sentry EU data residency)</td>
               <td>sentry.io/privacy</td>
             </tr>
@@ -519,7 +521,7 @@ export default function PrivacyPolicyPage() {
             </tr>
             <tr>
               <td><strong>Vercel, Inc.</strong></td>
-              <td>Hosting our marketing website at lumiiapp.com, <strong>and Vercel Analytics</strong> — cookieless, aggregated page-view analytics on the marketing site (no in-app data flows here).</td>
+              <td>Hosting our marketing website at lumiiapp.com, <strong>and Vercel Analytics</strong>, cookieless, aggregated page-view analytics on the marketing site (no in-app data flows here).</td>
               <td>United States / European Union</td>
               <td>vercel.com/legal/privacy-policy</td>
             </tr>
@@ -575,22 +577,22 @@ export default function PrivacyPolicyPage() {
           </thead>
           <tbody>
             <tr>
-              <td>Lumii backend (Railway) — US West</td>
+              <td>Lumii backend (Railway), US West</td>
               <td>California, US</td>
               <td><strong>UK Addendum + EU Standard Contractual Clauses</strong> (Module 2: controller-to-processor), plus encryption in transit</td>
             </tr>
             <tr>
-              <td>Lumii backend (Railway) — US East</td>
+              <td>Lumii backend (Railway), US East</td>
               <td>Virginia, US</td>
               <td>UK Addendum + EU SCCs (Module 2), plus encryption in transit</td>
             </tr>
             <tr>
-              <td>Lumii backend (Railway) — Amsterdam</td>
+              <td>Lumii backend (Railway), Amsterdam</td>
               <td>Netherlands (EEA)</td>
               <td>No transfer outside the EEA</td>
             </tr>
             <tr>
-              <td>Lumii backend (Railway) — Singapore</td>
+              <td>Lumii backend (Railway), Singapore</td>
               <td>Singapore</td>
               <td>UK Addendum + EU SCCs (Module 2), plus encryption in transit</td>
             </tr>
@@ -683,15 +685,15 @@ export default function PrivacyPolicyPage() {
 
       <h3>10.1 Rights under UK GDPR and EU GDPR</h3>
       <ul>
-        <li><strong>Access</strong> — ask for a copy of the personal data we hold about you.</li>
-        <li><strong>Rectification</strong> — ask us to correct inaccurate or incomplete data.</li>
-        <li><strong>Erasure</strong> (&quot;right to be forgotten&quot;) — ask us to delete your data. You can also do this yourself instantly from the in-app <strong>Account → Delete account</strong> option.</li>
-        <li><strong>Restriction</strong> — ask us to pause our use of your data while a query is resolved.</li>
-        <li><strong>Portability</strong> — ask for your data in a structured, machine-readable format.</li>
-        <li><strong>Objection</strong> — object to processing based on our legitimate interests.</li>
-        <li><strong>Withdraw consent</strong> — for anything we process on the basis of your consent (including biometric data, cycle tracking, and geofence verification).</li>
-        <li><strong>Not be subject to automated decision-making that produces legal or similarly significant effects</strong> — see Section 5.1 for why we believe this does not apply to Lumii, and how to request human review if you disagree.</li>
-        <li><strong>Complain to a supervisory authority</strong> — the UK ICO (<code>ico.org.uk</code>) or your local EU data-protection authority.</li>
+        <li><strong>Access</strong>, ask for a copy of the personal data we hold about you.</li>
+        <li><strong>Rectification</strong>, ask us to correct inaccurate or incomplete data.</li>
+        <li><strong>Erasure</strong> (&quot;right to be forgotten&quot;), ask us to delete your data. You can also do this yourself instantly from the in-app <strong>Account → Delete account</strong> option.</li>
+        <li><strong>Restriction</strong>, ask us to pause our use of your data while a query is resolved.</li>
+        <li><strong>Portability</strong>, ask for your data in a structured, machine-readable format.</li>
+        <li><strong>Objection</strong>, object to processing based on our legitimate interests.</li>
+        <li><strong>Withdraw consent</strong>, for anything we process on the basis of your consent (including biometric data, cycle tracking, and geofence verification).</li>
+        <li><strong>Not be subject to automated decision-making that produces legal or similarly significant effects</strong>, see Section 5.1 for why we believe this does not apply to Lumii, and how to request human review if you disagree.</li>
+        <li><strong>Complain to a supervisory authority</strong>, the UK ICO (<code>ico.org.uk</code>) or your local EU data-protection authority.</li>
       </ul>
 
       <h3>10.2 Rights under California law (CCPA, as amended by CPRA)</h3>
@@ -743,16 +745,16 @@ export default function PrivacyPolicyPage() {
         <strong>We do not knowingly collect personal information from children under 13.</strong> If you
         are a parent or guardian and believe your child under 13 has signed up to Lumii, please email{" "}
         <a href="mailto:office@hfjo.co.uk"><strong>office@hfjo.co.uk</strong></a> with subject{" "}
-        <code>PARENTAL REQUEST — UNDER 13</code> and we will delete the account and any associated data
+        <code>PARENTAL REQUEST, UNDER 13</code> and we will delete the account and any associated data
         within 7 working days.
       </p>
 
       <h3>11.1 Why the age picture is complicated</h3>
       <p>The age of digital consent is set differently in different jurisdictions:</p>
       <ul>
-        <li><strong>UK</strong> — 13 (UK GDPR Article 8, retained EU law).</li>
-        <li><strong>United States</strong> — 13 for COPPA purposes (we collect personal data only from users 13+; COPPA does not apply at or above 13).</li>
-        <li><strong>EU member states</strong> — between 13 and 16 depending on the country. As of this policy&apos;s date, several EU member states have set the threshold at 16, including <strong>Germany, France, Ireland, the Netherlands, and others</strong>. In those countries, a user aged 13–15 needs parental consent for processing that relies on a &quot;consent&quot; lawful basis (notably our biometric scan and cycle tracking).</li>
+        <li><strong>UK</strong>, 13 (UK GDPR Article 8, retained EU law).</li>
+        <li><strong>United States</strong>, 13 for COPPA purposes (we collect personal data only from users 13+; COPPA does not apply at or above 13).</li>
+        <li><strong>EU member states</strong>, between 13 and 16 depending on the country. As of this policy&apos;s date, several EU member states have set the threshold at 16, including <strong>Germany, France, Ireland, the Netherlands, and others</strong>. In those countries, a user aged 13–15 needs parental consent for processing that relies on a &quot;consent&quot; lawful basis (notably our biometric scan and cycle tracking).</li>
       </ul>
       <p>
         We currently rely on you to tell us your age truthfully during signup.{" "}
@@ -769,7 +771,7 @@ export default function PrivacyPolicyPage() {
       </p>
       <ul>
         <li><strong>No marketing emails by default.</strong> Marketing emails (if we ever add them) require an explicit opt-in for any user.</li>
-        <li><strong>No behavioural advertising.</strong> We do not show ads anywhere in Lumii, full stop — see Section 3.4.</li>
+        <li><strong>No behavioural advertising.</strong> We do not show ads anywhere in Lumii, full stop, see Section 3.4.</li>
         <li><strong>No use of under-18 user data to train any AI model</strong>, including our own and our subprocessors&apos;.</li>
         <li><strong>No profile photo prompted beyond the optional avatar.</strong> We never ask under-18 users to upload images of themselves to anywhere except the scan flow itself.</li>
         <li><strong>Geofence integration is off by default</strong> and requires an explicit in-app opt-in.</li>
@@ -787,7 +789,7 @@ export default function PrivacyPolicyPage() {
       <p>
         To exercise these rights, email{" "}
         <a href="mailto:office@hfjo.co.uk"><strong>office@hfjo.co.uk</strong></a> with subject{" "}
-        <code>PARENTAL REQUEST — UNDER 18</code> and include:
+        <code>PARENTAL REQUEST, UNDER 18</code> and include:
       </p>
       <ul>
         <li>Your name and relationship to the child;</li>
@@ -804,7 +806,7 @@ export default function PrivacyPolicyPage() {
       <p>
         You can delete the content you have posted at any time using the in-app Delete options, or by
         emailing us. You have the same rights as adult users (see Section 10) and we will respond to your
-        requests directly — you do not need to go through a parent unless you would prefer to.
+        requests directly, you do not need to go through a parent unless you would prefer to.
       </p>
 
       <hr />
@@ -827,9 +829,9 @@ export default function PrivacyPolicyPage() {
 
       <h2>13. Changes to this policy</h2>
       <p>
-        We may update this Privacy Policy from time to time. When we make material changes — for example,
+        We may update this Privacy Policy from time to time. When we make material changes, for example,
         adding a new subprocessor, changing where personal data is processed, or adding a new category of
-        data we collect — we will:
+        data we collect, we will:
       </p>
       <ul>
         <li>update the <strong>Last Updated</strong> date at the top of this policy, and</li>
@@ -852,7 +854,7 @@ export default function PrivacyPolicyPage() {
       </ul>
       <p>
         A dedicated <strong>privacy@lumiiapp.com</strong> alias is being set up. Until it is live, please
-        use <strong>office@hfjo.co.uk</strong> — your message will reach the same person.
+        use <strong>office@hfjo.co.uk</strong>, your message will reach the same person.
       </p>
       <p>If you are not satisfied with our response, you can complain to:</p>
       <ul>
@@ -882,14 +884,19 @@ export default function PrivacyPolicyPage() {
           </thead>
           <tbody>
             <tr>
-              <td>Weekly</td>
-              <td><strong>£3.99 / week</strong></td>
-              <td>Auto-renews each week unless cancelled</td>
+              <td>Pay-as-you-go scan</td>
+              <td><strong>Price shown in the App before you confirm</strong></td>
+              <td>One-time, charged per scan, does not renew</td>
             </tr>
             <tr>
               <td>Annual</td>
               <td><strong>£39.99 / year</strong></td>
               <td>Auto-renews each year unless cancelled</td>
+            </tr>
+            <tr>
+              <td>Weekly (legacy)</td>
+              <td><strong>£3.99 / week</strong></td>
+              <td>No longer offered to new subscribers; existing weekly subscriptions continue to auto-renew unless cancelled</td>
             </tr>
           </tbody>
         </table>
@@ -904,15 +911,6 @@ export default function PrivacyPolicyPage() {
         least <strong>24 hours before</strong> the end of the current period. Renewal is charged to your
         Apple ID payment method.
       </p>
-      <p>
-        <strong>Free trial.</strong> New annual subscribers may be offered a <strong>3-day free
-        trial</strong>. The weekly plan has no trial and bills immediately. If you start the annual free
-        trial and do not cancel at least <strong>24 hours before it ends</strong>, it automatically
-        converts to a paid annual subscription at <strong>£39.99 / year</strong> and your Apple ID is
-        charged. Whether a trial is offered, and its exact length, is shown in the App before you confirm
-        and is governed by Apple&apos;s introductory-offer rules — an introductory offer is available only
-        once per Apple ID.
-      </p>
 
       <h3>15.2 How payment works</h3>
       <p>
@@ -923,7 +921,7 @@ export default function PrivacyPolicyPage() {
       <p>
         We use <strong>RevenueCat, Inc.</strong> (a US-based subscription-management provider) to verify
         your subscription status and apply promotional rewards. RevenueCat receives your Lumii user ID
-        and an anonymous Apple subscriber identifier (a randomised ID Apple gives to apps — not your
+        and an anonymous Apple subscriber identifier (a randomised ID Apple gives to apps, not your
         Apple ID or your email). RevenueCat does not receive your payment details. See Section 7 for
         RevenueCat&apos;s processor entry and Section 8 for the transfer mechanism we use.
       </p>
@@ -959,12 +957,12 @@ export default function PrivacyPolicyPage() {
       <h2>16. In-app privacy controls</h2>
       <p>You have several controls available inside the App:</p>
       <ul>
-        <li><strong>Save scan photos toggle</strong> (Settings → Privacy &amp; Data → &quot;Save scan photos&quot;). When on (default), the photos you capture during a scan are saved locally to the App&apos;s storage so you can revisit them. When off, the photos are kept only for the duration of the scan and discarded immediately after the scan response is received. <strong>This toggle controls on-device storage only — it does not change the 24-hour server-side photo retention described in Section 6, which applies regardless.</strong></li>
+        <li><strong>Save scan photos toggle</strong> (Settings → Privacy &amp; Data → &quot;Save scan photos&quot;). When on (default), the photos you capture during a scan are saved locally to the App&apos;s storage so you can revisit them. When off, the photos are kept only for the duration of the scan and discarded immediately after the scan response is received. <strong>This toggle controls on-device storage only, it does not change the 24-hour server-side photo retention described in Section 6, which applies regardless.</strong></li>
         <li><strong>Delete a single scan</strong> (Scan history → swipe a scan → Delete). Removes the scan from your on-device history.</li>
         <li><strong>Delete your account</strong> (Settings → Account → Delete account). Removes your authentication record, your server-side profile, any cached tips on your profile, and any scan photo still inside the 24-hour server retention window. Pseudonymised audit records are retained as described in Section 6 (&quot;After account deletion: what we keep&quot;).</li>
-        <li><strong>Revoke biometric consent</strong> — happens automatically when you delete your account; see Section 5.</li>
-        <li><strong>Revoke location access</strong> — iOS Settings → Privacy &amp; Security → Location Services → Lumii.</li>
-        <li><strong>Revoke notification permissions</strong> — iOS Settings → Notifications → Lumii.</li>
+        <li><strong>Revoke biometric consent</strong>, happens automatically when you delete your account; see Section 5.</li>
+        <li><strong>Revoke location access</strong>, iOS Settings → Privacy &amp; Security → Location Services → Lumii.</li>
+        <li><strong>Revoke notification permissions</strong>, iOS Settings → Notifications → Lumii.</li>
       </ul>
 
       <hr />
@@ -999,7 +997,7 @@ export default function PrivacyPolicyPage() {
               <td>No</td>
             </tr>
             <tr>
-              <td>Biometric information (facial landmarks and metrics) — <strong>sensitive personal information</strong></td>
+              <td>Biometric information (facial landmarks and metrics), <strong>sensitive personal information</strong></td>
               <td>Scan analysis and personalised tips</td>
               <td>Until account deletion</td>
               <td>No</td>
@@ -1011,7 +1009,7 @@ export default function PrivacyPolicyPage() {
               <td>No</td>
             </tr>
             <tr>
-              <td>Geolocation data (precise) — <strong>sensitive personal information</strong></td>
+              <td>Geolocation data (precise), <strong>sensitive personal information</strong></td>
               <td>Geofence-based goal verification (on-device only)</td>
               <td>On device only; not stored on our servers</td>
               <td>No</td>
@@ -1067,16 +1065,16 @@ export default function PrivacyPolicyPage() {
       <h2>19. Glossary</h2>
       <p>A short list of terms used in this Privacy Policy that have specific legal meanings.</p>
       <ul>
-        <li><strong>Personal data</strong> (UK / EU GDPR) and <strong>personal information</strong> (CCPA) — information relating to an identified or identifiable individual. Includes obvious items like name and email, less obvious items like IP address, and inferences drawn from those items.</li>
-        <li><strong>Processing</strong> — anything done with personal data: collecting, storing, using, sharing, deleting. If we touch the data, we &quot;process&quot; it.</li>
-        <li><strong>Biometric data</strong> (UK / EU GDPR Article 9) — personal data resulting from specific technical processing relating to the physical, physiological, or behavioural characteristics of a natural person, which allow or confirm the unique identification of that person. The facial landmarks and metrics we derive from a scan fall under this definition.</li>
-        <li><strong>Sensitive personal information</strong> (CPRA §1798.140(ae)) — a sub-set of personal information including biometric data used for identification, precise geolocation, and health information. Triggers additional disclosure and the right described in Section 10.2.</li>
-        <li><strong>Subprocessor</strong> — a third party (like RevenueCat or Sentry) that processes your personal data on our behalf, under our instructions and a written contract.</li>
-        <li><strong>Standard Contractual Clauses (SCCs)</strong> — model contract terms approved by the European Commission and the UK ICO that authorise transfers of personal data outside the UK / EEA.</li>
-        <li><strong>UK International Data Transfer Addendum</strong> — the UK-specific addition to the EU SCCs that makes them effective for UK-originating personal data.</li>
-        <li><strong>Data Privacy Framework (DPF)</strong> — the EU-US and UK-US arrangements under which US companies can self-certify to receive personal data from the EU / UK. We use it for Google and Vercel; we use SCCs for Anthropic, RevenueCat, Railway, Apple, and Expo.</li>
-        <li><strong>Session replay</strong> — a recording of the visible content of the App during a user session, used for debugging. Sentry&apos;s mobile session replay automatically masks input fields like passwords. See Section 3.2.</li>
-        <li><strong>Promotional entitlement</strong> — a free grant of Lumii Pro access (via RevenueCat) that does not involve an Apple In-App Purchase or any payment by you. See Section 15.5.</li>
+        <li><strong>Personal data</strong> (UK / EU GDPR) and <strong>personal information</strong> (CCPA), information relating to an identified or identifiable individual. Includes obvious items like name and email, less obvious items like IP address, and inferences drawn from those items.</li>
+        <li><strong>Processing</strong>, anything done with personal data: collecting, storing, using, sharing, deleting. If we touch the data, we &quot;process&quot; it.</li>
+        <li><strong>Biometric data</strong> (UK / EU GDPR Article 9), personal data resulting from specific technical processing relating to the physical, physiological, or behavioural characteristics of a natural person, which allow or confirm the unique identification of that person. The facial landmarks and metrics we derive from a scan fall under this definition.</li>
+        <li><strong>Sensitive personal information</strong> (CPRA §1798.140(ae)), a sub-set of personal information including biometric data used for identification, precise geolocation, and health information. Triggers additional disclosure and the right described in Section 10.2.</li>
+        <li><strong>Subprocessor</strong>, a third party (like RevenueCat or Sentry) that processes your personal data on our behalf, under our instructions and a written contract.</li>
+        <li><strong>Standard Contractual Clauses (SCCs)</strong>, model contract terms approved by the European Commission and the UK ICO that authorise transfers of personal data outside the UK / EEA.</li>
+        <li><strong>UK International Data Transfer Addendum</strong>, the UK-specific addition to the EU SCCs that makes them effective for UK-originating personal data.</li>
+        <li><strong>Data Privacy Framework (DPF)</strong>, the EU-US and UK-US arrangements under which US companies can self-certify to receive personal data from the EU / UK. We use it for Google and Vercel; we use SCCs for Anthropic, RevenueCat, Railway, Apple, and Expo.</li>
+        <li><strong>Session replay</strong>, a recording of the visible content of the App during a user session, used for debugging. Sentry&apos;s mobile session replay automatically masks input fields like passwords. See Section 3.2.</li>
+        <li><strong>Promotional entitlement</strong>, a free grant of Lumii Pro access (via RevenueCat) that does not involve an Apple In-App Purchase or any payment by you. See Section 15.5.</li>
       </ul>
     </LegalLayout>
   );

@@ -4,12 +4,12 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: { absolute: "How Lumii Works — AI Face Scan to Glow-Up Plan" },
+  title: { absolute: "How Lumii Works, AI Face Scan to Glow-Up Plan" },
   description:
-    "Upload one photo. Lumii's AI maps 584 facial landmarks across 75+ metrics, gives you a glow-up score, and turns it into a step-by-step skincare and beauty plan.",
+    "Scan your face in 30 seconds. Lumii maps 584 facial landmarks across 75+ metrics, scores your glow, then builds a routine, tracks progress, follows your cycle, and lets you glow with your Circle. Here's every step.",
   alternates: { canonical: "/how-it-works" },
   openGraph: {
-    title: "How Lumii Works — AI Face Scan to Glow-Up Plan",
+    title: "How Lumii Works, AI Face Scan to Glow-Up Plan",
     description:
       "See how Lumii turns a single selfie into a personalized glow-up and skincare plan.",
     url: "https://www.lumiiapp.com/how-it-works",

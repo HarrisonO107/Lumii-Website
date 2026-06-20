@@ -5,7 +5,7 @@
 //  /public/og.jpg, then set openGraph.images / twitter.images to "/og.jpg".)
 import { ImageResponse } from "next/og";
 
-export const alt = "Lumii — your face, measured to the micron.";
+export const alt = "Lumii, your face, measured to the micron.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

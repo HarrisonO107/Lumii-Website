@@ -19,14 +19,14 @@ export async function generateMetadata(
   const c = normalize(code);
   const title = "You're invited to Lumii";
   const description = c
-    ? `Use code ${c} when you join — you'll both get 14 days of Lumii Pro, free.`
-    : "Join me on Lumii — your face, by the numbers.";
+    ? `Use code ${c} when you join, you'll both get 14 days of Lumii Pro, free.`
+    : "Join me on Lumii, your face, by the numbers.";
   return {
     title,
     description,
     openGraph: { title, description, type: "website" },
     twitter: { card: "summary", title, description },
-    // Per-code invite pages are personal links, not content — keep them out of search.
+    // Per-code invite pages are personal links, not content, keep them out of search.
     robots: { index: false, follow: false },
   };
 }

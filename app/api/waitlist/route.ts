@@ -79,10 +79,10 @@ export async function POST(req: Request) {
             </h1>
             <p style="font-size: 14px; color: #64748b; line-height: 1.7; font-weight: 300;">
               Thanks for joining the Lumii waitlist. We'll reach out before anyone else
-              when we launch — your spot is saved.
+              when we launch, your spot is saved.
             </p>
             <p style="font-size: 14px; color: #64748b; line-height: 1.7; font-weight: 300; margin-top: 24px;">
-              — The Lumii team
+, The Lumii team
             </p>
           </div>
         `,

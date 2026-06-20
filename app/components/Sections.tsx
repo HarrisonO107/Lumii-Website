@@ -93,7 +93,7 @@ function FaceLandmarks({ className }: { className?: string }) {
   for (let i = 0; i < 9; i++) landmarks.push([200 + (i - 4) * 6, 200 + i * 4]);
   // Mouth
   for (let i = 0; i < 12; i++) { const a = (i / 12) * Math.PI * 2; landmarks.push([200 + Math.cos(a) * 25, 280 + Math.sin(a) * 10]); }
-  // Extra scatter (deterministic — no Math.random to avoid hydration mismatch)
+  // Extra scatter (deterministic, no Math.random to avoid hydration mismatch)
   const seed = [0.12,0.87,0.34,0.62,0.91,0.23,0.55,0.78,0.41,0.06,0.69,0.33,0.95,0.17,0.48,0.72,0.29,0.84,0.53,0.11,0.66,0.38,0.93,0.21,0.57,0.79,0.44,0.02,0.68,0.36,0.14,0.88,0.31,0.65,0.92,0.25,0.51,0.76,0.43,0.08,0.71,0.35,0.97,0.19,0.46,0.74,0.27,0.82,0.56,0.13,0.63,0.39,0.94,0.22,0.58,0.77,0.42,0.05,0.67,0.37];
   for (let i = 0; i < 30; i++) landmarks.push([100 + seed[i * 2] * 200, 130 + seed[i * 2 + 1] * 200]);
 
@@ -207,7 +207,7 @@ function LeadText() {
     <section className="py-32 md:py-48 px-6 md:px-20" style={{ background: C.dark }}>
       <div className="max-w-[700px] mx-auto">
         <p ref={ref} className="text-[21px] md:text-[30px] leading-[1.6] tracking-[-0.01em]" style={{ fontFamily: SERIF }}>
-          Lumii maps 584 facial landmarks and measures 75+ metrics across symmetry, harmony, proportions, and skin quality — to build a beauty plan that could only be yours.
+          Lumii maps 584 facial landmarks and measures 75+ metrics across symmetry, harmony, proportions, and skin quality, to build a beauty plan that could only be yours.
         </p>
       </div>
     </section>
@@ -221,10 +221,10 @@ function DarkToCream() {
 
 // 3. How it works + Face landmarks visual
 const steps = [
-  { num: "01", title: "Three angles. That's it.", body: "Front. Left. Right. Our guided camera positions you perfectly — three photos in under 30 seconds." },
-  { num: "02", title: "584 landmarks, mapped.", body: "Every contour, ratio, and proportion — detected, measured, and scored against clinically-studied ideals." },
-  { num: "03", title: "A real score.", body: "A precise breakdown across symmetry, harmony, eyes, nose, lips, jaw, and skin — each scored individually." },
-  { num: "04", title: "Tips backed by numbers.", body: "Exercises, hairstyles, skincare — all tied to your actual measurements. Nothing generic." },
+  { num: "01", title: "Three angles. That's it.", body: "Front. Left. Right. Our guided camera positions you perfectly, three photos in under 30 seconds." },
+  { num: "02", title: "584 landmarks, mapped.", body: "Every contour, ratio, and proportion, detected, measured, and scored against clinically-studied ideals." },
+  { num: "03", title: "A real score.", body: "A precise breakdown across symmetry, harmony, eyes, nose, lips, jaw, and skin, each scored individually." },
+  { num: "04", title: "Tips backed by numbers.", body: "Exercises, hairstyles, skincare, all tied to your actual measurements. Nothing generic." },
   { num: "05", title: "Track your glow up.", body: "Scan again over time. Watch scores shift. Progress measured, not guessed." },
 ];
 
@@ -277,7 +277,7 @@ function ScoreShowcase() {
           A score that actually <em style={{ color: C.rose }}>means</em> something
         </h2>
         <p data-r="" className="text-[14px] font-light mb-12 md:mb-16 max-w-[480px] mx-auto" style={{ color: C.textSec }}>
-          Eight categories. Each scored individually. Together they tell you exactly where you stand — and where to focus.
+          Eight categories. Each scored individually. Together they tell you exactly where you stand, and where to focus.
         </p>
 
         <div className="flex justify-center">
@@ -355,11 +355,11 @@ function AppShowcase() {
             This is what you&apos;ll <em style={{ color: C.rose }}>open</em>
           </h2>
           <p data-r="" className="text-[14px] font-light mt-4 max-w-[440px] mx-auto" style={{ color: C.textSec }}>
-            Already live on iOS. Now landing on Android — every screen built around your actual measurements.
+            Already live on iOS. Now landing on Android, every screen built around your actual measurements.
           </p>
         </div>
 
-        {/* Desktop — fanned arc */}
+        {/* Desktop, fanned arc */}
         <div data-r="" className="hidden md:flex items-end justify-center" style={{ minHeight: 520 }}>
           {shots.map((shot, i) => {
             const p = poses[i];
@@ -382,7 +382,7 @@ function AppShowcase() {
           })}
         </div>
 
-        {/* Mobile — horizontal snap scroll */}
+        {/* Mobile, horizontal snap scroll */}
         <div data-r="" className="md:hidden flex gap-5 overflow-x-auto scroll-none snap-x snap-mandatory -mx-6 px-6 pb-3">
           {shots.map((shot, i) => (
             <div key={shot.src} className="snap-center shrink-0 flex flex-col items-center" style={{ width: "62vw", maxWidth: 250 }}>
@@ -408,8 +408,8 @@ function AppShowcase() {
 // 5. Features accordion
 const features = [
   { title: "Precision Analysis", body: "75+ facial metrics scored against ideal proportions. Every measurement comes with its actual value, ideal range, and a clear score out of 100." },
-  { title: "Skin Mapping", body: "Zone-by-zone analysis across your T-zone, cheeks, chin, and under-eye. Smoothness, redness, brightness — all measured." },
-  { title: "Face Shape Detection", body: "Your face shape identified and factored into every recommendation — hairstyles, contouring, exercises." },
+  { title: "Skin Mapping", body: "Zone-by-zone analysis across your T-zone, cheeks, chin, and under-eye. Smoothness, redness, brightness, all measured." },
+  { title: "Face Shape Detection", body: "Your face shape identified and factored into every recommendation, hairstyles, contouring, exercises." },
   { title: "Personalised Routines", body: "Science-backed tips with real steps. Each explains the anatomy behind why it works." },
   { title: "Progress Tracking", body: "Multiple scans build your trend line. See score changes across every metric." },
   { title: "Goal System", body: "Turn tips into trackable daily goals. Build streaks, hit milestones, stay consistent." },
@@ -456,7 +456,7 @@ function FeaturesAccordion() {
   );
 }
 
-// 6. Data strip — clean, like Jesko's data section
+// 6. Data strip, clean, like Jesko's data section
 const dataItems = [
   { label: "Landmarks per scan", value: "584" },
   { label: "Metrics scored", value: "75+" },
@@ -537,7 +537,7 @@ function FinalCTA() {
           See what 584 landmarks reveal about <em style={{ color: C.rose }}>your face.</em>
         </h2>
         <p data-r="" className="text-[13px] font-light mb-10 leading-relaxed" style={{ color: C.textSec }}>
-          The iOS founding-member codes are all claimed. We&apos;re building the Android release now — join the waitlist to be first in line when it drops.
+          The iOS founding-member codes are all claimed. We&apos;re building the Android release now, join the waitlist to be first in line when it drops.
         </p>
         <div data-r="">
           {!submitted ? (
@@ -562,7 +562,7 @@ function FinalCTA() {
             </div>
           )}
         </div>
-        <p data-r="" className="text-[10px] mt-8" style={{ color: C.textTer }}>Live on iOS. Android release in the works — free at launch.</p>
+        <p data-r="" className="text-[10px] mt-8" style={{ color: C.textTer }}>Live on iOS. Android release in the works, free at launch.</p>
       </div>
     </section>
   );

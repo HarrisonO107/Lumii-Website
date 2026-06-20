@@ -16,7 +16,7 @@ export default function ContactPage() {
             <span className="italic" style={{ color: "#F9A8C9" }}>We're listening.</span>
           </h1>
           <p className="text-[15px] text-white/40 font-light max-w-[400px] leading-[1.7]">
-            We read every message and reply within 24 hours. No support bots, no ticket system — just us.
+            We read every message and reply within 24 hours. No support bots, no ticket system, just us.
           </p>
         </motion.div>
       </section>
@@ -68,7 +68,7 @@ export default function ContactPage() {
           transition={{ duration: 0.7, delay: 0.35 }}
           className="text-[11px] text-white/20 font-light mt-8 leading-[1.8] max-w-[480px]"
         >
-          Lumii is a small team building something we genuinely believe in. Every message gets read by a real person. We're especially grateful for honest feedback — good or bad.
+          Lumii is a small team building something we genuinely believe in. Every message gets read by a real person. We're especially grateful for honest feedback, good or bad.
         </motion.p>
       </section>
     </main>

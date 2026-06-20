@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 // ── Store targets ────────────────────────────────────────────────────────────
 // Android listing resolves by package id. The iOS App Store listing isn't
-// published yet — it needs the numeric app id once live
+// published yet, it needs the numeric app id once live
 // (https://apps.apple.com/app/id<NUMERIC>). Until APP_STORE_URL is set, iOS and
 // desktop fall back to the marketing site so a tapped invite is NEVER a dead end.
 //   TODO(harrison): set APP_STORE_URL to the real listing when iOS is live.
@@ -33,21 +33,21 @@ export default function InviteRedirect({ code }: { code: string }) {
 
   useEffect(() => {
     // Stash the code (best-effort) for any later web-based redeem path. NOTE:
-    // true deferred deep-linking — the code auto-applying AFTER a fresh install
-    // — needs an attribution provider (Branch/AppsFlyer) and is flagged as a
+    // true deferred deep-linking, the code auto-applying AFTER a fresh install
+    //, needs an attribution provider (Branch/AppsFlyer) and is flagged as a
     // separate decision. This cookie/localStorage only survives within the web.
     try {
       localStorage.setItem("lumii_referral_code", code);
       document.cookie = `lumii_ref=${code}; path=/; max-age=2592000; SameSite=Lax`;
     } catch {
-      // Private mode / blocked storage — the code is still shown on-screen.
+      // Private mode / blocked storage, the code is still shown on-screen.
     }
 
     const target = storeUrlFor();
     setStore(target);
 
     // If the user taps "Open in app", the scheme navigation backgrounds this
-    // tab — cancel the auto store-redirect so we don't yank them away from it.
+    // tab, cancel the auto store-redirect so we don't yank them away from it.
     let cancelled = false;
     const onVisibility = () => {
       if (document.hidden) cancelled = true;

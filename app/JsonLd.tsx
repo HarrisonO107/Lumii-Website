@@ -26,7 +26,7 @@ export default function JsonLd() {
     {
       "@context": "https://schema.org",
       "@type": "MobileApplication",
-      name: "Lumii — Skincare Glow Up",
+      name: "Lumii, Skincare Glow Up",
       operatingSystem: "iOS",
       applicationCategory: "LifestyleApplication",
       url: "https://www.lumiiapp.com",
@@ -46,7 +46,7 @@ export default function JsonLd() {
           name: "What is Lumii?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Lumii is an AI-powered beauty advisor that analyses your face to give you a personalised Glow Score and skincare routine. Upload a photo, and our engine maps 584 facial landmarks and scores 75+ metrics — texture, tone, symmetry, hydration, and more — to build a routine designed specifically for your skin.",
+            text: "Lumii is an AI-powered beauty advisor that analyses your face to give you a personalised Glow Score and skincare routine. Upload a photo, and our engine maps 584 facial landmarks and scores 75+ metrics, texture, tone, symmetry, hydration, and more, to build a routine designed specifically for your skin.",
           },
         },
         {
@@ -62,7 +62,7 @@ export default function JsonLd() {
           name: "How accurate is the AI analysis?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Our model has been validated against expert dermatologist assessments with 89% concordance across key skin metrics. Accuracy improves with photo quality — clear lighting and no filters give the best results.",
+            text: "Our model has been validated against expert dermatologist assessments with 89% concordance across key skin metrics. Accuracy improves with photo quality, clear lighting and no filters give the best results.",
           },
         },
       ],

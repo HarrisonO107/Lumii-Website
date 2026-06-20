@@ -106,14 +106,14 @@
   .phone-float { animation: none; }
 }
 
-/* Hero phone fan — width drives the whole arc (margins + offsets use calc) */
+/* Hero phone fan, width drives the whole arc (margins + offsets use calc) */
 .phone-fan { --phw: 86px; }
 @media (min-width: 400px)  { .phone-fan { --phw: 96px; } }
 @media (min-width: 640px)  { .phone-fan { --phw: 118px; } }
 @media (min-width: 768px)  { .phone-fan { --phw: 128px; } }
 @media (min-width: 1024px) { .phone-fan { --phw: 150px; } }
 
-/* 4. LEGAL PROSE — dark themed long-form readability */
+/* 4. LEGAL PROSE, dark themed long-form readability */
 .legal-prose {
   color: rgba(255, 255, 255, 0.6);
   font-weight: 300;
@@ -266,7 +266,7 @@
 }
 
 /* ════════════════════════════════════════════════════════════
-   LAUNCH SHOWCASE — "Editorial Atelier"
+   LAUNCH SHOWCASE, "Editorial Atelier"
    A beauty broadsheet printed by a measuring instrument.
    ════════════════════════════════════════════════════════════ */
 :root {
@@ -291,7 +291,7 @@
 .font-body    { font-family: var(--font-body), system-ui, sans-serif; }
 .font-mono    { font-family: var(--font-mono), ui-monospace, "SF Mono", monospace; }
 
-/* Paper grain — printed-on-stock texture */
+/* Paper grain, printed-on-stock texture */
 .paper-grain::after {
   content: "";
   position: fixed;
@@ -331,12 +331,56 @@
 .rule-draw { transform: scaleX(0); transform-origin: left; }
 .in-view .rule-draw { transform: scaleX(1); transition: transform 1.1s cubic-bezier(0.16,1,0.3,1); }
 
-/* Plate (phone screenshot) frame */
+/* Plate (phone screenshot) frame, legacy, kept for safety */
 .plate {
   background: linear-gradient(160deg, #232327 0%, #0c0c0e 100%);
   border: 1px solid rgba(0,0,0,0.5);
   box-shadow: 0 40px 80px -36px rgba(40,20,30,0.45), 0 6px 20px rgba(40,20,30,0.18);
 }
+
+/* ── iPhone 17 Pro device frame ──
+   Container-query units (cqw) scale the rail, bezel and corner radius with the
+   figure width, so the same markup reads right from 130px (Momo) to 310px (hero). */
+.device {
+  position: relative;
+  container-type: inline-size;
+}
+.device-rail {
+  position: relative;
+  border-radius: 16cqw;
+  padding: 1.5cqw; /* titanium edge thickness */
+  background:
+    linear-gradient(135deg, #6c6862 0%, #3a3733 22%, #7a766f 50%, #2f2c28 78%, #585450 100%);
+  box-shadow:
+    0 40px 80px -34px rgba(40,20,30,0.50),
+    0 8px 24px rgba(40,20,30,0.18),
+    inset 0 0 0 0.4cqw rgba(255,255,255,0.10);
+}
+.device-bezel {
+  border-radius: 14.5cqw;
+  padding: 2.3cqw; /* black bezel around the screen */
+  background: #060607;
+  box-shadow: inset 0 0 0 0.5cqw rgba(0,0,0,0.9);
+}
+.device-screen {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12.2cqw;
+  aspect-ratio: 1206 / 2622;
+  background: #0c0c0e;
+}
+.device-screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+/* Titanium side buttons */
+.device-btn {
+  position: absolute;
+  background: linear-gradient(180deg, #6c6862, #322f2b);
+  box-shadow: inset 0 0.4cqw 0.6cqw rgba(255,255,255,0.12);
+}
+.device-btn.action { left: -1cqw; top: 21%;  width: 1.2cqw; height: 6%;  border-radius: 1cqw 0 0 1cqw; }
+.device-btn.vol-up { left: -1cqw; top: 31%;  width: 1.2cqw; height: 9%;  border-radius: 1cqw 0 0 1cqw; }
+.device-btn.vol-dn { left: -1cqw; top: 42%;  width: 1.2cqw; height: 9%;  border-radius: 1cqw 0 0 1cqw; }
+.device-btn.power  { right: -1cqw; top: 30%; width: 1.2cqw; height: 13%; border-radius: 0 1cqw 1cqw 0; }
 
 /* Soft float for hero plate */
 @keyframes atelier-float {
@@ -345,6 +389,32 @@
 }
 .atelier-float { animation: atelier-float 7s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .atelier-float { animation: none; } }
+
+/* App Store badge, diagonal shine sweep on hover */
+.badge-shine {
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.28) 50%,
+    transparent 100%
+  );
+  transform: skewX(-18deg);
+}
+.app-badge:hover .badge-shine {
+  animation: badge-shine 0.85s ease-out;
+}
+@keyframes badge-shine {
+  to { left: 160%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-badge:hover .badge-shine { animation: none; }
+}
 
 /* Marquee for the metrics band */
 @keyframes atelier-marquee {

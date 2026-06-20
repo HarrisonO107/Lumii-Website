@@ -8,7 +8,7 @@ const faqs = [
     items: [
       {
         q: "What is Lumii?",
-        a: "Lumii is an AI-powered beauty advisor that analyses your face to give you a personalised Glow Score and skincare routine. Upload a photo, and our engine maps 584 facial landmarks and scores 75+ metrics — texture, tone, symmetry, hydration, and more — to build a routine designed specifically for your skin.",
+        a: "Lumii is an AI-powered beauty advisor that analyses your face to give you a personalised Glow Score and skincare routine. Upload a photo, and our engine maps 584 facial landmarks and scores 75+ metrics, texture, tone, symmetry, hydration, and more, to build a routine designed specifically for your skin.",
       },
       {
         q: "Is Lumii a dermatologist?",
@@ -16,7 +16,7 @@ const faqs = [
       },
       {
         q: "When is Lumii launching?",
-        a: "Lumii is live now on iOS — download it free on the App Store. Android is in development; join the waitlist and we'll email you the moment it launches.",
+        a: "Lumii is live now on iOS, download it free on the App Store. Android is in development; join the waitlist and we'll email you the moment it launches.",
       },
       {
         q: "Will Lumii be free?",
@@ -33,7 +33,7 @@ const faqs = [
       },
       {
         q: "Is my data safe?",
-        a: "Yes. We only store your email address (to send your waitlist confirmation and launch notification) and your Glow Score history — not the photos used to generate it. All data is encrypted at rest and in transit.",
+        a: "Yes. We only store your email address (to send your waitlist confirmation and launch notification) and your Glow Score history, not the photos used to generate it. All data is encrypted at rest and in transit.",
       },
       {
         q: "Do you sell my data?",
@@ -46,7 +46,7 @@ const faqs = [
     items: [
       {
         q: "How accurate is the AI analysis?",
-        a: "Our model has been validated against expert dermatologist assessments with 89% concordance across key skin metrics. Accuracy improves with photo quality — clear lighting and no filters give the best results.",
+        a: "Our model has been validated against expert dermatologist assessments with 89% concordance across key skin metrics. Accuracy improves with photo quality, clear lighting and no filters give the best results.",
       },
       {
         q: "Will it work on my skin tone?",
@@ -67,11 +67,11 @@ const faqs = [
     items: [
       {
         q: "How does Lumii build my routine?",
-        a: "Based on your scan results — skin type, undertone, key concerns, Glow Score breakdown — Lumii assembles a morning and evening routine using evidence-backed ingredients and steps. The routine is ordered correctly (active ingredients, barriers, SPF) and accounts for compatibility between ingredients.",
+        a: "Based on your scan results, skin type, undertone, key concerns, Glow Score breakdown, Lumii assembles a morning and evening routine using evidence-backed ingredients and steps. The routine is ordered correctly (active ingredients, barriers, SPF) and accounts for compatibility between ingredients.",
       },
       {
         q: "Will Lumii recommend specific products?",
-        a: "At launch, Lumii provides ingredient-level guidance and product type recommendations. Specific product recommendations (with links) are coming in a future update. We are building this independently — brands cannot pay to be recommended.",
+        a: "At launch, Lumii provides ingredient-level guidance and product type recommendations. Specific product recommendations (with links) are coming in a future update. We are building this independently, brands cannot pay to be recommended.",
       },
       {
         q: "What if I'm a beginner?",

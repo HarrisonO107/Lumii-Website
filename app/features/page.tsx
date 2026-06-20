@@ -5,14 +5,14 @@ const features = [
   {
     tag: "Analysis",
     title: "47-point facial scan",
-    body: "Our engine maps your face across 47 data points — pore density, melanin distribution, hydration markers, sebum levels, facial symmetry, and more. The most comprehensive AI skin analysis available.",
+    body: "Our engine maps your face across 47 data points, pore density, melanin distribution, hydration markers, sebum levels, facial symmetry, and more. The most comprehensive AI skin analysis available.",
     metrics: [{ label: "Data points", val: "47" }, { label: "Accuracy", val: "89%" }, { label: "Scan time", val: "<10s" }],
     accent: "#F9A8C9",
   },
   {
     tag: "Scoring",
     title: "Your Glow Score",
-    body: "A single number — out of 100 — that captures your skin's overall health and radiance. Broken down across five dimensions so you know exactly where to focus. Updated every scan.",
+    body: "A single number, out of 100, that captures your skin's overall health and radiance. Broken down across five dimensions so you know exactly where to focus. Updated every scan.",
     metrics: [{ label: "Dimensions", val: "5" }, { label: "Top 8%", val: "score 90+" }, { label: "Updates", val: "Real-time" }],
     accent: "#f472b6",
   },
@@ -33,7 +33,7 @@ const features = [
   {
     tag: "Privacy",
     title: "Your photos never leave your device",
-    body: "All facial analysis is processed in memory and immediately discarded. We never store, share, or use your photos. Your face is yours — full stop.",
+    body: "All facial analysis is processed in memory and immediately discarded. We never store, share, or use your photos. Your face is yours, full stop.",
     metrics: [{ label: "Storage", val: "None" }, { label: "Sharing", val: "Never" }, { label: "Retention", val: "0 seconds" }],
     accent: "#34d399",
   },
@@ -62,7 +62,7 @@ export default function FeaturesPage() {
             <span className="italic" style={{ color: "#F9A8C9" }}>has been waiting for.</span>
           </h1>
           <p className="text-[15px] text-white/40 font-light max-w-[480px] leading-[1.7]">
-            A complete AI beauty platform — from scan to routine to progress tracking — built with the same rigour as professional dermatology tools.
+            A complete AI beauty platform, from scan to routine to progress tracking, built with the same rigour as professional dermatology tools.
           </p>
         </motion.div>
       </section>
@@ -127,7 +127,7 @@ export default function FeaturesPage() {
       >
         <div>
           <p className="text-[22px] font-light text-white tracking-[-0.01em] mb-1">Ready to see your Glow Score?</p>
-          <p className="text-[13px] text-white/35 font-light">Join the waitlist — free at launch.</p>
+          <p className="text-[13px] text-white/35 font-light">Join the waitlist, free at launch.</p>
         </div>
         <button
           className="flex-shrink-0 bg-white text-slate-900 font-semibold text-[13px] px-7 py-3.5 rounded-full shadow-lg whitespace-nowrap"

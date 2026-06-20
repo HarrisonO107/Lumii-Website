@@ -1,7 +1,7 @@
 // app/sitemap.ts  → Next.js serves this automatically at /sitemap.xml
 // (Currently /sitemap.xml returns 404.)
 // Only the 8 real, indexable routes are listed. /privacy-policy and
-// /terms-of-service are 308 redirects to /legal/* — intentionally omitted.
+// /terms-of-service are 308 redirects to /legal/*, intentionally omitted.
 import type { MetadataRoute } from "next";
 
 const BASE = "https://www.lumiiapp.com";

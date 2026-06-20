@@ -19,7 +19,7 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
 
     const tl = gsap.timeline({ onComplete });
 
-    // Animate in — quicker, tighter
+    // Animate in, quicker, tighter
     tl.to(chars, {
       opacity: 1, y: 0, duration: 0.42, stagger: 0.04, ease: "power3.out",
     }, 0.1);

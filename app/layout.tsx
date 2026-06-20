@@ -32,11 +32,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.lumiiapp.com"),
   title: {
-    default: "Lumii — AI Face Analysis & Skincare Glow Up App",
+    default: "Lumii, AI Face Analysis & Skincare Glow Up App",
     template: "%s · Lumii",
   },
   description:
-    "Lumii analyzes your face from one photo — 584 landmarks, 75+ metrics, one glow-up score — and builds your skincare & beauty plan. Free on iOS.",
+    "Lumii analyzes your face from one photo, 584 landmarks, 75+ metrics, one glow-up score, and builds your skincare & beauty plan. Free on iOS.",
   applicationName: "Lumii",
   keywords: [
     "face analysis app",
@@ -61,17 +61,17 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://www.lumiiapp.com",
     siteName: "Lumii",
-    title: "Lumii — AI Face Analysis & Skincare Glow Up",
+    title: "Lumii, AI Face Analysis & Skincare Glow Up",
     description:
-      "Upload one photo. Get a beauty plan built for your actual face — 584 landmarks, 75+ metrics, one score that tells you everything.",
+      "Upload one photo. Get a beauty plan built for your actual face, 584 landmarks, 75+ metrics, one score that tells you everything.",
     locale: "en_US",
     // og image is auto-provided by app/opengraph-image.tsx
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lumii — AI Face Analysis & Skincare Glow Up",
+    title: "Lumii, AI Face Analysis & Skincare Glow Up",
     description:
-      "Upload one photo. Get a beauty plan built for your actual face — 584 landmarks, 75+ metrics, one score.",
+      "Upload one photo. Get a beauty plan built for your actual face, 584 landmarks, 75+ metrics, one score.",
   },
   robots: {
     index: true,

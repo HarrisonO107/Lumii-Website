@@ -99,7 +99,7 @@ export default function Hero() {
       .catch(() => {});
   }, []);
 
-  // Staggered entrance — fires as the preloader slides away (~1.5s)
+  // Staggered entrance, fires as the preloader slides away (~1.5s)
   useEffect(() => {
     const pill = pillRef.current;
     const h1 = h1Ref.current;
@@ -179,7 +179,7 @@ export default function Hero() {
             className="text-[13px] sm:text-[14px] font-light text-white/55 leading-relaxed mb-7 md:mb-9 max-w-[400px]"
             style={{ opacity: 0 }}
           >
-            584 landmarks. 75+ metrics. One score that tells you everything. The iOS founding codes are gone — join the waitlist to land Android first.
+            584 landmarks. 75+ metrics. One score that tells you everything. The iOS founding codes are gone, join the waitlist to land Android first.
           </p>
 
           <div ref={formRef} style={{ opacity: 0 }}>
