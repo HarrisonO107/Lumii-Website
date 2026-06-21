@@ -121,7 +121,7 @@ export default function Pro() {
             <div className="relative">
               <div className="rounded-full overflow-hidden" style={{ width: 92, height: 92, border: `2px solid ${L.line}`, boxShadow: `0 14px 40px -12px ${L.glow}` }}>
                 {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-                <video src="/video/suki-hero.mp4?v=2" poster="/video/suki-hero-poster.jpg?v=2" autoPlay loop muted playsInline aria-hidden className="w-full h-full object-cover" style={{ objectPosition: "center 22%", transform: "scale(1.8)" }} />
+                <video src="/video/suki-avatar.mp4" autoPlay loop muted playsInline aria-hidden className="w-full h-full object-cover" style={{ objectPosition: "center 32%", transform: "scale(1.15)" }} />
               </div>
               <div className="absolute -right-3 -top-2 rounded-full px-2.5 py-1 text-[10px] font-bold tracking-wide" style={{ background: L.rose, color: "#fff", boxShadow: `0 6px 18px -6px ${L.glow}` }}>web only 🤍</div>
             </div>
