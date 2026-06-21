@@ -183,10 +183,7 @@ function Hero() {
             <span className="ml-2 rounded-full px-5 py-1.5 text-[13px] font-bold tracking-wide" style={{ background: "#0A84FF", color: "#fff" }}>GET</span>
           </motion.a>
 
-          <div className="mt-7 flex flex-wrap items-center gap-3">
-            <AppleBadge />
-            <GoogleBadge />
-          </div>
+          <div className="mt-5 text-[13px]" style={{ color: D.dim }}>Free on iOS &amp; Android · also on Google Play</div>
         </motion.div>
       </div>
       <motion.div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none" animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>
