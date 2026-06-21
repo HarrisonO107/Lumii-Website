@@ -195,6 +195,16 @@ function Hero() {
               Get it on Google Play →
             </a>
           </div>
+          <motion.a
+            href="/pro"
+            className="mt-5 inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-[13px] font-semibold"
+            style={{ background: "rgba(216,106,134,0.16)", border: `1px solid ${D.rosePale}`, color: D.text }}
+            whileHover={{ y: -2 }}
+            transition={{ type: "spring", stiffness: 420, damping: 26 }}
+          >
+            <span>🤍 Already Pro-curious? Go Pro on the web &amp; help us skip Apple&apos;s cut</span>
+            <span style={{ color: D.rosePale }}>→</span>
+          </motion.a>
         </motion.div>
       </div>
       <motion.div className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2 pointer-events-none" animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>
