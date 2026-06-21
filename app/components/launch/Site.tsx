@@ -227,59 +227,39 @@ function Intro() {
   );
 }
 
-/* ─────────────────────────  BIG FEATURE CARD  ───────────────────────── */
+/* ─────────────────────────  SHOWCASE (device + description)  ───────────────────────── */
 
-// a glassy trait score that floats off the phone (CSS bob desynced by delay)
-function FloatingChip({ className, label, val, delay = 0 }: { className: string; label: string; val: string; delay?: number }) {
-  return (
-    <motion.div
-      className={`atelier-float absolute z-20 flex items-center gap-2 rounded-full pl-2.5 pr-3.5 py-2 ${className}`}
-      style={{ background: "rgba(255,255,255,0.10)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", border: "1px solid rgba(255,255,255,0.22)", boxShadow: "0 10px 34px -8px rgba(216,106,134,0.55)", animationDelay: `${delay}s` }}
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
-      transition={{ delay: 0.3 + delay * 0.15, duration: 0.6, ease: EASE }}
-    >
-      <span className="rounded-full" style={{ width: 7, height: 7, background: D.rose, boxShadow: `0 0 8px ${D.rose}` }} />
-      <span className="text-[12px]" style={{ color: D.dim }}>{label}</span>
-      <span className="text-[13px] font-semibold tabular-nums" style={{ color: D.text }}>{val}</span>
-    </motion.div>
-  );
-}
+const SHOTS: { kicker: string; title: string; body: string; src: string }[] = [
+  { kicker: "The read", title: "See your score. Finally.", body: "Eight categories scored against clinically-studied ideals, with the exact numbers behind every line.", src: "/screenshots/home.jpg" },
+  { kicker: "The breakdown", title: "Every trait, ranked.", body: "Symmetry, jawline, eyes, skin and more, each measured on its own so you know exactly where you stand, and where to focus.", src: "/screenshots/breakdown.jpg" },
+  { kicker: "The routine", title: "Tips from your numbers.", body: "Every tip traces back to a measurement on your report, with a one-tap add to your daily ritual.", src: "/screenshots/tips.jpg" },
+  { kicker: "Suki", title: "Meet Suki.", body: "Your Lumii kitten reads your scan and talks you through it. Honest, never cold, and she grows with you.", src: "/screenshots/suki.jpg" },
+  { kicker: "The circle", title: "Glow with your circle.", body: "Private 7-day glow sprints with your friends. Only the people you invite ever see it.", src: "/screenshots/circle.jpg" },
+  { kicker: "Progress", title: "Watch the score move.", body: "Scan over time and Lumii tracks every metric against your baseline, with photos and a trend line.", src: "/screenshots/progress.jpg" },
+];
 
-function BigCard() {
+function Showcase() {
   return (
-    <section className="py-8" style={{ background: D.bg }}>
-      <div className="max-w-[1340px] mx-auto px-6 md:px-10">
-        <Reveal>
-          <div className="relative rounded-[32px] overflow-hidden" style={{ background: "linear-gradient(160deg, #1b1424 0%, #120f18 60%)", border: `1px solid ${D.cardLine}` }}>
-            <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 50% 60% at 80% 30%, rgba(216,106,134,0.20) 0%, transparent 65%)" }} />
-            <div className="relative grid lg:grid-cols-2 gap-8 items-center p-8 md:p-14">
-              <div>
-                <h3 className="font-display leading-[1.02] tracking-[-0.02em]" style={{ color: D.text, fontSize: "clamp(2rem,4vw,3.2rem)" }}>
-                  See your score.<br />Finally.
-                </h3>
-                <p className="mt-5 max-w-[420px] text-[15px] md:text-[16px] leading-[1.6]" style={{ color: D.dim }}>
-                  Eight categories scored against clinically-studied ideals, with the exact numbers behind every line.
-                </p>
-              </div>
-              <div className="relative flex justify-center lg:justify-end pt-4">
+    <section className="py-16 md:py-28" style={{ background: D.bg }}>
+      <div className="max-w-[1340px] mx-auto px-6 md:px-10 flex flex-col gap-24 md:gap-40">
+        {SHOTS.map((s, i) => {
+          const flip = i % 2 === 1;
+          return (
+            <div key={s.title} className="grid lg:grid-cols-2 gap-12 lg:gap-10 items-center">
+              <Reveal className={`flex justify-center ${flip ? "lg:order-2 lg:justify-start" : "lg:justify-end"}`}>
                 <div className="relative">
-                  {/* rose aura behind the phone */}
-                  <div className="absolute -inset-12 pointer-events-none" style={{ background: "radial-gradient(circle at 50% 45%, rgba(216,106,134,0.30) 0%, transparent 62%)", filter: "blur(8px)" }} />
-                  <div className="atelier-float relative" style={{ transform: "rotate(-3deg)" }}>
-                    <Phone src="/screenshots/home.jpg" width={272} />
-                  </div>
-                  {/* trait scores floating out of the app */}
-                  <FloatingChip className="top-[10%] -left-6 md:-left-16" label="Symmetry" val="95" delay={0} />
-                  <FloatingChip className="top-[38%] -left-10 md:-left-24" label="Jawline" val="88" delay={1.4} />
-                  <FloatingChip className="bottom-[30%] -left-4 md:-left-14" label="Skin" val="80" delay={2.6} />
-                  <FloatingChip className="bottom-[9%] left-2 md:-left-6" label="Eyes" val="84" delay={0.8} />
+                  <div className="absolute -inset-10 pointer-events-none" style={{ background: "radial-gradient(circle at 50% 45%, rgba(216,106,134,0.16) 0%, transparent 60%)" }} />
+                  <Phone src={s.src} width={300} />
                 </div>
-              </div>
+              </Reveal>
+              <Reveal delay={0.1} className={flip ? "lg:order-1" : ""}>
+                <div className="mono-label mb-5" style={{ color: D.rose }}>{s.kicker}</div>
+                <h3 className="font-display leading-[1.0] tracking-[-0.02em]" style={{ color: D.text, fontSize: "clamp(2rem,4.4vw,3.4rem)" }}>{s.title}</h3>
+                <p className="mt-5 max-w-[440px] text-[15px] md:text-[17px] leading-[1.6]" style={{ color: D.dim }}>{s.body}</p>
+              </Reveal>
             </div>
-          </div>
-        </Reveal>
+          );
+        })}
       </div>
     </section>
   );
@@ -336,54 +316,6 @@ function Press() {
           ))}
         </div>
         <Reveal><p className="mono-label text-center mt-6" style={{ color: "rgba(246,241,234,0.22)" }}>Hover for the word on the street</p></Reveal>
-      </div>
-    </section>
-  );
-}
-
-/* ─────────────────────────  FEATURE CARDS GRID  ───────────────────────── */
-
-const FEATURES: { title: string; sub: string; src: string; tint: string; callout: React.ReactNode; calloutClass: string }[] = [
-  {
-    title: "Tips from your numbers.", sub: "Every tip traces back to a measurement, with a one-tap add to your daily ritual.",
-    src: "/screenshots/tips.jpg", tint: "radial-gradient(ellipse 60% 50% at 70% 20%, rgba(216,106,134,0.22), transparent 65%)",
-    calloutClass: "top-[40%] -right-2 md:-right-6", callout: <><div className="text-[12px] font-semibold" style={{ color: D.rosePale }}>Quick win</div><div className="text-[12px]" style={{ color: D.dim }}>Sleep 7–9h → brighter under-eyes</div></>,
-  },
-  {
-    title: "Meet Suki.", sub: "Your Lumii kitten reads your scan and talks you through it. Honest, never cold.",
-    src: "/screenshots/suki.jpg", tint: "radial-gradient(ellipse 60% 50% at 30% 20%, rgba(140,110,220,0.2), transparent 65%)",
-    calloutClass: "top-[30%] -left-2 md:-left-6", callout: <><div className="text-[12px]" style={{ color: D.text }}>Your jawline is carrying.</div></>,
-  },
-  {
-    title: "Glow with your circle.", sub: "Private 7-day glow sprints with your friends. Only your people ever see it.",
-    src: "/screenshots/circle.jpg", tint: "radial-gradient(ellipse 60% 50% at 70% 20%, rgba(216,106,134,0.2), transparent 65%)",
-    calloutClass: "bottom-[26%] -right-2 md:-right-6", callout: <><div className="text-[12px] font-semibold" style={{ color: D.rosePale }}>7-day sprint</div><div className="text-[12px]" style={{ color: D.dim }}>5 checked in today</div></>,
-  },
-  {
-    title: "Watch the score move.", sub: "Scan over time and Lumii tracks every metric against your baseline.",
-    src: "/screenshots/progress.jpg", tint: "radial-gradient(ellipse 60% 50% at 30% 20%, rgba(120,180,140,0.16), transparent 65%)",
-    calloutClass: "top-[34%] -left-2 md:-left-6", callout: <><div className="text-[12px] font-semibold" style={{ color: D.rosePale }}>↑ +2</div><div className="text-[12px]" style={{ color: D.dim }}>this week</div></>,
-  },
-];
-
-function Features() {
-  return (
-    <section className="py-8 pb-24 md:pb-32" style={{ background: D.bg }}>
-      <div className="max-w-[1340px] mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-4 md:gap-6">
-        {FEATURES.map((f, i) => (
-          <Reveal key={f.title} delay={(i % 2) * 0.08}>
-            <div className="relative rounded-[28px] overflow-hidden h-full p-7 md:p-10" style={{ background: D.card, border: `1px solid ${D.cardLine}` }}>
-              <div className="absolute inset-0 pointer-events-none" style={{ background: f.tint }} />
-              <div className="relative">
-                <h3 className="font-display leading-[1.05] tracking-[-0.02em]" style={{ color: D.text, fontSize: "clamp(1.6rem,3vw,2.2rem)" }}>{f.title}</h3>
-                <p className="mt-3 max-w-[360px] text-[14px] md:text-[15px] leading-[1.55]" style={{ color: D.dim }}>{f.sub}</p>
-                <div className="relative mt-10 flex justify-center">
-                  <Phone src={f.src} width={220} callout={f.callout} calloutClass={f.calloutClass} />
-                </div>
-              </div>
-            </div>
-          </Reveal>
-        ))}
       </div>
     </section>
   );
@@ -565,8 +497,7 @@ export default function Site() {
       <Hero />
       <Intro />
       <Press />
-      <BigCard />
-      <Features />
+      <Showcase />
       <Premium />
       <Creators />
       <Download />
