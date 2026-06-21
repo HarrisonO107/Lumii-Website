@@ -1,60 +1,46 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValue, useSpring, useTransform, useScroll, type MotionValue } from "framer-motion";
+import { useEffect } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
-const C = {
-  paper: "#F4EEE4",
-  paperDeep: "#ECE3D3",
-  paperCard: "#FBF7EF",
-  ink: "#1C1815",
-  ink60: "rgba(28,24,21,0.60)",
-  ink45: "rgba(28,24,21,0.45)",
-  ink30: "rgba(28,24,21,0.30)",
-  line: "rgba(28,24,21,0.16)",
-  rose: "#C2566F",
-  roseDeep: "#A23E56",
-  rosePale: "#E7B8C2",
+// Dark, Flighty-style palette.
+const D = {
+  bg: "#0B0910",
+  bg2: "#0E0B14",
+  card: "#16121E",
+  cardLine: "rgba(255,255,255,0.08)",
+  text: "#F6F1EA",
+  dim: "rgba(246,241,234,0.60)",
+  dim2: "rgba(246,241,234,0.40)",
+  rose: "#D86A86",
+  roseDeep: "#C2566F",
+  rosePale: "#F0B9C6",
+  glow: "rgba(216,106,134,0.55)",
 };
 
 const APP_STORE_URL = "https://apps.apple.com/app/id6769432089";
 const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.hfjo.lumii";
-// TODO: real Discord invite.
-const DISCORD_URL = "https://discord.gg/lumii";
-// TODO: web Pro checkout (RevenueCat Web Billing). Routes to App Store for now.
-const PRO_CHECKOUT_URL = APP_STORE_URL;
+const DISCORD_URL = "https://discord.gg/lumii"; // TODO: real invite
+const PRO_CHECKOUT_URL = APP_STORE_URL; // TODO: web checkout
 
 /* ─────────────────────────  PRIMITIVES  ───────────────────────── */
 
 function Reveal({ children, delay = 0, y = 26, className }: { children: React.ReactNode; delay?: number; y?: number; className?: string }) {
   return (
-    <motion.div
-      className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-8% 0px" }}
-      transition={{ duration: 0.85, ease: EASE, delay }}
-    >
+    <motion.div className={className} initial={{ opacity: 0, y }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-10% 0px" }} transition={{ duration: 0.8, ease: EASE, delay }}>
       {children}
     </motion.div>
   );
 }
 
-function AppleBadge({ light = false }: { light?: boolean }) {
+function AppleBadge({ light = true }: { light?: boolean }) {
   return (
-    <motion.a
-      href={APP_STORE_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Download Lumii on the App Store"
+    <motion.a href={APP_STORE_URL} target="_blank" rel="noopener noreferrer" aria-label="Download Lumii on the App Store"
       className="app-badge group relative inline-flex items-center gap-3 overflow-hidden rounded-full px-5 py-3"
-      style={light ? { background: C.paper, color: C.ink } : { background: C.ink, color: C.paper }}
-      whileHover={{ y: -3 }}
-      whileTap={{ scale: 0.97, y: 0 }}
-      transition={{ type: "spring", stiffness: 420, damping: 26 }}
-    >
+      style={light ? { background: D.text, color: "#000" } : { background: "#000", color: D.text }}
+      whileHover={{ y: -3 }} whileTap={{ scale: 0.97, y: 0 }} transition={{ type: "spring", stiffness: 420, damping: 26 }}>
       <span aria-hidden className="badge-shine" />
       <svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor" aria-hidden className="relative">
         <path d="M17.05 12.04c-.03-2.6 2.12-3.85 2.22-3.91-1.21-1.77-3.1-2.01-3.77-2.04-1.6-.16-3.13.94-3.94.94-.82 0-2.07-.92-3.41-.9-1.75.03-3.37 1.02-4.27 2.59-1.82 3.16-.47 7.83 1.31 10.4.87 1.26 1.9 2.67 3.25 2.62 1.31-.05 1.8-.85 3.38-.85 1.57 0 2.01.85 3.39.82 1.4-.02 2.29-1.28 3.14-2.55.99-1.46 1.4-2.87 1.42-2.95-.03-.01-2.72-1.04-2.75-4.13M14.6 4.59c.72-.87 1.2-2.08 1.07-3.29-1.03.04-2.28.69-3.02 1.56-.66.77-1.24 2-1.08 3.18 1.15.09 2.32-.58 3.03-1.45" />
@@ -67,19 +53,12 @@ function AppleBadge({ light = false }: { light?: boolean }) {
   );
 }
 
-function GoogleBadge({ light = false }: { light?: boolean }) {
+function GoogleBadge() {
   return (
-    <motion.a
-      href={PLAY_STORE_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Get Lumii on Google Play"
+    <motion.a href={PLAY_STORE_URL} target="_blank" rel="noopener noreferrer" aria-label="Get Lumii on Google Play"
       className="app-badge group relative inline-flex items-center gap-3 overflow-hidden rounded-full px-5 py-3"
-      style={{ background: "transparent", color: light ? C.paper : C.ink, border: light ? "1px solid rgba(244,238,228,0.35)" : "1px solid rgba(28,24,21,0.16)" }}
-      whileHover={{ y: -3 }}
-      whileTap={{ scale: 0.97, y: 0 }}
-      transition={{ type: "spring", stiffness: 420, damping: 26 }}
-    >
+      style={{ background: "transparent", color: D.text, border: "1px solid rgba(246,241,234,0.3)" }}
+      whileHover={{ y: -3 }} whileTap={{ scale: 0.97, y: 0 }} transition={{ type: "spring", stiffness: 420, damping: 26 }}>
       <span aria-hidden className="badge-shine" />
       <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden className="relative">
         <path d="M3 2.2v19.6a.6.6 0 0 0 .92.5l16.3-9.8a.6.6 0 0 0 0-1.03L3.92 1.7A.6.6 0 0 0 3 2.2Z" />
@@ -92,55 +71,62 @@ function GoogleBadge({ light = false }: { light?: boolean }) {
   );
 }
 
-/* ─────────────────────────  NAV  ───────────────────────── */
+/* phone in a device frame, with an optional glowing callout floating on it */
+function Phone({ src, width = 260, callout, calloutClass }: { src: string; width?: number | string; callout?: React.ReactNode; calloutClass?: string }) {
+  return (
+    <div className="device relative" style={{ width }}>
+      <span className="device-btn action" />
+      <span className="device-btn vol-up" />
+      <span className="device-btn vol-dn" />
+      <span className="device-btn power" />
+      <div className="device-rail">
+        <div className="device-bezel">
+          <div className="device-screen">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={src} alt="" draggable={false} />
+          </div>
+        </div>
+      </div>
+      {callout && (
+        <div className={`absolute ${calloutClass ?? ""}`}>
+          <div className="rounded-2xl px-4 py-3 text-left" style={{ background: "rgba(20,16,26,0.92)", border: `1px solid ${D.rosePale}`, boxShadow: `0 0 34px ${D.glow}, 0 0 0 1px rgba(216,106,134,0.25)`, backdropFilter: "blur(6px)" }}>
+            {callout}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ─────────────────────────  NAV (floating pill)  ───────────────────────── */
 
 function Nav() {
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => {
-    const f = () => setScrolled(window.scrollY > 12);
-    window.addEventListener("scroll", f, { passive: true });
-    return () => window.removeEventListener("scroll", f);
-  }, []);
   const links: [string, string][] = [
     ["The app", "#app"],
     ["Premium", "#premium"],
     ["Creators", "#creators"],
     ["Tutorial", "/how-it-works"],
   ];
-  const fg = scrolled ? C.ink : C.paper;
   return (
-    <header
-      className="fixed top-0 inset-x-0 z-[80] transition-colors duration-500"
-      style={{
-        background: scrolled ? "rgba(244,238,228,0.82)" : "transparent",
-        backdropFilter: scrolled ? "blur(14px)" : "none",
-        WebkitBackdropFilter: scrolled ? "blur(14px)" : "none",
-        borderBottom: `1px solid ${scrolled ? C.line : "transparent"}`,
-      }}
-    >
-      <div className="max-w-[1320px] mx-auto px-5 md:px-10 h-[64px] flex items-center justify-between">
-        <a href="#top" className="font-display text-[26px] leading-none" style={{ color: fg }}>Lumii<span style={{ color: C.rose }}>.</span></a>
-        <nav className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
+    <header className="fixed top-4 inset-x-0 z-[90] flex justify-center px-4">
+      <div className="flex items-center gap-1 rounded-full py-2 pl-3 pr-2" style={{ background: "rgba(11,9,16,0.72)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(246,241,234,0.12)", boxShadow: "0 10px 30px -12px rgba(0,0,0,0.6)" }}>
+        <a href="#top" className="flex items-center justify-center rounded-full mr-1" style={{ width: 30, height: 30, background: D.roseDeep }}>
+          <span className="font-display text-[15px] leading-none" style={{ color: "#fff" }}>L</span>
+        </a>
+        <nav className="hidden sm:flex items-center">
           {links.map(([label, href]) => (
-            <a key={href} href={href} className="mono-label hover:opacity-100 transition-opacity" style={{ opacity: 0.78, color: fg }}>{label}</a>
+            <a key={href} href={href} className="px-3.5 py-1.5 text-[13px] font-medium rounded-full transition-colors hover:text-white" style={{ color: D.dim }}>{label}</a>
           ))}
         </nav>
-        <motion.a
-          href="#download"
-          className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[12px] font-semibold"
-          style={{ background: scrolled ? C.ink : C.paper, color: scrolled ? C.paper : C.ink }}
-          whileHover={{ y: -2 }}
-          whileTap={{ scale: 0.95, y: 0 }}
-          transition={{ type: "spring", stiffness: 420, damping: 26 }}
-        >
-          Download <span style={{ fontSize: 14 }}>↗</span>
+        <motion.a href="#download" className="ml-1 inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-[13px] font-semibold" style={{ background: D.text, color: "#000" }} whileHover={{ y: -2 }} whileTap={{ scale: 0.96, y: 0 }} transition={{ type: "spring", stiffness: 420, damping: 26 }}>
+          Get the app
         </motion.a>
       </div>
     </header>
   );
 }
 
-/* ─────────────────────────  HERO (Suki wandering)  ───────────────────────── */
+/* ─────────────────────────  HERO (Suki meadow video)  ───────────────────────── */
 
 function Hero() {
   const mx = useMotionValue(0);
@@ -149,207 +135,169 @@ function Hero() {
   const sy = useSpring(my, { stiffness: 70, damping: 18 });
   const vx = useTransform(sx, [-1, 1], [-22, 22]);
   const vy = useTransform(sy, [-1, 1], [-16, 16]);
-
   useEffect(() => {
-    const onMove = (e: PointerEvent) => {
-      mx.set((e.clientX / window.innerWidth) * 2 - 1);
-      my.set((e.clientY / window.innerHeight) * 2 - 1);
-    };
+    const onMove = (e: PointerEvent) => { mx.set((e.clientX / window.innerWidth) * 2 - 1); my.set((e.clientY / window.innerHeight) * 2 - 1); };
     window.addEventListener("pointermove", onMove, { passive: true });
     return () => window.removeEventListener("pointermove", onMove);
   }, [mx, my]);
 
   return (
-    <section id="top" className="relative overflow-hidden" style={{ height: "100svh", background: C.ink }}>
-      <motion.video
-        src="/video/suki-hero.mp4?v=2"
-        poster="/video/suki-hero-poster.jpg?v=2"
-        autoPlay loop muted playsInline preload="auto" aria-hidden
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{ x: vx, y: vy, scale: 1.12 }}
-      />
-      <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(180deg, rgba(20,12,14,0.45) 0%, transparent 22%, transparent 45%, rgba(20,12,14,0.30) 78%, rgba(20,12,14,0.72) 100%)" }} />
-
-      <div className="relative h-full max-w-[1320px] mx-auto px-6 md:px-10 flex flex-col justify-end pb-[12vh]">
-        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: EASE, delay: 0.15 }} className="max-w-[760px]">
-          <h1 className="font-display leading-[0.9] tracking-[-0.04em]" style={{ color: C.paper, fontSize: "clamp(3rem, 9vw, 7.5rem)" }}>
+    <section id="top" className="relative overflow-hidden" style={{ height: "100svh", background: "#000" }}>
+      <motion.video src="/video/suki-hero.mp4?v=2" poster="/video/suki-hero-poster.jpg?v=2" autoPlay loop muted playsInline preload="auto" aria-hidden className="absolute inset-0 w-full h-full object-cover" style={{ x: vx, y: vy, scale: 1.12 }} />
+      <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(180deg, rgba(8,6,10,0.5) 0%, transparent 26%, transparent 52%, rgba(8,6,10,0.45) 80%, #0B0910 100%)" }} />
+      <div className="relative h-full max-w-[1320px] mx-auto px-6 md:px-10 flex flex-col justify-end pb-[13vh]">
+        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: EASE, delay: 0.15 }} className="max-w-[820px]">
+          <h1 className="font-display leading-[0.88] tracking-[-0.04em]" style={{ color: D.text, fontSize: "clamp(3.2rem, 9.5vw, 8rem)" }}>
             <span className="block">Your face,</span>
-            <span className="block">by the <span className="italic" style={{ color: C.rosePale }}>numbers.</span></span>
+            <span className="block">by the <span className="italic" style={{ color: D.rosePale }}>numbers.</span></span>
           </h1>
-          <div className="mt-7 flex flex-wrap items-center gap-3">
-            <AppleBadge light />
-            <GoogleBadge light />
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <AppleBadge />
+            <GoogleBadge />
           </div>
-          <div className="mt-6 flex items-center gap-3 text-[13px]" style={{ color: "rgba(244,238,228,0.78)" }}>
-            <span style={{ color: C.rosePale, letterSpacing: "0.1em" }}>★★★★★</span>
-            <span><strong style={{ color: C.paper, fontWeight: 600 }}>5.0</strong></span>
+          <div className="mt-6 flex items-center gap-3 text-[13px]" style={{ color: D.dim }}>
+            <span style={{ color: D.rosePale, letterSpacing: "0.1em" }}>★★★★★</span>
+            <span><strong style={{ color: D.text, fontWeight: 600 }}>5.0</strong></span>
             <span style={{ opacity: 0.4 }}>·</span>
-            <span><strong style={{ color: C.paper, fontWeight: 600 }}>300+</strong> glowing up</span>
+            <span><strong style={{ color: D.text, fontWeight: 600 }}>300+</strong> glowing up</span>
           </div>
         </motion.div>
       </div>
-
       <motion.div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none" animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>
-        <span className="mono-label" style={{ color: "rgba(244,238,228,0.7)" }}>Scroll</span>
-        <span style={{ color: "rgba(244,238,228,0.7)", fontSize: 18 }}>↓</span>
+        <span className="mono-label" style={{ color: "rgba(246,241,234,0.6)" }}>Scroll</span>
+        <span style={{ color: "rgba(246,241,234,0.6)", fontSize: 18 }}>↓</span>
       </motion.div>
     </section>
   );
 }
 
-/* ─────────────────────────  PHONE JOURNEY  ─────────────────────────
-   Suki whips out the phone, the camera flies into the blank screen, then a
-   tour of live UI panels plays inside. The screen rectangle is measured as a
-   % of the square stage — tweak SCREEN if the overlay drifts off the phone. */
+/* ─────────────────────────  INTRO STATEMENT  ───────────────────────── */
 
-const SCREEN = { left: 43.4, top: 41.6, w: 20.4, h: 43.6 };
-const SCx = SCREEN.left + SCREEN.w / 2; // 53.6
-const SCy = SCREEN.top + SCREEN.h / 2; // 63.4
-
-// faux phone status bar
-function StatusBar() {
+function Intro() {
   return (
-    <div className="absolute top-0 inset-x-0 flex items-center justify-between px-[7%] pt-[3.5%] z-10">
-      <span className="font-semibold" style={{ color: C.ink, fontSize: "clamp(8px,2.6cqw,16px)" }}>9:41</span>
-      <span className="rounded-full" style={{ width: "26%", height: "clamp(10px,3cqw,20px)", background: "#080809" }} />
-      <span style={{ color: C.ink, fontSize: "clamp(8px,2.4cqw,14px)" }}>▮▮▮</span>
-    </div>
+    <section id="app" className="pt-28 md:pt-40 pb-8" style={{ background: D.bg }}>
+      <div className="max-w-[1180px] mx-auto px-6 md:px-10">
+        <Reveal>
+          <h2 className="font-display tracking-[-0.03em] leading-[1.02]" style={{ color: D.text, fontSize: "clamp(2.4rem,6vw,5rem)" }}>
+            Everything your face has been trying to tell you, <span style={{ color: D.dim2 }}>finally measured.</span>
+          </h2>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <p className="mt-8 max-w-[640px] text-[17px] md:text-[19px] leading-[1.6]" style={{ color: D.dim }}>
+            Lumii reads 584 landmarks across 75+ measurements in one scan, then turns it into a score, a routine, and a
+            plan to raise it. The most precise beauty read ever put in a pocket.
+          </p>
+        </Reveal>
+      </div>
+    </section>
   );
 }
 
-function ScorePanel({ o }: { o: MotionValue<number> }) {
-  const R = 42;
-  const circ = 2 * Math.PI * R;
-  const dash = useTransform(o, [0, 1], [circ, circ * (1 - 0.86)]);
-  const chipOp = useTransform(o, [0.5, 1], [0, 1]);
-  const chipScale = useTransform(o, [0.5, 1], [0.7, 1]);
+/* ─────────────────────────  BIG FEATURE CARD  ───────────────────────── */
+
+function BigCard() {
   return (
-    <motion.div className="absolute inset-0 flex flex-col items-center justify-center" style={{ opacity: o, background: C.paperCard }}>
-      <StatusBar />
-      <span className="mono-label" style={{ color: C.rose, fontSize: "clamp(8px,2.4cqw,13px)" }}>Today&apos;s glow</span>
-      <div className="relative mt-[4%]" style={{ width: "62%" }}>
-        <svg viewBox="0 0 100 100" className="w-full">
-          <circle cx="50" cy="50" r={R} fill="none" stroke="rgba(28,24,21,0.10)" strokeWidth="5" />
-          <motion.circle
-            cx="50" cy="50" r={R} fill="none" stroke={C.rose} strokeWidth="5" strokeLinecap="round"
-            transform="rotate(-90 50 50)" strokeDasharray={circ} style={{ strokeDashoffset: dash }}
-          />
-        </svg>
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="font-display" style={{ color: C.ink, fontSize: "clamp(28px,13cqw,80px)", lineHeight: 1 }}>86</span>
-          <span className="mono-label" style={{ color: C.ink45, fontSize: "clamp(7px,2cqw,12px)" }}>/ 100 · Radiant</span>
+    <section className="py-8" style={{ background: D.bg }}>
+      <div className="max-w-[1180px] mx-auto px-6 md:px-10">
+        <Reveal>
+          <div className="relative rounded-[32px] overflow-hidden" style={{ background: "linear-gradient(160deg, #1b1424 0%, #120f18 60%)", border: `1px solid ${D.cardLine}` }}>
+            <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 50% 60% at 80% 30%, rgba(216,106,134,0.20) 0%, transparent 65%)" }} />
+            <div className="relative grid lg:grid-cols-2 gap-8 items-center p-8 md:p-14">
+              <div>
+                <h3 className="font-display leading-[1.02] tracking-[-0.02em]" style={{ color: D.text, fontSize: "clamp(2rem,4vw,3.2rem)" }}>
+                  See your score.<br />Finally.
+                </h3>
+                <p className="mt-5 max-w-[420px] text-[15px] md:text-[16px] leading-[1.6]" style={{ color: D.dim }}>
+                  Eight categories scored against clinically-studied ideals, with the exact numbers behind every line.
+                </p>
+              </div>
+              <div className="relative flex justify-center lg:justify-end pt-4">
+                <Phone
+                  src="/screenshots/home.jpg"
+                  width={272}
+                  calloutClass="top-[34%] -left-2 md:-left-8"
+                  callout={<>
+                    <div className="text-[13px] font-semibold" style={{ color: D.rosePale }}>86 · Radiant</div>
+                    <div className="text-[12px]" style={{ color: D.dim }}>↑ 2 this week</div>
+                  </>}
+                />
+              </div>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* ─────────────────────────  PRESS GRID (placeholders)  ───────────────────────── */
+
+function Press() {
+  // TODO: placeholder press logos — replace with real coverage before launch.
+  const logos = ["VOGUE", "Cosmopolitan", "ELLE", "TechCrunch", "The Verge", "BuzzFeed", "Refinery29", "Forbes"];
+  return (
+    <section className="py-20 md:py-28" style={{ background: D.bg }}>
+      <div className="max-w-[1180px] mx-auto px-6 md:px-10">
+        <Reveal>
+          <p className="mono-label text-center mb-10" style={{ color: D.dim2 }}>As seen in</p>
+        </Reveal>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+          {logos.map((l, i) => (
+            <Reveal key={l} delay={(i % 4) * 0.06}>
+              <div className="flex items-center justify-center rounded-2xl h-[100px] md:h-[120px]" style={{ background: D.card, border: `1px solid ${D.cardLine}` }}>
+                <span className="font-display text-[20px] md:text-[24px]" style={{ color: "rgba(246,241,234,0.45)", letterSpacing: "0.02em" }}>{l}</span>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </div>
-      <motion.div className="mt-[6%] rounded-full px-[5%] py-[2%] font-semibold" style={{ background: C.rose, color: "#fff", fontSize: "clamp(9px,2.6cqw,15px)", opacity: chipOp, scale: chipScale }}>
-        ↑ 2 this week
-      </motion.div>
-    </motion.div>
+    </section>
   );
 }
 
-function Bar({ o, name, val, i }: { o: MotionValue<number>; name: string; val: number; i: number }) {
-  const w = useTransform(o, [0.2 + i * 0.05, 0.7 + i * 0.05], ["0%", `${val}%`]);
+/* ─────────────────────────  FEATURE CARDS GRID  ───────────────────────── */
+
+const FEATURES: { title: string; sub: string; src: string; tint: string; callout: React.ReactNode; calloutClass: string }[] = [
+  {
+    title: "Tips from your numbers.", sub: "Every tip traces back to a measurement, with a one-tap add to your daily ritual.",
+    src: "/screenshots/tips.jpg", tint: "radial-gradient(ellipse 60% 50% at 70% 20%, rgba(216,106,134,0.22), transparent 65%)",
+    calloutClass: "top-[40%] -right-2 md:-right-6", callout: <><div className="text-[12px] font-semibold" style={{ color: D.rosePale }}>Quick win</div><div className="text-[12px]" style={{ color: D.dim }}>Sleep 7–9h → brighter under-eyes</div></>,
+  },
+  {
+    title: "Meet Suki.", sub: "Your Lumii kitten reads your scan and talks you through it. Honest, never cold.",
+    src: "/screenshots/suki.jpg", tint: "radial-gradient(ellipse 60% 50% at 30% 20%, rgba(140,110,220,0.2), transparent 65%)",
+    calloutClass: "top-[30%] -left-2 md:-left-6", callout: <><div className="text-[12px]" style={{ color: D.text }}>Your jawline is carrying.</div></>,
+  },
+  {
+    title: "Glow with your circle.", sub: "Private 7-day glow sprints with your friends. Only your people ever see it.",
+    src: "/screenshots/circle.jpg", tint: "radial-gradient(ellipse 60% 50% at 70% 20%, rgba(216,106,134,0.2), transparent 65%)",
+    calloutClass: "bottom-[26%] -right-2 md:-right-6", callout: <><div className="text-[12px] font-semibold" style={{ color: D.rosePale }}>7-day sprint</div><div className="text-[12px]" style={{ color: D.dim }}>5 checked in today</div></>,
+  },
+  {
+    title: "Watch the score move.", sub: "Scan over time and Lumii tracks every metric against your baseline.",
+    src: "/screenshots/progress.jpg", tint: "radial-gradient(ellipse 60% 50% at 30% 20%, rgba(120,180,140,0.16), transparent 65%)",
+    calloutClass: "top-[34%] -left-2 md:-left-6", callout: <><div className="text-[12px] font-semibold" style={{ color: D.rosePale }}>↑ +2</div><div className="text-[12px]" style={{ color: D.dim }}>this week</div></>,
+  },
+];
+
+function Features() {
   return (
-    <div className="mb-[5%]">
-      <div className="flex justify-between mb-[2%]" style={{ color: C.ink, fontSize: "clamp(9px,2.6cqw,15px)" }}>
-        <span>{name}</span>
-        <span className="font-semibold">{val}</span>
-      </div>
-      <div className="rounded-full overflow-hidden" style={{ height: "clamp(5px,1.6cqw,12px)", background: "rgba(28,24,21,0.1)" }}>
-        <motion.div className="h-full rounded-full" style={{ background: C.rose, width: w }} />
-      </div>
-    </div>
-  );
-}
-
-function BreakdownPanel({ o }: { o: MotionValue<number> }) {
-  const bars: [string, number][] = [["Symmetry", 95], ["Jawline", 88], ["Eyes", 84], ["Skin", 80], ["Harmony", 86]];
-  return (
-    <motion.div className="absolute inset-0 flex flex-col justify-center px-[10%]" style={{ opacity: o, background: C.paperCard }}>
-      <StatusBar />
-      <span className="mono-label mb-[6%]" style={{ color: C.rose, fontSize: "clamp(8px,2.4cqw,13px)" }}>The breakdown</span>
-      {bars.map(([name, val], i) => <Bar key={name} o={o} name={name} val={val} i={i} />)}
-    </motion.div>
-  );
-}
-
-function Bubble({ o, text, i, mine }: { o: MotionValue<number>; text: string; i: number; mine: boolean }) {
-  const op = useTransform(o, [0.3 + i * 0.18, 0.5 + i * 0.18], [0, 1]);
-  const x = useTransform(o, [0.3 + i * 0.18, 0.5 + i * 0.18], [mine ? 30 : -30, 0]);
-  return (
-    <motion.div
-      className="rounded-[18px] px-[5%] py-[3.5%] max-w-[82%]"
-      style={{ background: mine ? C.rose : "#fff", color: mine ? "#fff" : C.ink, alignSelf: mine ? "flex-end" : "flex-start", fontSize: "clamp(9px,2.6cqw,15px)", lineHeight: 1.35, boxShadow: "0 6px 18px -10px rgba(120,40,60,0.4)", opacity: op, x }}
-    >
-      {text}
-    </motion.div>
-  );
-}
-
-function SukiPanel({ o }: { o: MotionValue<number> }) {
-  const bubbles = ["You're sitting at 86, real talk?", "Your jawline is carrying.", "Want your quick win for today?"];
-  return (
-    <motion.div className="absolute inset-0 flex flex-col justify-center px-[9%] gap-[4%]" style={{ opacity: o, background: C.paperCard }}>
-      <StatusBar />
-      <span className="mono-label" style={{ color: C.rose, fontSize: "clamp(8px,2.4cqw,13px)" }}>Chat with Suki</span>
-      {bubbles.map((b, i) => <Bubble key={b} o={o} text={b} i={i} mine={i === 1} />)}
-    </motion.div>
-  );
-}
-
-function PhoneJourney() {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-
-  // whip-out pop, then fly into the screen
-  const scale = useTransform(scrollYProgress, [0, 0.07, 0.14, 0.46], [0.72, 1, 1, 2.8]);
-  const rot = useTransform(scrollYProgress, [0, 0.07], [-7, 0]);
-  const catOp = useTransform(scrollYProgress, [0.3, 0.44], [1, 0]); // cat + frame dissolve as we enter
-  const radius = useTransform(scrollYProgress, [0.14, 0.46], [2.4, 0]); // screen corners square off at full zoom
-
-  // panel sub-progress (0..1 each) across the tour
-  const pScore = useTransform(scrollYProgress, [0.16, 0.46, 0.54, 0.6], [0, 1, 1, 0]);
-  const pBreak = useTransform(scrollYProgress, [0.58, 0.66, 0.74, 0.8], [0, 1, 1, 0]);
-  const pSuki = useTransform(scrollYProgress, [0.78, 0.86, 1, 1], [0, 1, 1, 1]);
-  // each panel also needs an internal 0..1 to drive its element anims
-  const scoreFill = useTransform(scrollYProgress, [0.16, 0.5], [0, 1]);
-  const breakFill = useTransform(scrollYProgress, [0.58, 0.78], [0, 1]);
-  const sukiFill = useTransform(scrollYProgress, [0.78, 0.98], [0, 1]);
-  const screenRadius = useTransform(radius, (v) => `${v}rem`);
-  const captionOp = useTransform(scrollYProgress, [0, 0.12, 0.2], [1, 1, 0]);
-
-  const STAGE = "min(92vh, 94vw)";
-
-  return (
-    <section id="app" ref={ref} className="relative" style={{ height: "560vh", background: C.paper }}>
-      <div className="sticky top-0 h-screen overflow-hidden flex items-center justify-center">
-        {/* recenter the screen rect to the viewport, then scale around it */}
-        <div style={{ transform: `translate(${(50 - SCx).toFixed(2)}%, ${(50 - SCy).toFixed(2)}%)` }}>
-          <motion.div
-            className="relative"
-            style={{ width: STAGE, height: STAGE, scale, rotate: rot, transformOrigin: `${SCx}% ${SCy}%` }}
-          >
-            {/* Suki holding the phone (white bg blended into paper via multiply) */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <motion.img src="/suki-phone-raw.png" alt="Suki holding the Lumii app" className="absolute inset-0 w-full h-full object-contain" style={{ opacity: catOp, mixBlendMode: "multiply" }} draggable={false} />
-
-            {/* live screen overlaid on the phone's blank screen */}
-            <motion.div
-              className="device absolute overflow-hidden"
-              style={{ left: `${SCREEN.left}%`, top: `${SCREEN.top}%`, width: `${SCREEN.w}%`, height: `${SCREEN.h}%`, borderRadius: screenRadius }}
-            >
-              {/* panels stacked; opacity from p* crossfades, fill from *Fill animates content */}
-              <motion.div className="absolute inset-0" style={{ opacity: pScore }}><ScorePanel o={scoreFill} /></motion.div>
-              <motion.div className="absolute inset-0" style={{ opacity: pBreak }}><BreakdownPanel o={breakFill} /></motion.div>
-              <motion.div className="absolute inset-0" style={{ opacity: pSuki }}><SukiPanel o={sukiFill} /></motion.div>
-            </motion.div>
-          </motion.div>
-        </div>
-
-        {/* caption that fades once we're inside */}
-        <motion.div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center pointer-events-none" style={{ opacity: captionOp }}>
-          <span className="mono-label" style={{ color: C.ink45 }}>Scroll into the app</span>
-        </motion.div>
+    <section className="py-8 pb-24 md:pb-32" style={{ background: D.bg }}>
+      <div className="max-w-[1180px] mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-4 md:gap-6">
+        {FEATURES.map((f, i) => (
+          <Reveal key={f.title} delay={(i % 2) * 0.08}>
+            <div className="relative rounded-[28px] overflow-hidden h-full p-7 md:p-10" style={{ background: D.card, border: `1px solid ${D.cardLine}` }}>
+              <div className="absolute inset-0 pointer-events-none" style={{ background: f.tint }} />
+              <div className="relative">
+                <h3 className="font-display leading-[1.05] tracking-[-0.02em]" style={{ color: D.text, fontSize: "clamp(1.6rem,3vw,2.2rem)" }}>{f.title}</h3>
+                <p className="mt-3 max-w-[360px] text-[14px] md:text-[15px] leading-[1.55]" style={{ color: D.dim }}>{f.sub}</p>
+                <div className="relative mt-10 flex justify-center">
+                  <Phone src={f.src} width={220} callout={f.callout} calloutClass={f.calloutClass} />
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        ))}
       </div>
     </section>
   );
@@ -360,39 +308,30 @@ function PhoneJourney() {
 function Premium() {
   const perks = ["Unlimited scans", "Full 8-category breakdown", "Suki coaching", "Your Circle", "Cycle insight", "Progress history"];
   return (
-    <section id="premium" className="relative py-28 md:py-40 overflow-hidden" style={{ background: C.ink, color: C.paper }}>
-      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 55% 60% at 78% 30%, rgba(194,86,111,0.22) 0%, transparent 65%)" }} />
-      <div className="relative max-w-[1320px] mx-auto px-5 md:px-10 grid lg:grid-cols-[1.1fr_0.9fr] gap-16 items-center">
+    <section id="premium" className="relative py-28 md:py-40 overflow-hidden" style={{ background: D.bg2 }}>
+      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 55% 60% at 78% 30%, rgba(216,106,134,0.22) 0%, transparent 65%)" }} />
+      <div className="relative max-w-[1180px] mx-auto px-6 md:px-10 grid lg:grid-cols-[1.1fr_0.9fr] gap-16 items-center">
         <div>
-          <div className="mono-label mb-6" style={{ color: C.rosePale }}>Lumii Pro</div>
-          <h2 className="font-display leading-[0.94] tracking-[-0.03em]" style={{ fontSize: "clamp(2.6rem,6.4vw,5rem)" }}>
-            Go Pro on the <span className="italic" style={{ color: C.rosePale }}>web.</span>
+          <div className="mono-label mb-6" style={{ color: D.rosePale }}>Lumii Pro</div>
+          <h2 className="font-display leading-[0.94] tracking-[-0.03em]" style={{ color: D.text, fontSize: "clamp(2.6rem,6.4vw,5rem)" }}>
+            Go Pro on the <span className="italic" style={{ color: D.rosePale }}>web.</span>
           </h2>
-          <p className="mt-6 max-w-[420px] text-[15px] md:text-[16px] leading-[1.7]" style={{ color: "rgba(244,238,228,0.75)" }}>
-            Same Pro. No app-store middleman.
-          </p>
+          <p className="mt-6 max-w-[420px] text-[16px] leading-[1.6]" style={{ color: D.dim }}>Same Pro. No app-store middleman.</p>
           <div className="mt-9 flex flex-wrap items-center gap-3">
-            <motion.a
-              href={PRO_CHECKOUT_URL}
-              className="app-badge group relative inline-flex items-center gap-2 overflow-hidden rounded-full px-6 py-3 text-[14px] font-semibold"
-              style={{ background: C.paper, color: C.ink }}
-              whileHover={{ y: -3 }}
-              whileTap={{ scale: 0.97, y: 0 }}
-              transition={{ type: "spring", stiffness: 420, damping: 26 }}
-            >
+            <motion.a href={PRO_CHECKOUT_URL} className="app-badge group relative inline-flex items-center gap-2 overflow-hidden rounded-full px-6 py-3 text-[14px] font-semibold" style={{ background: D.text, color: "#000" }} whileHover={{ y: -3 }} whileTap={{ scale: 0.97, y: 0 }} transition={{ type: "spring", stiffness: 420, damping: 26 }}>
               <span aria-hidden className="badge-shine" />
               <span className="relative">Go Pro on the web</span>
               <span className="relative" style={{ fontSize: 15 }}>→</span>
             </motion.a>
-            <span className="mono-label" style={{ color: "rgba(244,238,228,0.5)" }}>Cancel anytime</span>
+            <span className="mono-label" style={{ color: D.dim2 }}>Cancel anytime</span>
           </div>
         </div>
-        <div className="rounded-[28px] p-8 md:p-10" style={{ background: "rgba(244,238,228,0.05)", border: "1px solid rgba(244,238,228,0.12)" }}>
-          <div className="mono-label mb-6" style={{ color: "rgba(244,238,228,0.5)" }}>What unlocks</div>
+        <div className="rounded-[28px] p-8 md:p-10" style={{ background: D.card, border: `1px solid ${D.cardLine}` }}>
+          <div className="mono-label mb-6" style={{ color: D.dim2 }}>What unlocks</div>
           <ul className="flex flex-col gap-4">
             {perks.map((p) => (
-              <li key={p} className="flex gap-3 text-[15px]" style={{ color: C.paper }}>
-                <span style={{ color: C.rosePale }}>✦</span>
+              <li key={p} className="flex gap-3 text-[15px]" style={{ color: D.text }}>
+                <span style={{ color: D.rosePale }}>✦</span>
                 <span style={{ fontWeight: 600 }}>{p}</span>
               </li>
             ))}
@@ -412,30 +351,19 @@ function Creators() {
     ["A direct line", "Pitch ideas straight to the team."],
   ];
   return (
-    <section id="creators" className="py-28 md:py-40" style={{ background: C.paperDeep }}>
-      <div className="max-w-[1320px] mx-auto px-5 md:px-10">
+    <section id="creators" className="py-28 md:py-40" style={{ background: D.bg }}>
+      <div className="max-w-[1180px] mx-auto px-6 md:px-10">
         <div className="grid lg:grid-cols-[1fr_0.85fr] gap-14 items-center">
           <div>
-            <Reveal><div className="mono-label mb-6" style={{ color: C.rose }}>Creator program</div></Reveal>
+            <Reveal><div className="mono-label mb-6" style={{ color: D.rosePale }}>Creator program</div></Reveal>
             <Reveal delay={0.06}>
-              <h2 className="font-display leading-[0.94] tracking-[-0.03em]" style={{ color: C.ink, fontSize: "clamp(2.6rem,6.4vw,5rem)" }}>
-                Make edits. <span className="italic" style={{ color: C.rose }}>Get paid.</span>
+              <h2 className="font-display leading-[0.94] tracking-[-0.03em]" style={{ color: D.text, fontSize: "clamp(2.6rem,6.4vw,5rem)" }}>
+                Make edits. <span className="italic" style={{ color: D.rosePale }}>Get paid.</span>
               </h2>
             </Reveal>
-            <Reveal delay={0.12}>
-              <p className="mt-6 max-w-[420px] text-[15px] md:text-[16px] leading-[1.7]" style={{ color: C.ink60 }}>Grab a brief. Post. Get paid.</p>
-            </Reveal>
+            <Reveal delay={0.12}><p className="mt-6 max-w-[420px] text-[16px] leading-[1.6]" style={{ color: D.dim }}>Grab a brief. Post. Get paid.</p></Reveal>
             <Reveal delay={0.18}>
-              <motion.a
-                href={DISCORD_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="app-badge group relative mt-9 inline-flex items-center gap-2 overflow-hidden rounded-full px-6 py-3 text-[14px] font-semibold"
-                style={{ background: "#5865F2", color: "#fff" }}
-                whileHover={{ y: -3 }}
-                whileTap={{ scale: 0.97, y: 0 }}
-                transition={{ type: "spring", stiffness: 420, damping: 26 }}
-              >
+              <motion.a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="app-badge group relative mt-9 inline-flex items-center gap-2 overflow-hidden rounded-full px-6 py-3 text-[14px] font-semibold" style={{ background: "#5865F2", color: "#fff" }} whileHover={{ y: -3 }} whileTap={{ scale: 0.97, y: 0 }} transition={{ type: "spring", stiffness: 420, damping: 26 }}>
                 <span aria-hidden className="badge-shine" />
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden className="relative">
                   <path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.3.5c1.7.4 2.5.9 3.4 1.6a13.3 13.3 0 0 0-10.9 0c.9-.6 1.8-1.2 3.4-1.6L10.6 3a19.8 19.8 0 0 0-4.9 1.4C2.5 9.1 1.6 13.6 2 18.1a19.9 19.9 0 0 0 6 3l.8-1.3c-.7-.2-1.3-.5-1.9-.9l.5-.3a14.2 14.2 0 0 0 12.2 0l.5.3c-.6.4-1.2.7-1.9.9l.8 1.3a19.9 19.9 0 0 0 6-3c.5-5.2-.8-9.7-3.5-13.7M9.3 15.2c-1 0-1.7-.9-1.7-2s.8-2 1.7-2 1.7.9 1.7 2-.7 2-1.7 2m5.4 0c-1 0-1.7-.9-1.7-2s.8-2 1.7-2 1.7.9 1.7 2-.7 2-1.7 2" />
@@ -445,12 +373,12 @@ function Creators() {
               </motion.a>
             </Reveal>
           </div>
-          <div className="flex flex-col gap-px rounded-[24px] overflow-hidden" style={{ background: C.line }}>
+          <div className="flex flex-col gap-px rounded-[24px] overflow-hidden" style={{ background: D.cardLine }}>
             {perks.map(([t, b], i) => (
               <Reveal key={t} delay={i * 0.1}>
-                <div className="px-7 py-8" style={{ background: C.paperCard }}>
-                  <h3 className="font-display text-[22px]" style={{ color: C.ink }}>{t}</h3>
-                  <p className="mt-2 text-[14px] leading-[1.6]" style={{ color: C.ink60 }}>{b}</p>
+                <div className="px-7 py-8" style={{ background: D.card }}>
+                  <h3 className="font-display text-[22px]" style={{ color: D.text }}>{t}</h3>
+                  <p className="mt-2 text-[14px] leading-[1.6]" style={{ color: D.dim }}>{b}</p>
                 </div>
               </Reveal>
             ))}
@@ -465,13 +393,13 @@ function Creators() {
 
 function Download() {
   return (
-    <section id="download" className="relative py-28 md:py-40 overflow-hidden" style={{ background: C.paper }}>
-      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 50% 60% at 50% 50%, rgba(194,86,111,0.14) 0%, transparent 68%)" }} />
+    <section id="download" className="relative py-28 md:py-40 overflow-hidden" style={{ background: D.bg2 }}>
+      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 50% 60% at 50% 50%, rgba(216,106,134,0.18) 0%, transparent 68%)" }} />
       <div className="relative max-w-[900px] mx-auto px-6 text-center">
-        <Reveal><p className="mono-label mb-8">Free · iOS &amp; Android</p></Reveal>
+        <Reveal><p className="mono-label mb-8" style={{ color: D.dim2 }}>Free · iOS &amp; Android</p></Reveal>
         <Reveal delay={0.08}>
-          <h2 className="font-display leading-[0.92] tracking-[-0.04em]" style={{ color: C.ink, fontSize: "clamp(2.8rem,8vw,6rem)" }}>
-            Read your <span className="italic" style={{ color: C.rose }}>face.</span>
+          <h2 className="font-display leading-[0.92] tracking-[-0.04em]" style={{ color: D.text, fontSize: "clamp(2.8rem,8vw,6rem)" }}>
+            Read your <span className="italic" style={{ color: D.rosePale }}>face.</span>
           </h2>
         </Reveal>
         <Reveal delay={0.2}>
@@ -481,11 +409,11 @@ function Download() {
           </div>
         </Reveal>
         <Reveal delay={0.26}>
-          <div className="mt-6 flex items-center justify-center gap-3 text-[13px]" style={{ color: C.ink60 }}>
-            <span style={{ color: C.rose, letterSpacing: "0.1em" }}>★★★★★</span>
-            <span><strong style={{ color: C.ink, fontWeight: 600 }}>5.0</strong></span>
+          <div className="mt-6 flex items-center justify-center gap-3 text-[13px]" style={{ color: D.dim }}>
+            <span style={{ color: D.rosePale, letterSpacing: "0.1em" }}>★★★★★</span>
+            <span><strong style={{ color: D.text, fontWeight: 600 }}>5.0</strong></span>
             <span style={{ opacity: 0.4 }}>·</span>
-            <span><strong style={{ color: C.ink, fontWeight: 600 }}>300+</strong> glowing up</span>
+            <span><strong style={{ color: D.text, fontWeight: 600 }}>300+</strong> glowing up</span>
           </div>
         </Reveal>
       </div>
@@ -497,28 +425,22 @@ function Download() {
 
 function Footer() {
   return (
-    <footer style={{ background: C.ink, color: C.paper }}>
-      <div className="max-w-[1320px] mx-auto px-5 md:px-10 py-16">
+    <footer style={{ background: "#000", color: D.text }}>
+      <div className="max-w-[1180px] mx-auto px-6 md:px-10 py-16">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-10">
-          <div className="font-display text-[48px] leading-none">Lumii<span style={{ color: C.rosePale }}>.</span></div>
+          <div className="font-display text-[48px] leading-none">Lumii<span style={{ color: D.rosePale }}>.</span></div>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-12 gap-y-4">
             {[
-              ["The app", "#app"],
-              ["Premium", "#premium"],
-              ["Creators", "#creators"],
-              ["Tutorial", "/how-it-works"],
-              ["FAQ", "/faq"],
-              ["Privacy", "/legal/privacy-policy"],
-              ["Terms", "/legal/terms-of-service"],
-              ["Contact", "mailto:hello@lumiiapp.com"],
+              ["The app", "#app"], ["Premium", "#premium"], ["Creators", "#creators"], ["Tutorial", "/how-it-works"],
+              ["FAQ", "/faq"], ["Privacy", "/legal/privacy-policy"], ["Terms", "/legal/terms-of-service"], ["Contact", "mailto:hello@lumiiapp.com"],
             ].map(([l, h]) => (
-              <a key={l} href={h} className="text-[13px] transition-opacity hover:opacity-100" style={{ color: "rgba(244,238,228,0.62)" }}>{l}</a>
+              <a key={l} href={h} className="text-[13px] transition-opacity hover:opacity-100" style={{ color: D.dim }}>{l}</a>
             ))}
           </div>
         </div>
-        <div className="mt-14 pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3" style={{ borderTop: "1px solid rgba(244,238,228,0.14)" }}>
-          <p className="mono-label" style={{ color: "rgba(244,238,228,0.4)" }}>Built for girls · London</p>
-          <p className="mono-label" style={{ color: "rgba(244,238,228,0.4)" }}>© {new Date().getFullYear()} HFJO&amp;CO Limited</p>
+        <div className="mt-14 pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3" style={{ borderTop: "1px solid rgba(246,241,234,0.12)" }}>
+          <p className="mono-label" style={{ color: D.dim2 }}>Built for girls · London</p>
+          <p className="mono-label" style={{ color: D.dim2 }}>© {new Date().getFullYear()} HFJO&amp;CO Limited</p>
         </div>
       </div>
     </footer>
@@ -529,10 +451,13 @@ function Footer() {
 
 export default function Site() {
   return (
-    <main className="relative overflow-x-clip">
+    <main className="relative overflow-x-clip" style={{ background: D.bg }}>
       <Nav />
       <Hero />
-      <PhoneJourney />
+      <Intro />
+      <BigCard />
+      <Press />
+      <Features />
       <Premium />
       <Creators />
       <Download />
