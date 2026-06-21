@@ -159,7 +159,7 @@ function Hero() {
       {/* left scrim for legibility + vertical fade into the dark sections */}
       <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(90deg, rgba(8,6,10,0.85) 0%, rgba(8,6,10,0.45) 32%, transparent 62%)" }} />
       <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(180deg, rgba(8,6,10,0.5) 0%, transparent 26%, transparent 52%, rgba(8,6,10,0.45) 80%, #0B0910 100%)" }} />
-      <div className="relative h-full max-w-[1180px] mx-auto px-6 md:px-10 flex flex-col justify-end pb-[13vh]">
+      <div className="relative h-full max-w-[1340px] mx-auto px-6 md:px-10 flex flex-col justify-end pb-[13vh]">
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: EASE, delay: 0.15 }} className="max-w-[820px]">
           <h1 className="font-display leading-[0.88] tracking-[-0.04em]" style={{ color: D.text, fontSize: "clamp(3.2rem, 9.5vw, 8rem)" }}>
             <span className="block">Your face,</span>
@@ -210,7 +210,7 @@ function Hero() {
 function Intro() {
   return (
     <section id="app" className="pt-28 md:pt-40 pb-8" style={{ background: D.bg }}>
-      <div className="max-w-[1180px] mx-auto px-6 md:px-10">
+      <div className="max-w-[1340px] mx-auto px-6 md:px-10">
         <Reveal>
           <h2 className="font-display tracking-[-0.03em] leading-[1.02]" style={{ color: D.text, fontSize: "clamp(2.4rem,6vw,5rem)" }}>
             Everything your face has been trying to tell you, <span style={{ color: D.dim2 }}>finally measured.</span>
@@ -232,7 +232,7 @@ function Intro() {
 function BigCard() {
   return (
     <section className="py-8" style={{ background: D.bg }}>
-      <div className="max-w-[1180px] mx-auto px-6 md:px-10">
+      <div className="max-w-[1340px] mx-auto px-6 md:px-10">
         <Reveal>
           <div className="relative rounded-[32px] overflow-hidden" style={{ background: "linear-gradient(160deg, #1b1424 0%, #120f18 60%)", border: `1px solid ${D.cardLine}` }}>
             <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 50% 60% at 80% 30%, rgba(216,106,134,0.20) 0%, transparent 65%)" }} />
@@ -282,7 +282,7 @@ const PRESS: { name: string; serif: boolean; quote: string }[] = [
 function Press() {
   return (
     <section className="py-16 md:py-24" style={{ background: D.bg }}>
-      <div className="max-w-[1180px] mx-auto px-6 md:px-10">
+      <div className="max-w-[1340px] mx-auto px-6 md:px-10">
         <Reveal><p className="mono-label text-center mb-10" style={{ color: D.dim2 }}>As seen in</p></Reveal>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
           {PRESS.map((p, i) => (
@@ -335,7 +335,7 @@ const FEATURES: { title: string; sub: string; src: string; tint: string; callout
 function Features() {
   return (
     <section className="py-8 pb-24 md:pb-32" style={{ background: D.bg }}>
-      <div className="max-w-[1180px] mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-4 md:gap-6">
+      <div className="max-w-[1340px] mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-4 md:gap-6">
         {FEATURES.map((f, i) => (
           <Reveal key={f.title} delay={(i % 2) * 0.08}>
             <div className="relative rounded-[28px] overflow-hidden h-full p-7 md:p-10" style={{ background: D.card, border: `1px solid ${D.cardLine}` }}>
@@ -362,7 +362,7 @@ function Premium() {
   return (
     <section id="premium" className="relative py-28 md:py-40 overflow-hidden" style={{ background: D.bg2 }}>
       <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 55% 60% at 78% 30%, rgba(216,106,134,0.22) 0%, transparent 65%)" }} />
-      <div className="relative max-w-[1180px] mx-auto px-6 md:px-10 grid lg:grid-cols-[1.1fr_0.9fr] gap-16 items-center">
+      <div className="relative max-w-[1340px] mx-auto px-6 md:px-10 grid lg:grid-cols-[1.1fr_0.9fr] gap-16 items-center">
         <div>
           <div className="mono-label mb-6" style={{ color: D.rosePale }}>Lumii Pro</div>
           <h2 className="font-display leading-[0.94] tracking-[-0.03em]" style={{ color: D.text, fontSize: "clamp(2.6rem,6.4vw,5rem)" }}>
@@ -404,7 +404,7 @@ function Creators() {
   ];
   return (
     <section id="creators" className="py-28 md:py-40" style={{ background: D.bg }}>
-      <div className="max-w-[1180px] mx-auto px-6 md:px-10">
+      <div className="max-w-[1340px] mx-auto px-6 md:px-10">
         <div className="grid lg:grid-cols-[1fr_0.85fr] gap-14 items-center">
           <div>
             <Reveal><div className="mono-label mb-6" style={{ color: D.rosePale }}>Creator program</div></Reveal>
@@ -478,7 +478,7 @@ function Download() {
 function Footer() {
   return (
     <footer style={{ background: "#000", color: D.text }}>
-      <div className="max-w-[1180px] mx-auto px-6 md:px-10 py-16">
+      <div className="max-w-[1340px] mx-auto px-6 md:px-10 py-16">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-10">
           <div className="font-display text-[48px] leading-none">Lumii<span style={{ color: D.rosePale }}>.</span></div>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-12 gap-y-4">
@@ -499,6 +499,29 @@ function Footer() {
   );
 }
 
+/* ─────────────────────────  CREATOR FAB  ─────────────────────────
+   Always-on-screen button so creators can jump straight to the program. */
+function CreatorFab() {
+  return (
+    <motion.a
+      href="#creators"
+      className="fixed right-4 md:right-6 bottom-5 md:bottom-7 z-[85] inline-flex items-center gap-2.5 rounded-full pl-4 pr-5 py-3.5 text-[14px] font-semibold"
+      style={{ background: "#5865F2", color: "#fff", boxShadow: "0 14px 40px -10px rgba(88,101,242,0.7), inset 0 1px 0 rgba(255,255,255,0.25)" }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 1, duration: 0.6, ease: EASE }}
+      whileHover={{ y: -3, scale: 1.04 }}
+      whileTap={{ scale: 0.97 }}
+    >
+      <motion.span className="absolute inset-0 rounded-full" style={{ border: "2px solid #5865F2" }} animate={{ scale: [1, 1.35], opacity: [0.5, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }} aria-hidden />
+      <svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor" aria-hidden className="relative">
+        <path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.3.5c1.7.4 2.5.9 3.4 1.6a13.3 13.3 0 0 0-10.9 0c.9-.6 1.8-1.2 3.4-1.6L10.6 3a19.8 19.8 0 0 0-4.9 1.4C2.5 9.1 1.6 13.6 2 18.1a19.9 19.9 0 0 0 6 3l.8-1.3c-.7-.2-1.3-.5-1.9-.9l.5-.3a14.2 14.2 0 0 0 12.2 0l.5.3c-.6.4-1.2.7-1.9.9l.8 1.3a19.9 19.9 0 0 0 6-3c.5-5.2-.8-9.7-3.5-13.7M9.3 15.2c-1 0-1.7-.9-1.7-2s.8-2 1.7-2 1.7.9 1.7 2-.7 2-1.7 2m5.4 0c-1 0-1.7-.9-1.7-2s.8-2 1.7-2 1.7.9 1.7 2-.7 2-1.7 2" />
+      </svg>
+      <span className="relative">Are you a creator?</span>
+    </motion.a>
+  );
+}
+
 /* ─────────────────────────  PAGE  ───────────────────────── */
 
 export default function Site() {
@@ -514,6 +537,7 @@ export default function Site() {
       <Creators />
       <Download />
       <Footer />
+      <CreatorFab />
     </main>
   );
 }
