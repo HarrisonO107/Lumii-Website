@@ -159,35 +159,33 @@ function Hero() {
             <span className="block">Your face,</span>
             <span className="block">by the <span className="italic" style={{ color: D.rosePale }}>numbers.</span></span>
           </h1>
-          {/* a glassy slice of the app, so the hero reads as a product */}
-          <motion.div
+          {/* App Store listing card — instant "this is an app" signal */}
+          <motion.a
+            href={APP_STORE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="mt-8 inline-flex items-center gap-4 rounded-3xl px-5 py-4"
-            style={{ background: "rgba(18,14,24,0.5)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", border: `1px solid ${D.rosePale}`, boxShadow: `0 0 40px ${D.glow}` }}
+            style={{ background: "rgba(18,14,24,0.55)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", border: "1px solid rgba(246,241,234,0.16)", boxShadow: `0 0 40px ${D.glow}` }}
             animate={{ y: [0, -6, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            whileHover={{ scale: 1.02 }}
           >
-            <div className="relative" style={{ width: 48, height: 48 }}>
-              <svg viewBox="0 0 40 40" className="w-full h-full">
-                <circle cx="20" cy="20" r="16" fill="none" stroke="rgba(246,241,234,0.16)" strokeWidth="4" />
-                <circle cx="20" cy="20" r="16" fill="none" stroke={D.rose} strokeWidth="4" strokeLinecap="round" transform="rotate(-90 20 20)" strokeDasharray="100.5" strokeDashoffset="14" />
-              </svg>
-              <span className="absolute inset-0 flex items-center justify-center font-display text-[15px]" style={{ color: D.text }}>86</span>
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/icon.png" alt="Lumii app icon" className="rounded-2xl" style={{ width: 56, height: 56 }} />
             <div className="text-left">
-              <div className="mono-label" style={{ color: D.dim }}>Today&apos;s glow</div>
-              <div className="text-[15px] font-semibold" style={{ color: D.text }}>Radiant · ↑2 this week</div>
+              <div className="text-[16px] font-semibold leading-tight" style={{ color: D.text }}>Lumii</div>
+              <div className="text-[12px] mb-1" style={{ color: D.dim }}>AI Face Analysis</div>
+              <div className="flex items-center gap-1.5 text-[12px]" style={{ color: D.dim }}>
+                <span style={{ color: D.rosePale, letterSpacing: "0.06em" }}>★★★★★</span>
+                <span><strong style={{ color: D.text, fontWeight: 600 }}>5.0</strong> · 300+ ratings</span>
+              </div>
             </div>
-          </motion.div>
+            <span className="ml-2 rounded-full px-5 py-1.5 text-[13px] font-bold tracking-wide" style={{ background: "#0A84FF", color: "#fff" }}>GET</span>
+          </motion.a>
 
           <div className="mt-7 flex flex-wrap items-center gap-3">
             <AppleBadge />
             <GoogleBadge />
-          </div>
-          <div className="mt-6 flex items-center gap-3 text-[13px]" style={{ color: D.dim }}>
-            <span style={{ color: D.rosePale, letterSpacing: "0.1em" }}>★★★★★</span>
-            <span><strong style={{ color: D.text, fontWeight: 600 }}>5.0</strong></span>
-            <span style={{ opacity: 0.4 }}>·</span>
-            <span><strong style={{ color: D.text, fontWeight: 600 }}>300+</strong> glowing up</span>
           </div>
         </motion.div>
       </div>
