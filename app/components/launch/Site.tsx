@@ -272,8 +272,8 @@ function Hero() {
     <section id="top" className="relative overflow-hidden" style={{ height: "100svh", background: C.ink }}>
       {/* full-bleed looping Suki, drifts toward the cursor */}
       <motion.video
-        src="/video/suki-hero.mp4"
-        poster="/video/suki-hero-poster.jpg"
+        src="/video/suki-hero.mp4?v=2"
+        poster="/video/suki-hero-poster.jpg?v=2"
         autoPlay
         loop
         muted
