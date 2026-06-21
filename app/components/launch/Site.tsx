@@ -158,7 +158,7 @@ function Hero() {
       </div>
       {/* left scrim for legibility + vertical fade into the dark sections */}
       <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(90deg, rgba(8,6,10,0.85) 0%, rgba(8,6,10,0.45) 32%, transparent 62%)" }} />
-      <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(180deg, rgba(8,6,10,0.5) 0%, transparent 26%, transparent 52%, rgba(8,6,10,0.45) 80%, #0B0910 100%)" }} />
+      <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(180deg, rgba(8,6,10,0.55) 0%, transparent 22%, transparent 42%, rgba(8,6,10,0.55) 66%, rgba(8,6,10,0.9) 88%, #0B0910 100%)" }} />
       <div className="relative h-full max-w-[1340px] mx-auto px-6 md:px-10 flex flex-col justify-end pb-[13vh]">
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: EASE, delay: 0.15 }} className="max-w-[820px]">
           <h1 className="font-display leading-[0.88] tracking-[-0.04em]" style={{ color: D.text, fontSize: "clamp(3.2rem, 9.5vw, 8rem)" }}>
@@ -197,7 +197,7 @@ function Hero() {
           </div>
         </motion.div>
       </div>
-      <motion.div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none" animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>
+      <motion.div className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2 pointer-events-none" animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>
         <span className="mono-label" style={{ color: "rgba(246,241,234,0.6)" }}>Scroll</span>
         <span style={{ color: "rgba(246,241,234,0.6)", fontSize: 18 }}>↓</span>
       </motion.div>
@@ -505,7 +505,7 @@ function CreatorFab() {
   return (
     <motion.a
       href="#creators"
-      className="fixed right-4 md:right-6 bottom-5 md:bottom-7 z-[85] inline-flex items-center gap-2.5 rounded-full pl-4 pr-5 py-3.5 text-[14px] font-semibold"
+      className="fixed right-3 md:right-6 bottom-4 md:bottom-7 z-[85] inline-flex items-center gap-2 md:gap-2.5 rounded-full pl-3 pr-4 py-2.5 md:pl-4 md:pr-5 md:py-3.5 text-[12px] md:text-[14px] font-semibold"
       style={{ background: "#5865F2", color: "#fff", boxShadow: "0 14px 40px -10px rgba(88,101,242,0.7), inset 0 1px 0 rgba(255,255,255,0.25)" }}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
