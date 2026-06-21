@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -142,6 +142,12 @@ function Hero() {
     return () => window.removeEventListener("pointermove", onMove);
   }, [mx, my]);
 
+  // live user count from Supabase (rounded to nearest 5), falls back to 300
+  const [users, setUsers] = useState(300);
+  useEffect(() => {
+    fetch("/api/stats").then((r) => r.json()).then((d) => { if (typeof d?.users === "number") setUsers(d.users); }).catch(() => {});
+  }, []);
+
   return (
     <section id="top" className="relative overflow-hidden" style={{ height: "100svh", background: "#000" }}>
       {/* push the cat to the right so the left stays clear for copy */}
@@ -153,7 +159,7 @@ function Hero() {
       {/* left scrim for legibility + vertical fade into the dark sections */}
       <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(90deg, rgba(8,6,10,0.85) 0%, rgba(8,6,10,0.45) 32%, transparent 62%)" }} />
       <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(180deg, rgba(8,6,10,0.5) 0%, transparent 26%, transparent 52%, rgba(8,6,10,0.45) 80%, #0B0910 100%)" }} />
-      <div className="relative h-full max-w-[1320px] mx-auto px-6 md:px-10 flex flex-col justify-end pb-[13vh]">
+      <div className="relative h-full max-w-[1180px] mx-auto px-6 md:px-10 flex flex-col justify-end pb-[13vh]">
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: EASE, delay: 0.15 }} className="max-w-[820px]">
           <h1 className="font-display leading-[0.88] tracking-[-0.04em]" style={{ color: D.text, fontSize: "clamp(3.2rem, 9.5vw, 8rem)" }}>
             <span className="block">Your face,</span>
@@ -177,7 +183,7 @@ function Hero() {
               <div className="text-[12px] mb-1" style={{ color: D.dim }}>AI Face Analysis</div>
               <div className="flex items-center gap-1.5 text-[12px]" style={{ color: D.dim }}>
                 <span style={{ color: D.rosePale, letterSpacing: "0.06em" }}>★★★★★</span>
-                <span><strong style={{ color: D.text, fontWeight: 600 }}>5.0</strong> · 300+ users</span>
+                <span><strong style={{ color: D.text, fontWeight: 600 }}>5.0</strong> · {users}+</span>
               </div>
             </div>
             <span className="ml-2 rounded-full px-5 py-1.5 text-[13px] font-bold tracking-wide" style={{ background: "#0A84FF", color: "#fff" }}>GET</span>
