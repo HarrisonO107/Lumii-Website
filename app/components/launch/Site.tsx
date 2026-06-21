@@ -197,13 +197,24 @@ function Hero() {
           </div>
           <motion.a
             href="/pro"
-            className="mt-5 inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-[13px] font-semibold"
-            style={{ background: "rgba(216,106,134,0.16)", border: `1px solid ${D.rosePale}`, color: D.text }}
+            className="app-badge group relative mt-6 inline-flex items-center gap-2.5 overflow-hidden rounded-full px-5 py-3 text-[14px]"
+            style={{ background: "rgba(11,9,16,0.55)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", boxShadow: "0 10px 36px -12px rgba(216,106,134,0.55)" }}
             whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.98 }}
             transition={{ type: "spring", stiffness: 420, damping: 26 }}
           >
-            <span>🤍 Already Pro-curious? Go Pro on the web &amp; help us skip Apple&apos;s cut</span>
-            <span style={{ color: D.rosePale }}>→</span>
+            {/* gradient ring border */}
+            <span
+              aria-hidden
+              className="absolute inset-0 rounded-full"
+              style={{ padding: 1, background: "linear-gradient(120deg, #F0B9C6, #D86A86 45%, rgba(240,185,198,0.25))", WebkitMask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)", WebkitMaskComposite: "xor", maskComposite: "exclude" }}
+            />
+            <span aria-hidden className="badge-shine" />
+            <span className="relative font-bold tracking-wide" style={{ color: D.rosePale, fontSize: 11, letterSpacing: "0.14em" }}>PRO</span>
+            <span className="relative h-3.5 w-px" style={{ background: "rgba(246,241,234,0.2)" }} />
+            <span className="relative font-semibold" style={{ color: D.text }}>Go Pro on the web</span>
+            <span className="relative text-[12px]" style={{ color: D.dim }}>web-only deals</span>
+            <span className="relative" style={{ color: D.rosePale, fontSize: 15 }}>→</span>
           </motion.a>
         </motion.div>
       </div>
