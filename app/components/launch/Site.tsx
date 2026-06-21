@@ -105,7 +105,6 @@ function Nav() {
     ["The app", "#app"],
     ["Premium", "#premium"],
     ["Creators", "#creators"],
-    ["Tutorial", "/how-it-works"],
   ];
   return (
     <header className="fixed top-4 inset-x-0 z-[90] flex justify-center px-4">
@@ -459,7 +458,7 @@ function Footer() {
           <div className="font-display text-[48px] leading-none">Lumii<span style={{ color: D.rosePale }}>.</span></div>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-12 gap-y-4">
             {[
-              ["The app", "#app"], ["Premium", "#premium"], ["Creators", "#creators"], ["Tutorial", "/how-it-works"],
+              ["The app", "#app"], ["Premium", "#premium"], ["Creators", "#creators"],
               ["FAQ", "/faq"], ["Privacy", "/legal/privacy-policy"], ["Terms", "/legal/terms-of-service"], ["Contact", "mailto:hello@lumiiapp.com"],
             ].map(([l, h]) => (
               <a key={l} href={h} className="text-[13px] transition-opacity hover:opacity-100" style={{ color: D.dim }}>{l}</a>

@@ -106,7 +106,7 @@ export default function Pro() {
             <img src="/icon.png" alt="Lumii" className="w-full h-full object-cover" />
           </Link>
           <nav className="hidden sm:flex items-center">
-            {([["The app", "/#app"], ["Creators", "/#creators"], ["Tutorial", "/how-it-works"]] as [string, string][]).map(([l, h]) => (
+            {([["The app", "/#app"], ["Premium", "/#premium"], ["Creators", "/#creators"]] as [string, string][]).map(([l, h]) => (
               <Link key={h} href={h} className="px-3.5 py-1.5 text-[13px] font-medium rounded-full transition-colors hover:opacity-100" style={{ color: L.dim }}>{l}</Link>
             ))}
           </nav>
