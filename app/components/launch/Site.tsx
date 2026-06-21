@@ -161,9 +161,9 @@ function Hero() {
       <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(180deg, rgba(8,6,10,0.55) 0%, transparent 22%, transparent 42%, rgba(8,6,10,0.55) 66%, rgba(8,6,10,0.9) 88%, #0B0910 100%)" }} />
       <div className="relative h-full max-w-[1340px] mx-auto px-6 md:px-10 flex flex-col justify-end pb-[13vh]">
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: EASE, delay: 0.15 }} className="max-w-[820px]">
-          <h1 className="font-display leading-[0.88] tracking-[-0.04em]" style={{ color: D.text, fontSize: "clamp(3.2rem, 9.5vw, 8rem)" }}>
-            <span className="block">Your face,</span>
-            <span className="block">by the <span className="italic" style={{ color: D.rosePale }}>numbers.</span></span>
+          <h1 className="font-display leading-[0.86] tracking-[-0.04em]" style={{ color: D.text, fontSize: "clamp(3.4rem, 10vw, 8.5rem)" }}>
+            <span className="block">Your glow,</span>
+            <span className="block italic" style={{ color: D.rosePale }}>scored.</span>
           </h1>
           {/* App Store listing card — instant "this is an app" signal */}
           <motion.a
@@ -189,33 +189,22 @@ function Hero() {
             <span className="ml-2 rounded-full px-5 py-1.5 text-[13px] font-bold tracking-wide" style={{ background: "#0A84FF", color: "#fff" }}>GET</span>
           </motion.a>
 
-          <div className="mt-5 text-[13px]" style={{ color: D.dim }}>
-            Free on iOS ·{" "}
-            <a href={PLAY_STORE_URL} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 transition-opacity hover:opacity-80" style={{ color: D.text }}>
-              Get it on Google Play →
+          <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2.5">
+            <a href={PLAY_STORE_URL} target="_blank" rel="noopener noreferrer" className="text-[13px] transition-opacity hover:opacity-80" style={{ color: D.dim }}>
+              Also on Google Play →
             </a>
+            <motion.a
+              href="/pro"
+              className="app-badge group relative inline-flex items-center gap-2 overflow-hidden rounded-full px-3.5 py-1.5 text-[12px] font-semibold"
+              style={{ border: `1px solid ${D.rosePale}`, color: D.rosePale, background: "rgba(216,106,134,0.08)" }}
+              whileHover={{ y: -1 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: "spring", stiffness: 420, damping: 26 }}
+            >
+              <span aria-hidden className="badge-shine" />
+              <span className="relative">✦ Go Pro on the web</span>
+            </motion.a>
           </div>
-          <motion.a
-            href="/pro"
-            className="app-badge group relative mt-6 inline-flex items-center gap-2.5 overflow-hidden rounded-full px-5 py-3 text-[14px]"
-            style={{ background: "rgba(11,9,16,0.55)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", boxShadow: "0 10px 36px -12px rgba(216,106,134,0.55)" }}
-            whileHover={{ y: -2 }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ type: "spring", stiffness: 420, damping: 26 }}
-          >
-            {/* gradient ring border */}
-            <span
-              aria-hidden
-              className="absolute inset-0 rounded-full"
-              style={{ padding: 1, background: "linear-gradient(120deg, #F0B9C6, #D86A86 45%, rgba(240,185,198,0.25))", WebkitMask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)", WebkitMaskComposite: "xor", maskComposite: "exclude" }}
-            />
-            <span aria-hidden className="badge-shine" />
-            <span className="relative font-bold tracking-wide" style={{ color: D.rosePale, fontSize: 11, letterSpacing: "0.14em" }}>PRO</span>
-            <span className="relative h-3.5 w-px" style={{ background: "rgba(246,241,234,0.2)" }} />
-            <span className="relative font-semibold" style={{ color: D.text }}>Go Pro on the web</span>
-            <span className="relative text-[12px]" style={{ color: D.dim }}>web-only deals</span>
-            <span className="relative" style={{ color: D.rosePale, fontSize: 15 }}>→</span>
-          </motion.a>
         </motion.div>
       </div>
       <motion.div className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2 pointer-events-none" animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>
