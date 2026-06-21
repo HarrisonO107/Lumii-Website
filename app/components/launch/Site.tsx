@@ -1,16 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import {
-  motion,
-  useInView,
-  useMotionValue,
-  useSpring,
-  useTransform,
-  useScroll,
-  useMotionValueEvent,
-  animate,
-} from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform, useScroll, type MotionValue } from "framer-motion";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -19,7 +10,6 @@ const C = {
   paperDeep: "#ECE3D3",
   paperCard: "#FBF7EF",
   ink: "#1C1815",
-  ink80: "rgba(28,24,21,0.80)",
   ink60: "rgba(28,24,21,0.60)",
   ink45: "rgba(28,24,21,0.45)",
   ink30: "rgba(28,24,21,0.30)",
@@ -27,36 +17,18 @@ const C = {
   rose: "#C2566F",
   roseDeep: "#A23E56",
   rosePale: "#E7B8C2",
-  forest: "#3B5A3E",
 };
 
-// Real outbound links.
 const APP_STORE_URL = "https://apps.apple.com/app/id6769432089";
 const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.hfjo.lumii";
-// TODO: replace with the real Discord invite once created.
+// TODO: real Discord invite.
 const DISCORD_URL = "https://discord.gg/lumii";
-// TODO: point at the web Pro checkout (RevenueCat Web Billing) once it exists.
-// Until then it routes to the App Store so the CTA is never dead.
+// TODO: web Pro checkout (RevenueCat Web Billing). Routes to App Store for now.
 const PRO_CHECKOUT_URL = APP_STORE_URL;
-
-// Set this to the number of exported Grok frames in /public/build-frames
-// (named frame_0001.jpg .. frame_NNNN.jpg). While 0, the iPhone build falls
-// back to the code-built assembly so the section always looks finished.
-const BUILD_FRAME_COUNT = 0;
 
 /* ─────────────────────────  PRIMITIVES  ───────────────────────── */
 
-function Reveal({
-  children,
-  delay = 0,
-  y = 26,
-  className,
-}: {
-  children: React.ReactNode;
-  delay?: number;
-  y?: number;
-  className?: string;
-}) {
+function Reveal({ children, delay = 0, y = 26, className }: { children: React.ReactNode; delay?: number; y?: number; className?: string }) {
   return (
     <motion.div
       className={className}
@@ -67,76 +39,6 @@ function Reveal({
     >
       {children}
     </motion.div>
-  );
-}
-
-function Counter({ to, decimals = 0, suffix = "" }: { to: number; decimals?: number; suffix?: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-20%" });
-  const [v, setV] = useState(0);
-  useEffect(() => {
-    if (!inView) return;
-    const c = animate(0, to, { duration: 1.5, ease: EASE, onUpdate: (x) => setV(x) });
-    return () => c.stop();
-  }, [inView, to]);
-  return (
-    <span ref={ref} className="tabular-nums">
-      {v.toFixed(decimals)}
-      {suffix}
-    </span>
-  );
-}
-
-/* iPhone 17 Pro device frame holding a screenshot. */
-function Plate({
-  src,
-  fig,
-  caption,
-  rotate = 0,
-  float = false,
-  width = 264,
-}: {
-  src: string;
-  fig: string;
-  caption: string;
-  rotate?: number;
-  float?: boolean;
-  width?: number | string;
-}) {
-  return (
-    <figure className="relative" style={{ width }}>
-      <div style={{ transform: `rotate(${rotate}deg)` }}>
-        <div className={float ? "atelier-float" : ""}>
-          <div className="device relative">
-            {[
-              "top-[-14px] left-[-14px] border-l border-t",
-              "top-[-14px] right-[-14px] border-r border-t",
-              "bottom-[-14px] left-[-14px] border-l border-b",
-              "bottom-[-14px] right-[-14px] border-r border-b",
-            ].map((c) => (
-              <span key={c} className={`absolute z-10 w-3 h-3 ${c}`} style={{ borderColor: C.ink30 }} />
-            ))}
-            <span className="device-btn action" />
-            <span className="device-btn vol-up" />
-            <span className="device-btn vol-dn" />
-            <span className="device-btn power" />
-            <div className="device-rail">
-              <div className="device-bezel">
-                <div className="device-screen">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={src} alt={caption} draggable={false} />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <figcaption className="mono-label mt-5 flex items-center gap-2">
-        <span style={{ color: C.rose }}>{fig}</span>
-        <span className="h-px flex-1" style={{ background: C.line }} />
-        <span>{caption}</span>
-      </figcaption>
-    </figure>
   );
 }
 
@@ -173,11 +75,7 @@ function GoogleBadge({ light = false }: { light?: boolean }) {
       rel="noopener noreferrer"
       aria-label="Get Lumii on Google Play"
       className="app-badge group relative inline-flex items-center gap-3 overflow-hidden rounded-full px-5 py-3"
-      style={{
-        background: "transparent",
-        color: light ? C.paper : C.ink,
-        border: light ? "1px solid rgba(244,238,228,0.35)" : "1px solid rgba(28,24,21,0.16)",
-      }}
+      style={{ background: "transparent", color: light ? C.paper : C.ink, border: light ? "1px solid rgba(244,238,228,0.35)" : "1px solid rgba(28,24,21,0.16)" }}
       whileHover={{ y: -3 }}
       whileTap={{ scale: 0.97, y: 0 }}
       transition={{ type: "spring", stiffness: 420, damping: 26 }}
@@ -205,12 +103,10 @@ function Nav() {
   }, []);
   const links: [string, string][] = [
     ["The app", "#app"],
-    ["The build", "#build"],
     ["Premium", "#premium"],
     ["Creators", "#creators"],
     ["Tutorial", "/how-it-works"],
   ];
-  // Over the dark hero video the bar is light; once scrolled onto paper it inverts.
   const fg = scrolled ? C.ink : C.paper;
   return (
     <header
@@ -223,15 +119,10 @@ function Nav() {
       }}
     >
       <div className="max-w-[1320px] mx-auto px-5 md:px-10 h-[64px] flex items-center justify-between">
-        <a href="#top" className="flex items-baseline gap-2">
-          <span className="font-display text-[26px] leading-none" style={{ color: fg }}>Lumii</span>
-          <span className="font-display text-[26px] leading-none italic" style={{ color: C.rose }}>·</span>
-        </a>
+        <a href="#top" className="font-display text-[26px] leading-none" style={{ color: fg }}>Lumii<span style={{ color: C.rose }}>.</span></a>
         <nav className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
           {links.map(([label, href]) => (
-            <a key={href} href={href} className="mono-label hover:opacity-100 transition-opacity" style={{ opacity: 0.78, color: fg }}>
-              {label}
-            </a>
+            <a key={href} href={href} className="mono-label hover:opacity-100 transition-opacity" style={{ opacity: 0.78, color: fg }}>{label}</a>
           ))}
         </nav>
         <motion.a
@@ -249,7 +140,7 @@ function Nav() {
   );
 }
 
-/* ─────────────────────────  HERO (full-bleed Suki video)  ───────────────────────── */
+/* ─────────────────────────  HERO (Suki wandering)  ───────────────────────── */
 
 function Hero() {
   const mx = useMotionValue(0);
@@ -270,31 +161,18 @@ function Hero() {
 
   return (
     <section id="top" className="relative overflow-hidden" style={{ height: "100svh", background: C.ink }}>
-      {/* full-bleed looping Suki, drifts toward the cursor */}
       <motion.video
         src="/video/suki-hero.mp4?v=2"
         poster="/video/suki-hero-poster.jpg?v=2"
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="auto"
-        aria-hidden
+        autoPlay loop muted playsInline preload="auto" aria-hidden
         className="absolute inset-0 w-full h-full object-cover"
         style={{ x: vx, y: vy, scale: 1.12 }}
       />
-      {/* legibility scrims: darken top for nav, paper-fade bottom for copy */}
       <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(180deg, rgba(20,12,14,0.45) 0%, transparent 22%, transparent 45%, rgba(20,12,14,0.30) 78%, rgba(20,12,14,0.72) 100%)" }} />
-      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 80% 60% at 50% 38%, transparent 40%, rgba(20,12,14,0.35) 100%)" }} />
 
       <div className="relative h-full max-w-[1320px] mx-auto px-6 md:px-10 flex flex-col justify-end pb-[12vh]">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: EASE, delay: 0.15 }}
-          className="max-w-[760px]"
-        >
-          <h1 className="font-display leading-[0.9] tracking-[-0.03em]" style={{ color: C.paper, fontSize: "clamp(3rem, 9vw, 7.5rem)" }}>
+        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: EASE, delay: 0.15 }} className="max-w-[760px]">
+          <h1 className="font-display leading-[0.9] tracking-[-0.04em]" style={{ color: C.paper, fontSize: "clamp(3rem, 9vw, 7.5rem)" }}>
             <span className="block">Your face,</span>
             <span className="block">by the <span className="italic" style={{ color: C.rosePale }}>numbers.</span></span>
           </h1>
@@ -311,314 +189,183 @@ function Hero() {
         </motion.div>
       </div>
 
-      {/* scroll cue */}
-      <motion.div
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none"
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <span className="mono-label" style={{ color: "rgba(244,238,228,0.7)" }}>Scroll to build</span>
+      <motion.div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none" animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>
+        <span className="mono-label" style={{ color: "rgba(244,238,228,0.7)" }}>Scroll</span>
         <span style={{ color: "rgba(244,238,228,0.7)", fontSize: 18 }}>↓</span>
       </motion.div>
     </section>
   );
 }
 
-/* ─────────────────────────  THE BUILD  ─────────────────────────
-   Grok frame-sequence scrubber (when frames exist) or a code-built
-   iPhone 17 Pro assembly fallback. Both pin and scrub on scroll. */
+/* ─────────────────────────  PHONE JOURNEY  ─────────────────────────
+   Suki whips out the phone, the camera flies into the blank screen, then a
+   tour of live UI panels plays inside. The screen rectangle is measured as a
+   % of the square stage — tweak SCREEN if the overlay drifts off the phone. */
 
-function FrameScrubber({ count }: { count: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const imgs = useRef<HTMLImageElement[]>([]);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+const SCREEN = { left: 43.4, top: 41.6, w: 20.4, h: 43.6 };
+const SCx = SCREEN.left + SCREEN.w / 2; // 53.6
+const SCy = SCREEN.top + SCREEN.h / 2; // 63.4
 
-  useEffect(() => {
-    imgs.current = [];
-    for (let i = 1; i <= count; i++) {
-      const im = new Image();
-      im.src = `/build-frames/frame_${String(i).padStart(4, "0")}.jpg`;
-      imgs.current[i - 1] = im;
-    }
-  }, [count]);
-
-  const draw = (p: number) => {
-    const c = canvasRef.current;
-    if (!c) return;
-    const ctx = c.getContext("2d");
-    if (!ctx) return;
-    const idx = Math.min(count - 1, Math.max(0, Math.round(p * (count - 1))));
-    const im = imgs.current[idx];
-    ctx.clearRect(0, 0, c.width, c.height);
-    if (!im || !im.complete || !im.naturalWidth) return;
-    const r = Math.min(c.width / im.naturalWidth, c.height / im.naturalHeight);
-    const w = im.naturalWidth * r;
-    const h = im.naturalHeight * r;
-    ctx.drawImage(im, (c.width - w) / 2, (c.height - h) / 2, w, h);
-  };
-
-  useMotionValueEvent(scrollYProgress, "change", draw);
-
-  useEffect(() => {
-    const c = canvasRef.current;
-    if (!c) return;
-    const fit = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      c.width = c.clientWidth * dpr;
-      c.height = c.clientHeight * dpr;
-      draw(scrollYProgress.get());
-    };
-    fit();
-    window.addEventListener("resize", fit);
-    return () => window.removeEventListener("resize", fit);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+// faux phone status bar
+function StatusBar() {
   return (
-    <section id="build" ref={ref} className="relative" style={{ height: "420vh", background: C.paperDeep }}>
-      <div className="sticky top-0 h-screen overflow-hidden flex items-center justify-center">
-        <canvas ref={canvasRef} className="w-full h-full" />
-        <div className="absolute top-[12vh] left-1/2 -translate-x-1/2 text-center px-6">
-          <div className="mono-label flex items-center justify-center gap-3" style={{ color: C.ink45 }}>
-            <span style={{ color: C.rose }}>The build</span>
-            <span className="w-10 h-px" style={{ background: C.line }} />
-            <span>Engineered for your face</span>
-          </div>
-          <h2 className="font-display mt-4 leading-[0.96] tracking-[-0.02em]" style={{ color: C.ink, fontSize: "clamp(2rem,5vw,3.4rem)" }}>
-            Built like the <span className="italic" style={{ color: C.rose }}>hardware</span> it runs on.
-          </h2>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function NativeBuild() {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-
-  // body assembles, camera pops onto the back, phone spins to front, screen boots.
-  const bodyOp = useTransform(scrollYProgress, [0.03, 0.16], [0, 1]);
-  const bodyY = useTransform(scrollYProgress, [0.03, 0.18], [90, 0]);
-  const camScale = useTransform(scrollYProgress, [0.14, 0.3], [0.4, 1]);
-  const camOp = useTransform(scrollYProgress, [0.14, 0.28], [0, 1]);
-  const spin = useTransform(scrollYProgress, [0.34, 0.62], [180, 360]); // back -> front
-  const islandScale = useTransform(scrollYProgress, [0.6, 0.72], [0, 1]);
-  const flash = useTransform(scrollYProgress, [0.6, 0.7, 0.82], [0, 0.9, 0]);
-  const appOp = useTransform(scrollYProgress, [0.64, 0.8], [0, 1]);
-  const k1o = useTransform(scrollYProgress, [0.6, 0.72], [0, 1]);
-  const k1y = useTransform(scrollYProgress, [0.6, 0.72], [28, 0]);
-  const k2o = useTransform(scrollYProgress, [0.72, 0.86], [0, 1]);
-  const k2y = useTransform(scrollYProgress, [0.72, 0.86], [28, 0]);
-
-  const PHW = "clamp(220px, 50vw, 286px)";
-  const titanium = "linear-gradient(150deg,#dad6d0 0%,#a8a49d 22%,#cfcbc4 47%,#8f8b84 73%,#c3bfb8 100%)";
-  const lens =
-    "radial-gradient(circle at 38% 32%, #4a4e57 0%, #20222a 42%, #0a0b0e 72%)";
-
-  // one camera lens: dark glass + metallic ring + specular dot
-  const Lens = ({ top, left }: { top: string; left: string }) => (
-    <div
-      className="absolute rounded-full"
-      style={{ top, left, width: "14cqw", height: "14cqw", background: lens, border: "0.8cqw solid #2b2d33", boxShadow: "inset 0 0 1.5cqw rgba(0,0,0,0.8), 0 0.4cqw 1cqw rgba(0,0,0,0.4)" }}
-    >
-      <span className="absolute rounded-full" style={{ top: "20%", left: "24%", width: "26%", height: "26%", background: "radial-gradient(circle, rgba(255,255,255,0.7), transparent 70%)" }} />
+    <div className="absolute top-0 inset-x-0 flex items-center justify-between px-[7%] pt-[3.5%] z-10">
+      <span className="font-semibold" style={{ color: C.ink, fontSize: "clamp(8px,2.6cqw,16px)" }}>9:41</span>
+      <span className="rounded-full" style={{ width: "26%", height: "clamp(10px,3cqw,20px)", background: "#080809" }} />
+      <span style={{ color: C.ink, fontSize: "clamp(8px,2.4cqw,14px)" }}>▮▮▮</span>
     </div>
   );
+}
+
+function ScorePanel({ o }: { o: MotionValue<number> }) {
+  const R = 42;
+  const circ = 2 * Math.PI * R;
+  const dash = useTransform(o, [0, 1], [circ, circ * (1 - 0.86)]);
+  const chipOp = useTransform(o, [0.5, 1], [0, 1]);
+  const chipScale = useTransform(o, [0.5, 1], [0.7, 1]);
+  return (
+    <motion.div className="absolute inset-0 flex flex-col items-center justify-center" style={{ opacity: o, background: C.paperCard }}>
+      <StatusBar />
+      <span className="mono-label" style={{ color: C.rose, fontSize: "clamp(8px,2.4cqw,13px)" }}>Today&apos;s glow</span>
+      <div className="relative mt-[4%]" style={{ width: "62%" }}>
+        <svg viewBox="0 0 100 100" className="w-full">
+          <circle cx="50" cy="50" r={R} fill="none" stroke="rgba(28,24,21,0.10)" strokeWidth="5" />
+          <motion.circle
+            cx="50" cy="50" r={R} fill="none" stroke={C.rose} strokeWidth="5" strokeLinecap="round"
+            transform="rotate(-90 50 50)" strokeDasharray={circ} style={{ strokeDashoffset: dash }}
+          />
+        </svg>
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <span className="font-display" style={{ color: C.ink, fontSize: "clamp(28px,13cqw,80px)", lineHeight: 1 }}>86</span>
+          <span className="mono-label" style={{ color: C.ink45, fontSize: "clamp(7px,2cqw,12px)" }}>/ 100 · Radiant</span>
+        </div>
+      </div>
+      <motion.div className="mt-[6%] rounded-full px-[5%] py-[2%] font-semibold" style={{ background: C.rose, color: "#fff", fontSize: "clamp(9px,2.6cqw,15px)", opacity: chipOp, scale: chipScale }}>
+        ↑ 2 this week
+      </motion.div>
+    </motion.div>
+  );
+}
+
+function Bar({ o, name, val, i }: { o: MotionValue<number>; name: string; val: number; i: number }) {
+  const w = useTransform(o, [0.2 + i * 0.05, 0.7 + i * 0.05], ["0%", `${val}%`]);
+  return (
+    <div className="mb-[5%]">
+      <div className="flex justify-between mb-[2%]" style={{ color: C.ink, fontSize: "clamp(9px,2.6cqw,15px)" }}>
+        <span>{name}</span>
+        <span className="font-semibold">{val}</span>
+      </div>
+      <div className="rounded-full overflow-hidden" style={{ height: "clamp(5px,1.6cqw,12px)", background: "rgba(28,24,21,0.1)" }}>
+        <motion.div className="h-full rounded-full" style={{ background: C.rose, width: w }} />
+      </div>
+    </div>
+  );
+}
+
+function BreakdownPanel({ o }: { o: MotionValue<number> }) {
+  const bars: [string, number][] = [["Symmetry", 95], ["Jawline", 88], ["Eyes", 84], ["Skin", 80], ["Harmony", 86]];
+  return (
+    <motion.div className="absolute inset-0 flex flex-col justify-center px-[10%]" style={{ opacity: o, background: C.paperCard }}>
+      <StatusBar />
+      <span className="mono-label mb-[6%]" style={{ color: C.rose, fontSize: "clamp(8px,2.4cqw,13px)" }}>The breakdown</span>
+      {bars.map(([name, val], i) => <Bar key={name} o={o} name={name} val={val} i={i} />)}
+    </motion.div>
+  );
+}
+
+function Bubble({ o, text, i, mine }: { o: MotionValue<number>; text: string; i: number; mine: boolean }) {
+  const op = useTransform(o, [0.3 + i * 0.18, 0.5 + i * 0.18], [0, 1]);
+  const x = useTransform(o, [0.3 + i * 0.18, 0.5 + i * 0.18], [mine ? 30 : -30, 0]);
+  return (
+    <motion.div
+      className="rounded-[18px] px-[5%] py-[3.5%] max-w-[82%]"
+      style={{ background: mine ? C.rose : "#fff", color: mine ? "#fff" : C.ink, alignSelf: mine ? "flex-end" : "flex-start", fontSize: "clamp(9px,2.6cqw,15px)", lineHeight: 1.35, boxShadow: "0 6px 18px -10px rgba(120,40,60,0.4)", opacity: op, x }}
+    >
+      {text}
+    </motion.div>
+  );
+}
+
+function SukiPanel({ o }: { o: MotionValue<number> }) {
+  const bubbles = ["You're sitting at 86, real talk?", "Your jawline is carrying.", "Want your quick win for today?"];
+  return (
+    <motion.div className="absolute inset-0 flex flex-col justify-center px-[9%] gap-[4%]" style={{ opacity: o, background: C.paperCard }}>
+      <StatusBar />
+      <span className="mono-label" style={{ color: C.rose, fontSize: "clamp(8px,2.4cqw,13px)" }}>Chat with Suki</span>
+      {bubbles.map((b, i) => <Bubble key={b} o={o} text={b} i={i} mine={i === 1} />)}
+    </motion.div>
+  );
+}
+
+function PhoneJourney() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+
+  // whip-out pop, then fly into the screen
+  const scale = useTransform(scrollYProgress, [0, 0.07, 0.14, 0.46], [0.72, 1, 1, 2.8]);
+  const rot = useTransform(scrollYProgress, [0, 0.07], [-7, 0]);
+  const catOp = useTransform(scrollYProgress, [0.3, 0.44], [1, 0]); // cat + frame dissolve as we enter
+  const radius = useTransform(scrollYProgress, [0.14, 0.46], [2.4, 0]); // screen corners square off at full zoom
+
+  // panel sub-progress (0..1 each) across the tour
+  const pScore = useTransform(scrollYProgress, [0.16, 0.46, 0.54, 0.6], [0, 1, 1, 0]);
+  const pBreak = useTransform(scrollYProgress, [0.58, 0.66, 0.74, 0.8], [0, 1, 1, 0]);
+  const pSuki = useTransform(scrollYProgress, [0.78, 0.86, 1, 1], [0, 1, 1, 1]);
+  // each panel also needs an internal 0..1 to drive its element anims
+  const scoreFill = useTransform(scrollYProgress, [0.16, 0.5], [0, 1]);
+  const breakFill = useTransform(scrollYProgress, [0.58, 0.78], [0, 1]);
+  const sukiFill = useTransform(scrollYProgress, [0.78, 0.98], [0, 1]);
+  const screenRadius = useTransform(radius, (v) => `${v}rem`);
+  const captionOp = useTransform(scrollYProgress, [0, 0.12, 0.2], [1, 1, 0]);
+
+  const STAGE = "min(92vh, 94vw)";
 
   return (
-    <section id="build" ref={ref} className="relative" style={{ height: "400vh", background: C.paperDeep }}>
-      <div className="ruler-x absolute top-0 inset-x-0 h-[10px] opacity-50" />
-      <div className="sticky top-0 h-screen overflow-hidden flex items-center">
-        <div className="w-full max-w-[1320px] mx-auto px-6 md:px-10 grid lg:grid-cols-2 gap-12 items-center">
-          <div className="flex justify-center order-2 lg:order-1" style={{ perspective: 1400 }}>
-            <div className="relative">
-              {/* ground shadow */}
-              <div className="absolute left-1/2 -translate-x-1/2 -bottom-8 pointer-events-none" style={{ width: "62%", height: "26px", background: "radial-gradient(ellipse, rgba(60,30,40,0.28), transparent 70%)", filter: "blur(4px)" }} />
-              <div className="atelier-float">
-                <motion.div
-                  className="device relative"
-                  style={{ width: PHW, aspectRatio: "1206 / 2622", transformStyle: "preserve-3d", rotateY: spin, opacity: bodyOp, y: bodyY }}
-                >
-                  {/* BACK FACE: titanium body + camera plateau */}
-                  <div className="absolute inset-0" style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transform: "rotateY(180deg)", borderRadius: "16cqw", background: titanium, border: "0.6cqw solid rgba(255,255,255,0.35)", boxShadow: "inset 0 0 4cqw rgba(255,255,255,0.4), inset 0 0 8cqw rgba(0,0,0,0.18), 0 50px 90px -40px rgba(60,40,50,0.5)" }}>
-                    <motion.div className="absolute" style={{ top: "5%", left: "7%", width: "42cqw", height: "42cqw", borderRadius: "12cqw", background: "linear-gradient(150deg,#3a3a40,#141417)", border: "0.5cqw solid rgba(255,255,255,0.12)", boxShadow: "inset 0 0 3cqw rgba(0,0,0,0.7), 0 1cqw 3cqw rgba(0,0,0,0.35)", scale: camScale, opacity: camOp }}>
-                      <Lens top="6%" left="6%" />
-                      <Lens top="6%" left="52%" />
-                      <Lens top="52%" left="6%" />
-                      {/* flash */}
-                      <span className="absolute rounded-full" style={{ top: "60%", left: "60%", width: "8cqw", height: "8cqw", background: "radial-gradient(circle,#fff8e6,#c9a24a 70%)", boxShadow: "0 0 1cqw rgba(255,240,200,0.6)" }} />
-                      {/* lidar */}
-                      <span className="absolute rounded-full" style={{ top: "30%", left: "70%", width: "5cqw", height: "5cqw", background: "radial-gradient(circle,#2a2c33,#0a0b0e)" }} />
-                    </motion.div>
-                    {/* etched wordmark */}
-                    <span className="absolute left-1/2 -translate-x-1/2 font-display italic" style={{ top: "46%", color: "rgba(60,55,52,0.45)", fontSize: "9cqw" }}>L</span>
-                  </div>
+    <section id="app" ref={ref} className="relative" style={{ height: "560vh", background: C.paper }}>
+      <div className="sticky top-0 h-screen overflow-hidden flex items-center justify-center">
+        {/* recenter the screen rect to the viewport, then scale around it */}
+        <div style={{ transform: `translate(${(50 - SCx).toFixed(2)}%, ${(50 - SCy).toFixed(2)}%)` }}>
+          <motion.div
+            className="relative"
+            style={{ width: STAGE, height: STAGE, scale, rotate: rot, transformOrigin: `${SCx}% ${SCy}%` }}
+          >
+            {/* Suki holding the phone (white bg blended into paper via multiply) */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <motion.img src="/suki-phone-raw.png" alt="Suki holding the Lumii app" className="absolute inset-0 w-full h-full object-contain" style={{ opacity: catOp, mixBlendMode: "multiply" }} draggable={false} />
 
-                  {/* FRONT FACE: screen powers on */}
-                  <div className="absolute inset-0" style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}>
-                    <div className="device-rail absolute inset-0">
-                      <div className="device-bezel">
-                        <div className="device-screen">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <motion.img src="/screenshots/home.jpg" alt="Lumii on iPhone" style={{ opacity: appOp }} />
-                          <motion.div className="absolute inset-0" style={{ background: "#FBF7EF", opacity: flash }} />
-                          <motion.div className="absolute left-1/2 -translate-x-1/2" style={{ top: "2.6%", width: "32%", height: "3.4%", background: "#050506", borderRadius: "999px", scale: islandScale }} />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
-            </div>
-          </div>
-
-          <div className="order-1 lg:order-2">
-            <div className="mono-label flex items-center gap-3 mb-6">
-              <span style={{ color: C.rose }}>The build</span>
-              <span className="w-10 h-px" style={{ background: C.line }} />
-              <span>Scroll to assemble</span>
-            </div>
-            <motion.h2 className="font-display leading-[0.98] tracking-[-0.02em]" style={{ color: C.ink, fontSize: "clamp(2.2rem,5vw,3.8rem)", opacity: k1o, y: k1y }}>
-              Engineered like the <span className="italic" style={{ color: C.rose }}>phone</span> it runs on.
-            </motion.h2>
-            <motion.p className="mono-label mt-7" style={{ opacity: k2o, y: k2y }}>
-              Built for iPhone · Free on iOS &amp; Android
-            </motion.p>
-          </div>
+            {/* live screen overlaid on the phone's blank screen */}
+            <motion.div
+              className="device absolute overflow-hidden"
+              style={{ left: `${SCREEN.left}%`, top: `${SCREEN.top}%`, width: `${SCREEN.w}%`, height: `${SCREEN.h}%`, borderRadius: screenRadius }}
+            >
+              {/* panels stacked; opacity from p* crossfades, fill from *Fill animates content */}
+              <motion.div className="absolute inset-0" style={{ opacity: pScore }}><ScorePanel o={scoreFill} /></motion.div>
+              <motion.div className="absolute inset-0" style={{ opacity: pBreak }}><BreakdownPanel o={breakFill} /></motion.div>
+              <motion.div className="absolute inset-0" style={{ opacity: pSuki }}><SukiPanel o={sukiFill} /></motion.div>
+            </motion.div>
+          </motion.div>
         </div>
+
+        {/* caption that fades once we're inside */}
+        <motion.div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center pointer-events-none" style={{ opacity: captionOp }}>
+          <span className="mono-label" style={{ color: C.ink45 }}>Scroll into the app</span>
+        </motion.div>
       </div>
     </section>
   );
 }
 
-function BuildSection() {
-  return BUILD_FRAME_COUNT > 0 ? <FrameScrubber count={BUILD_FRAME_COUNT} /> : <NativeBuild />;
-}
-
-/* ─────────────────────────  METRICS MARQUEE  ───────────────────────── */
-
-function MetricsBand() {
-  const items = ["584 Landmarks", "75 Measurements", "8 Categories", "5 Skin Zones", "Cycle Aware", "Glow With Friends", "3 Photos", "Under 30 Seconds"];
-  const row = [...items, ...items];
-  return (
-    <section className="py-5 overflow-hidden" style={{ background: C.ink, color: C.paper }}>
-      <div className="flex whitespace-nowrap atelier-marquee">
-        {row.map((t, i) => (
-          <span key={i} className="flex items-center font-mono text-[12px] tracking-[0.16em] uppercase">
-            <span className="px-7" style={{ opacity: 0.92 }}>{t}</span>
-            <span style={{ color: C.rose }}>✦</span>
-          </span>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* ─────────────────────────  THE APP (showcase)  ───────────────────────── */
-
-const SHOWCASE: { src: string; fig: string; cap: string; kick: string; title: React.ReactNode; body: string; flip?: boolean }[] = [
-  {
-    src: "/screenshots/breakdown.jpg", fig: "Fig. 01", cap: "Every trait, ranked", kick: "The read",
-    title: <>A score that finally <span className="italic" style={{ color: C.rose }}>means</span> something.</>,
-    body: "Eight categories, each measured against clinically-studied ideals, with the exact numbers behind every line.",
-  },
-  {
-    src: "/screenshots/tips.jpg", fig: "Fig. 02", cap: "Quick wins, from your numbers", kick: "The routine", flip: true,
-    title: <>Advice tied to your <span className="italic" style={{ color: C.rose }}>actual</span> measurements.</>,
-    body: "Every tip traces back to a number on your report. One tap adds it to your daily ritual.",
-  },
-  {
-    src: "/screenshots/suki.jpg", fig: "Fig. 03", cap: "Your Lumii kitten", kick: "Suki",
-    title: <>Meet <span className="italic" style={{ color: C.rose }}>Suki.</span></>,
-    body: "Honest, never cold. Suki reads your scan, talks you through it, and grows with you.",
-  },
-  {
-    src: "/screenshots/circle.jpg", fig: "Fig. 04", cap: "Glow with your friends", kick: "The circle", flip: true,
-    title: <>Better with your <span className="italic" style={{ color: C.rose }}>girls.</span></>,
-    body: "Build a private Circle, run a 7-day glow sprint, share the proof. Only your people ever see it.",
-  },
-];
-
-function Showcase() {
-  return (
-    <section id="app" className="py-24 md:py-36" style={{ background: C.paper }}>
-      <div className="max-w-[1320px] mx-auto px-5 md:px-10">
-        <Reveal>
-          <div className="mono-label flex items-center gap-3 mb-10">
-            <span style={{ color: C.rose }}>§ The app</span>
-            <span className="w-10 h-px" style={{ background: C.line }} />
-            <span>Show, don&apos;t tell</span>
-          </div>
-        </Reveal>
-        <Reveal delay={0.06}>
-          <h2 className="font-display leading-[0.96] tracking-[-0.02em] mb-16 md:mb-24" style={{ color: C.ink, fontSize: "clamp(2.4rem,6vw,4.6rem)" }}>
-            See it <span className="italic" style={{ color: C.rose }}>work.</span>
-          </h2>
-        </Reveal>
-
-        <div className="flex flex-col gap-28 md:gap-40">
-          {SHOWCASE.map((s, i) => (
-            <div key={s.fig} className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-              <Reveal className={`flex justify-center ${s.flip ? "lg:order-2 lg:justify-start" : "lg:justify-end"}`}>
-                <Plate src={s.src} fig={s.fig} caption={s.cap} rotate={s.flip ? 2.5 : -2.5} float={i % 2 === 0} width={272} />
-              </Reveal>
-              <Reveal delay={0.1} className={s.flip ? "lg:order-1" : ""}>
-                <div className="mono-label flex items-center gap-3 mb-6">
-                  <span style={{ color: C.rose }}>{s.kick}</span>
-                  <span className="w-8 h-px" style={{ background: C.line }} />
-                </div>
-                <h3 className="font-display leading-[1.0] tracking-[-0.02em]" style={{ color: C.ink, fontSize: "clamp(2rem,4.4vw,3.2rem)" }}>{s.title}</h3>
-              </Reveal>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-24 grid grid-cols-3 gap-5 max-w-[560px]">
-          {[
-            { n: 584, s: "", l: "Landmarks" },
-            { n: 75, s: "+", l: "Metrics" },
-            { n: 8, s: "", l: "Categories" },
-          ].map((stat, i) => (
-            <Reveal key={stat.l} delay={0.1 + i * 0.08}>
-              <div className="pt-4" style={{ borderTop: "1px solid rgba(28,24,21,0.16)" }}>
-                <div className="font-display text-[clamp(2.2rem,5vw,3rem)] leading-none" style={{ color: C.ink }}>
-                  <Counter to={stat.n} suffix={stat.s} />
-                </div>
-                <div className="mono-label mt-2">{stat.l}</div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ─────────────────────────  PREMIUM (web push)  ───────────────────────── */
+/* ─────────────────────────  PREMIUM  ───────────────────────── */
 
 function Premium() {
-  const perks = [
-    "Unlimited scans",
-    "Full 8-category breakdown",
-    "Suki coaching",
-    "Your Circle",
-    "Cycle insight",
-    "Progress history",
-  ];
+  const perks = ["Unlimited scans", "Full 8-category breakdown", "Suki coaching", "Your Circle", "Cycle insight", "Progress history"];
   return (
     <section id="premium" className="relative py-28 md:py-40 overflow-hidden" style={{ background: C.ink, color: C.paper }}>
       <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 55% 60% at 78% 30%, rgba(194,86,111,0.22) 0%, transparent 65%)" }} />
-      <div className="ruler-x absolute top-0 inset-x-0 h-[10px] opacity-30" />
       <div className="relative max-w-[1320px] mx-auto px-5 md:px-10 grid lg:grid-cols-[1.1fr_0.9fr] gap-16 items-center">
         <div>
-          <div className="mono-label flex items-center gap-3 mb-6" style={{ color: "rgba(244,238,228,0.55)" }}>
-            <span style={{ color: C.rosePale }}>Lumii Pro</span>
-            <span className="w-10 h-px" style={{ background: "rgba(244,238,228,0.2)" }} />
-            <span>Straight from us</span>
-          </div>
-          <h2 className="font-display leading-[0.94] tracking-[-0.02em]" style={{ fontSize: "clamp(2.6rem,6.4vw,5rem)" }}>
+          <div className="mono-label mb-6" style={{ color: C.rosePale }}>Lumii Pro</div>
+          <h2 className="font-display leading-[0.94] tracking-[-0.03em]" style={{ fontSize: "clamp(2.6rem,6.4vw,5rem)" }}>
             Go Pro on the <span className="italic" style={{ color: C.rosePale }}>web.</span>
           </h2>
           <p className="mt-6 max-w-[420px] text-[15px] md:text-[16px] leading-[1.7]" style={{ color: "rgba(244,238,228,0.75)" }}>
@@ -637,22 +384,18 @@ function Premium() {
               <span className="relative">Go Pro on the web</span>
               <span className="relative" style={{ fontSize: 15 }}>→</span>
             </motion.a>
-            <span className="mono-label" style={{ color: "rgba(244,238,228,0.5)" }}>Cancel anytime · Secure checkout</span>
+            <span className="mono-label" style={{ color: "rgba(244,238,228,0.5)" }}>Cancel anytime</span>
           </div>
         </div>
-
         <div className="rounded-[28px] p-8 md:p-10" style={{ background: "rgba(244,238,228,0.05)", border: "1px solid rgba(244,238,228,0.12)" }}>
           <div className="mono-label mb-6" style={{ color: "rgba(244,238,228,0.5)" }}>What unlocks</div>
           <ul className="flex flex-col gap-4">
-            {perks.map((p) => {
-              const [head, ...rest] = p.split(", ");
-              return (
-                <li key={p} className="flex gap-3 text-[14px] leading-[1.5]" style={{ color: "rgba(244,238,228,0.82)" }}>
-                  <span style={{ color: C.rosePale }}>✦</span>
-                  <span><strong style={{ color: C.paper, fontWeight: 600 }}>{head}</strong>{rest.length ? `, ${rest.join(", ")}` : ""}</span>
-                </li>
-              );
-            })}
+            {perks.map((p) => (
+              <li key={p} className="flex gap-3 text-[15px]" style={{ color: C.paper }}>
+                <span style={{ color: C.rosePale }}>✦</span>
+                <span style={{ fontWeight: 600 }}>{p}</span>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
@@ -660,7 +403,7 @@ function Premium() {
   );
 }
 
-/* ─────────────────────────  CREATORS (Discord funnel)  ───────────────────────── */
+/* ─────────────────────────  CREATORS  ───────────────────────── */
 
 function Creators() {
   const perks = [
@@ -673,22 +416,14 @@ function Creators() {
       <div className="max-w-[1320px] mx-auto px-5 md:px-10">
         <div className="grid lg:grid-cols-[1fr_0.85fr] gap-14 items-center">
           <div>
-            <Reveal>
-              <div className="mono-label flex items-center gap-3 mb-6">
-                <span style={{ color: C.rose }}>Creator program</span>
-                <span className="w-10 h-px" style={{ background: C.line }} />
-                <span>Built by girls, for girls</span>
-              </div>
-            </Reveal>
+            <Reveal><div className="mono-label mb-6" style={{ color: C.rose }}>Creator program</div></Reveal>
             <Reveal delay={0.06}>
-              <h2 className="font-display leading-[0.94] tracking-[-0.02em]" style={{ color: C.ink, fontSize: "clamp(2.6rem,6.4vw,5rem)" }}>
+              <h2 className="font-display leading-[0.94] tracking-[-0.03em]" style={{ color: C.ink, fontSize: "clamp(2.6rem,6.4vw,5rem)" }}>
                 Make edits. <span className="italic" style={{ color: C.rose }}>Get paid.</span>
               </h2>
             </Reveal>
             <Reveal delay={0.12}>
-              <p className="mt-6 max-w-[420px] text-[15px] md:text-[16px] leading-[1.7]" style={{ color: C.ink60 }}>
-                Grab a brief. Post. Get paid.
-              </p>
+              <p className="mt-6 max-w-[420px] text-[15px] md:text-[16px] leading-[1.7]" style={{ color: C.ink60 }}>Grab a brief. Post. Get paid.</p>
             </Reveal>
             <Reveal delay={0.18}>
               <motion.a
@@ -710,7 +445,6 @@ function Creators() {
               </motion.a>
             </Reveal>
           </div>
-
           <div className="flex flex-col gap-px rounded-[24px] overflow-hidden" style={{ background: C.line }}>
             {perks.map(([t, b], i) => (
               <Reveal key={t} delay={i * 0.1}>
@@ -727,33 +461,29 @@ function Creators() {
   );
 }
 
-/* ─────────────────────────  DOWNLOAD CTA  ───────────────────────── */
+/* ─────────────────────────  DOWNLOAD  ───────────────────────── */
 
 function Download() {
   return (
     <section id="download" className="relative py-28 md:py-40 overflow-hidden" style={{ background: C.paper }}>
       <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 50% 60% at 50% 50%, rgba(194,86,111,0.14) 0%, transparent 68%)" }} />
-      <div className="ruler-x absolute top-0 inset-x-0 h-[10px] opacity-60" />
-      <div className="ruler-x absolute bottom-0 inset-x-0 h-[10px] opacity-60" />
       <div className="relative max-w-[900px] mx-auto px-6 text-center">
-        <Reveal>
-          <p className="mono-label mb-8">Free to download · iOS &amp; Android</p>
-        </Reveal>
+        <Reveal><p className="mono-label mb-8">Free · iOS &amp; Android</p></Reveal>
         <Reveal delay={0.08}>
-          <h2 className="font-display leading-[0.92] tracking-[-0.03em]" style={{ color: C.ink, fontSize: "clamp(2.8rem,8vw,6rem)" }}>
+          <h2 className="font-display leading-[0.92] tracking-[-0.04em]" style={{ color: C.ink, fontSize: "clamp(2.8rem,8vw,6rem)" }}>
             Read your <span className="italic" style={{ color: C.rose }}>face.</span>
           </h2>
         </Reveal>
-        <Reveal delay={0.24}>
+        <Reveal delay={0.2}>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
             <AppleBadge />
             <GoogleBadge />
           </div>
         </Reveal>
-        <Reveal delay={0.3}>
+        <Reveal delay={0.26}>
           <div className="mt-6 flex items-center justify-center gap-3 text-[13px]" style={{ color: C.ink60 }}>
             <span style={{ color: C.rose, letterSpacing: "0.1em" }}>★★★★★</span>
-            <span><strong style={{ color: C.ink, fontWeight: 600 }}>5.0</strong> rating</span>
+            <span><strong style={{ color: C.ink, fontWeight: 600 }}>5.0</strong></span>
             <span style={{ opacity: 0.4 }}>·</span>
             <span><strong style={{ color: C.ink, fontWeight: 600 }}>300+</strong> glowing up</span>
           </div>
@@ -770,12 +500,7 @@ function Footer() {
     <footer style={{ background: C.ink, color: C.paper }}>
       <div className="max-w-[1320px] mx-auto px-5 md:px-10 py-16">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-10">
-          <div>
-            <div className="font-display text-[48px] leading-none">
-              Lumii<span className="italic" style={{ color: C.rosePale }}>.</span>
-            </div>
-            <p className="mono-label mt-5" style={{ color: "rgba(244,238,228,0.5)" }}>Built for girls</p>
-          </div>
+          <div className="font-display text-[48px] leading-none">Lumii<span style={{ color: C.rosePale }}>.</span></div>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-12 gap-y-4">
             {[
               ["The app", "#app"],
@@ -787,14 +512,12 @@ function Footer() {
               ["Terms", "/legal/terms-of-service"],
               ["Contact", "mailto:hello@lumiiapp.com"],
             ].map(([l, h]) => (
-              <a key={l} href={h} className="text-[13px] transition-opacity hover:opacity-100" style={{ color: "rgba(244,238,228,0.62)" }}>
-                {l}
-              </a>
+              <a key={l} href={h} className="text-[13px] transition-opacity hover:opacity-100" style={{ color: "rgba(244,238,228,0.62)" }}>{l}</a>
             ))}
           </div>
         </div>
         <div className="mt-14 pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3" style={{ borderTop: "1px solid rgba(244,238,228,0.14)" }}>
-          <p className="mono-label" style={{ color: "rgba(244,238,228,0.4)" }}>Vol. 01 · The Face Issue · Designed in London</p>
+          <p className="mono-label" style={{ color: "rgba(244,238,228,0.4)" }}>Built for girls · London</p>
           <p className="mono-label" style={{ color: "rgba(244,238,228,0.4)" }}>© {new Date().getFullYear()} HFJO&amp;CO Limited</p>
         </div>
       </div>
@@ -809,9 +532,7 @@ export default function Site() {
     <main className="relative overflow-x-clip">
       <Nav />
       <Hero />
-      <BuildSection />
-      <MetricsBand />
-      <Showcase />
+      <PhoneJourney />
       <Premium />
       <Creators />
       <Download />
