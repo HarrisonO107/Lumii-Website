@@ -91,19 +91,18 @@ export default function Pro() {
 
       <section className="relative max-w-[1040px] mx-auto px-6 md:px-10 pt-12 md:pt-16 pb-28">
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: EASE }} className="text-center max-w-[680px] mx-auto">
-          <div className="mono-label mb-5" style={{ color: D.rosePale }}>Direct from the makers of Lumii</div>
+          <div className="mono-label mb-5" style={{ color: D.rosePale }}>Lumii Pro · web-only deals</div>
           <h1 className="font-display leading-[0.96] tracking-[-0.03em]" style={{ fontSize: "clamp(2.5rem,6.5vw,4.6rem)" }}>
-            Go Pro here, and you <span style={{ color: D.rosePale }}>genuinely</span> help us out.
+            Go Pro, plus deals you <span style={{ color: D.rosePale }}>only get here.</span>
           </h1>
           <p className="mt-6 text-[16px] md:text-[18px] leading-[1.6]" style={{ color: D.dim }}>
-            Buy straight from us and Apple doesn&apos;t take their cut. That 15% goes back into building Lumii instead, so we can stay
-            cheap and keep shipping. Same Pro, unlocks instantly on every device. 🤍
+            Same Pro, same price as the app, unlocks instantly on every device. Buy direct and you also unlock scan bundles you can&apos;t get anywhere else.
           </p>
         </motion.div>
 
         {/* warm "why web" reasons */}
         <div className="mt-10 flex flex-wrap items-center justify-center gap-2.5">
-          {["No Apple tax", "Bundles only sold here", "Unlocks on all your devices", "Cancel anytime"].map((t) => (
+          {["Same price as the app", "Bundles only sold here", "Unlocks on all your devices", "Cancel anytime"].map((t) => (
             <span key={t} className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[13px]" style={{ background: "rgba(255,255,255,0.05)", border: `1px solid ${D.cardLine}`, color: D.text }}>
               <span style={{ color: D.rosePale }}>✓</span> {t}
             </span>
@@ -143,7 +142,7 @@ export default function Pro() {
             whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}
           >
             <span aria-hidden className="badge-shine" />
-            <span className="relative">{busy === proPkg?.identifier ? "Opening checkout…" : `Go Pro & help us out`}</span>
+            <span className="relative">{busy === proPkg?.identifier ? "Opening checkout…" : "Go Pro"}</span>
             <span className="relative" style={{ fontSize: 16 }}>→</span>
           </motion.button>
           <p className="mono-label mt-4 text-center" style={{ color: D.dim2 }}>Secure checkout · Tax handled · Unlocks instantly in the app</p>
@@ -174,8 +173,7 @@ export default function Pro() {
         {/* warm sign-off */}
         <div className="mt-16 text-center max-w-[560px] mx-auto">
           <p className="text-[15px] leading-[1.7]" style={{ color: D.dim }}>
-            We&apos;re a tiny team building Lumii for you. Every subscription bought here, instead of through Apple, makes a real
-            difference to whether we get to keep going. Thank you, truly. 🤍
+            We&apos;re a small team building Lumii. Buying direct means more of what you pay goes straight into making the app better. 🤍
           </p>
           <p className="mono-label mt-4" style={{ color: D.dim2 }}>— The Lumii team</p>
         </div>
@@ -186,9 +184,9 @@ export default function Pro() {
       {done && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center px-6" style={{ background: "rgba(8,6,10,0.85)", backdropFilter: "blur(8px)" }}>
           <motion.div initial={{ opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }} className="rounded-[28px] p-10 text-center max-w-[420px]" style={{ background: D.card, border: `1px solid ${D.rosePale}`, boxShadow: `0 0 60px ${D.glow}` }}>
-            <div className="font-display text-[28px]">Thank you 🤍</div>
+            <div className="font-display text-[28px]">You&apos;re in 🤍</div>
             <p className="mt-3 text-[15px]" style={{ color: D.dim }}>
-              {done.includes("scan") ? "Your scans are added." : "Pro is unlocked, everywhere."} Open the Lumii app and it&apos;ll be waiting. You just helped us out more than you know.
+              {done.includes("scan") ? "Your scans are added." : "Pro is unlocked, everywhere."} Open the Lumii app and it&apos;ll be waiting.
             </p>
             <Link href="/" className="inline-flex mt-7 rounded-full px-6 py-3 text-[14px] font-semibold" style={{ background: D.text, color: "#000" }}>Done</Link>
           </motion.div>
