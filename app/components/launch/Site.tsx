@@ -110,8 +110,9 @@ function Nav() {
   return (
     <header className="fixed top-4 inset-x-0 z-[90] flex justify-center px-4">
       <div className="flex items-center gap-1 rounded-full py-2 pl-3 pr-2" style={{ background: "rgba(11,9,16,0.72)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(246,241,234,0.12)", boxShadow: "0 10px 30px -12px rgba(0,0,0,0.6)" }}>
-        <a href="#top" className="flex items-center justify-center rounded-full mr-1" style={{ width: 30, height: 30, background: D.roseDeep }}>
-          <span className="font-display text-[15px] leading-none" style={{ color: "#fff" }}>L</span>
+        <a href="#top" className="block rounded-full overflow-hidden mr-1" style={{ width: 32, height: 32, border: "1px solid rgba(246,241,234,0.2)" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/icon.png" alt="Lumii" className="w-full h-full object-cover" />
         </a>
         <nav className="hidden sm:flex items-center">
           {links.map(([label, href]) => (
@@ -143,7 +144,14 @@ function Hero() {
 
   return (
     <section id="top" className="relative overflow-hidden" style={{ height: "100svh", background: "#000" }}>
-      <motion.video src="/video/suki-hero.mp4?v=2" poster="/video/suki-hero-poster.jpg?v=2" autoPlay loop muted playsInline preload="auto" aria-hidden className="absolute inset-0 w-full h-full object-cover" style={{ x: vx, y: vy, scale: 1.12 }} />
+      {/* push the cat to the right so the left stays clear for copy */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 md:[transform:translateX(13%)_scale(1.34)]" style={{ transform: "scale(1.12)" }}>
+          <motion.video src="/video/suki-hero.mp4?v=2" poster="/video/suki-hero-poster.jpg?v=2" autoPlay loop muted playsInline preload="auto" aria-hidden className="absolute inset-0 w-full h-full object-cover" style={{ x: vx, y: vy }} />
+        </div>
+      </div>
+      {/* left scrim for legibility + vertical fade into the dark sections */}
+      <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(90deg, rgba(8,6,10,0.85) 0%, rgba(8,6,10,0.45) 32%, transparent 62%)" }} />
       <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(180deg, rgba(8,6,10,0.5) 0%, transparent 26%, transparent 52%, rgba(8,6,10,0.45) 80%, #0B0910 100%)" }} />
       <div className="relative h-full max-w-[1320px] mx-auto px-6 md:px-10 flex flex-col justify-end pb-[13vh]">
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: EASE, delay: 0.15 }} className="max-w-[820px]">
@@ -151,7 +159,27 @@ function Hero() {
             <span className="block">Your face,</span>
             <span className="block">by the <span className="italic" style={{ color: D.rosePale }}>numbers.</span></span>
           </h1>
-          <div className="mt-8 flex flex-wrap items-center gap-3">
+          {/* a glassy slice of the app, so the hero reads as a product */}
+          <motion.div
+            className="mt-8 inline-flex items-center gap-4 rounded-3xl px-5 py-4"
+            style={{ background: "rgba(18,14,24,0.5)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", border: `1px solid ${D.rosePale}`, boxShadow: `0 0 40px ${D.glow}` }}
+            animate={{ y: [0, -6, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <div className="relative" style={{ width: 48, height: 48 }}>
+              <svg viewBox="0 0 40 40" className="w-full h-full">
+                <circle cx="20" cy="20" r="16" fill="none" stroke="rgba(246,241,234,0.16)" strokeWidth="4" />
+                <circle cx="20" cy="20" r="16" fill="none" stroke={D.rose} strokeWidth="4" strokeLinecap="round" transform="rotate(-90 20 20)" strokeDasharray="100.5" strokeDashoffset="14" />
+              </svg>
+              <span className="absolute inset-0 flex items-center justify-center font-display text-[15px]" style={{ color: D.text }}>86</span>
+            </div>
+            <div className="text-left">
+              <div className="mono-label" style={{ color: D.dim }}>Today&apos;s glow</div>
+              <div className="text-[15px] font-semibold" style={{ color: D.text }}>Radiant · ↑2 this week</div>
+            </div>
+          </motion.div>
+
+          <div className="mt-7 flex flex-wrap items-center gap-3">
             <AppleBadge />
             <GoogleBadge />
           </div>
@@ -232,24 +260,42 @@ function BigCard() {
 
 /* ─────────────────────────  PRESS GRID (placeholders)  ───────────────────────── */
 
+// TODO: PLACEHOLDER press — fake logos + fake quotes until real coverage exists.
+// Do not ship live as a truthful "as seen in" claim.
+const PRESS: { name: string; serif: boolean; quote: string }[] = [
+  { name: "VOGUE", serif: true, quote: "“The beauty read every it-girl is quietly obsessed with.”" },
+  { name: "ELLE", serif: true, quote: "“Finally, a glow-up you can actually measure.”" },
+  { name: "Cosmopolitan", serif: true, quote: "“The most precise face scan we’ve put in a pocket.”" },
+  { name: "Harper’s BAZAAR", serif: true, quote: "“Skincare science, minus the guesswork.”" },
+  { name: "TechCrunch", serif: false, quote: "“584 landmarks, one score. Lumii nails the read.”" },
+  { name: "The Verge", serif: false, quote: "“The rare beauty app that feels genuinely smart.”" },
+  { name: "Refinery29", serif: false, quote: "“My whole group chat is on it now.”" },
+  { name: "Forbes", serif: true, quote: "“A standout in the AI-beauty wave.”" },
+];
+
 function Press() {
-  // TODO: placeholder press logos — replace with real coverage before launch.
-  const logos = ["VOGUE", "Cosmopolitan", "ELLE", "TechCrunch", "The Verge", "BuzzFeed", "Refinery29", "Forbes"];
   return (
-    <section className="py-20 md:py-28" style={{ background: D.bg }}>
+    <section className="py-16 md:py-24" style={{ background: D.bg }}>
       <div className="max-w-[1180px] mx-auto px-6 md:px-10">
-        <Reveal>
-          <p className="mono-label text-center mb-10" style={{ color: D.dim2 }}>As seen in</p>
-        </Reveal>
+        <Reveal><p className="mono-label text-center mb-10" style={{ color: D.dim2 }}>As seen in</p></Reveal>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-          {logos.map((l, i) => (
-            <Reveal key={l} delay={(i % 4) * 0.06}>
-              <div className="flex items-center justify-center rounded-2xl h-[100px] md:h-[120px]" style={{ background: D.card, border: `1px solid ${D.cardLine}` }}>
-                <span className="font-display text-[20px] md:text-[24px]" style={{ color: "rgba(246,241,234,0.45)", letterSpacing: "0.02em" }}>{l}</span>
+          {PRESS.map((p, i) => (
+            <Reveal key={p.name} delay={(i % 4) * 0.06}>
+              <div className="group relative flex items-center justify-center overflow-hidden rounded-2xl h-[100px] md:h-[120px] px-4" style={{ background: D.card, border: `1px solid ${D.cardLine}` }}>
+                <span
+                  className="transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-1 text-[19px] md:text-[23px] font-semibold"
+                  style={{ color: "rgba(246,241,234,0.5)", letterSpacing: p.serif ? "0.04em" : "-0.01em", fontFamily: p.serif ? "Georgia, 'Times New Roman', serif" : "inherit" }}
+                >
+                  {p.name}
+                </span>
+                <span className="absolute inset-0 flex items-center justify-center px-5 text-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 text-[13px] md:text-[14px] leading-[1.45] italic" style={{ color: D.dim }}>
+                  {p.quote}
+                </span>
               </div>
             </Reveal>
           ))}
         </div>
+        <Reveal><p className="mono-label text-center mt-6" style={{ color: "rgba(246,241,234,0.22)" }}>Hover for the word on the street</p></Reveal>
       </div>
     </section>
   );
@@ -455,8 +501,8 @@ export default function Site() {
       <Nav />
       <Hero />
       <Intro />
-      <BigCard />
       <Press />
+      <BigCard />
       <Features />
       <Premium />
       <Creators />
