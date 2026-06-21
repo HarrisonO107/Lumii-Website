@@ -23,7 +23,7 @@ const D = {
 const APP_STORE_URL = "https://apps.apple.com/app/id6769432089";
 const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.hfjo.lumii";
 const DISCORD_URL = "https://discord.gg/lumii"; // TODO: real invite
-const PRO_CHECKOUT_URL = APP_STORE_URL; // TODO: web checkout
+const PRO_CHECKOUT_URL = "/pro"; // RevenueCat Web Billing paywall
 
 /* ─────────────────────────  PRIMITIVES  ───────────────────────── */
 
