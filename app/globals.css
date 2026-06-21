@@ -287,9 +287,12 @@
   --gold:       #A9844B;
 }
 
-.font-display { font-family: var(--font-display), "Times New Roman", Georgia, serif; }
+.font-display { font-family: var(--font-display), system-ui, -apple-system, sans-serif; font-weight: 600; letter-spacing: -0.02em; }
 .font-body    { font-family: var(--font-body), system-ui, sans-serif; }
 .font-mono    { font-family: var(--font-mono), ui-monospace, "SF Mono", monospace; }
+
+/* Geist has no true italic; the rose accent words use a synthesised slant. */
+.font-display .italic, .font-display.italic { font-style: italic; }
 
 /* Paper grain, printed-on-stock texture */
 .paper-grain::after {

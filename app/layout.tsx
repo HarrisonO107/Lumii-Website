@@ -1,22 +1,22 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Hanken_Grotesk, Spline_Sans_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import JsonLd from "./JsonLd";
 
-const display = Fraunces({
+// Flighty-style: one clean neutral grotesque (Geist) for headlines and body.
+const display = Geist({
   subsets: ["latin"],
-  style: ["normal", "italic"],
   display: "swap",
   variable: "--font-display",
 });
 
-const body = Hanken_Grotesk({
+const body = Geist({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-body",
 });
 
-const mono = Spline_Sans_Mono({
+const mono = Geist_Mono({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-mono",
