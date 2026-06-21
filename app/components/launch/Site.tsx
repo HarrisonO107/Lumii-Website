@@ -165,7 +165,7 @@ function Hero() {
             target="_blank"
             rel="noopener noreferrer"
             className="mt-8 inline-flex items-center gap-4 rounded-3xl px-5 py-4"
-            style={{ background: "rgba(18,14,24,0.55)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", border: "1px solid rgba(246,241,234,0.16)", boxShadow: `0 0 40px ${D.glow}` }}
+            style={{ background: "rgba(255,255,255,0.10)", backdropFilter: "blur(22px) saturate(150%)", WebkitBackdropFilter: "blur(22px) saturate(150%)", border: "1px solid rgba(255,255,255,0.22)", boxShadow: "0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.28)" }}
             animate={{ y: [0, -6, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
             whileHover={{ scale: 1.02 }}
@@ -177,13 +177,18 @@ function Hero() {
               <div className="text-[12px] mb-1" style={{ color: D.dim }}>AI Face Analysis</div>
               <div className="flex items-center gap-1.5 text-[12px]" style={{ color: D.dim }}>
                 <span style={{ color: D.rosePale, letterSpacing: "0.06em" }}>★★★★★</span>
-                <span><strong style={{ color: D.text, fontWeight: 600 }}>5.0</strong> · 300+ ratings</span>
+                <span><strong style={{ color: D.text, fontWeight: 600 }}>5.0</strong> · 300+ users</span>
               </div>
             </div>
             <span className="ml-2 rounded-full px-5 py-1.5 text-[13px] font-bold tracking-wide" style={{ background: "#0A84FF", color: "#fff" }}>GET</span>
           </motion.a>
 
-          <div className="mt-5 text-[13px]" style={{ color: D.dim }}>Free on iOS &amp; Android · also on Google Play</div>
+          <div className="mt-5 text-[13px]" style={{ color: D.dim }}>
+            Free on iOS ·{" "}
+            <a href={PLAY_STORE_URL} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 transition-opacity hover:opacity-80" style={{ color: D.text }}>
+              Get it on Google Play →
+            </a>
+          </div>
         </motion.div>
       </div>
       <motion.div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none" animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>
