@@ -229,6 +229,24 @@ function Intro() {
 
 /* ─────────────────────────  BIG FEATURE CARD  ───────────────────────── */
 
+// a glassy trait score that floats off the phone (CSS bob desynced by delay)
+function FloatingChip({ className, label, val, delay = 0 }: { className: string; label: string; val: string; delay?: number }) {
+  return (
+    <motion.div
+      className={`atelier-float absolute z-20 flex items-center gap-2 rounded-full pl-2.5 pr-3.5 py-2 ${className}`}
+      style={{ background: "rgba(255,255,255,0.10)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", border: "1px solid rgba(255,255,255,0.22)", boxShadow: "0 10px 34px -8px rgba(216,106,134,0.55)", animationDelay: `${delay}s` }}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ delay: 0.3 + delay * 0.15, duration: 0.6, ease: EASE }}
+    >
+      <span className="rounded-full" style={{ width: 7, height: 7, background: D.rose, boxShadow: `0 0 8px ${D.rose}` }} />
+      <span className="text-[12px]" style={{ color: D.dim }}>{label}</span>
+      <span className="text-[13px] font-semibold tabular-nums" style={{ color: D.text }}>{val}</span>
+    </motion.div>
+  );
+}
+
 function BigCard() {
   return (
     <section className="py-8" style={{ background: D.bg }}>
@@ -246,15 +264,18 @@ function BigCard() {
                 </p>
               </div>
               <div className="relative flex justify-center lg:justify-end pt-4">
-                <Phone
-                  src="/screenshots/home.jpg"
-                  width={272}
-                  calloutClass="top-[34%] -left-2 md:-left-8"
-                  callout={<>
-                    <div className="text-[13px] font-semibold" style={{ color: D.rosePale }}>86 · Radiant</div>
-                    <div className="text-[12px]" style={{ color: D.dim }}>↑ 2 this week</div>
-                  </>}
-                />
+                <div className="relative">
+                  {/* rose aura behind the phone */}
+                  <div className="absolute -inset-12 pointer-events-none" style={{ background: "radial-gradient(circle at 50% 45%, rgba(216,106,134,0.30) 0%, transparent 62%)", filter: "blur(8px)" }} />
+                  <div className="atelier-float relative" style={{ transform: "rotate(-3deg)" }}>
+                    <Phone src="/screenshots/home.jpg" width={272} />
+                  </div>
+                  {/* trait scores floating out of the app */}
+                  <FloatingChip className="top-[10%] -left-6 md:-left-16" label="Symmetry" val="95" delay={0} />
+                  <FloatingChip className="top-[38%] -left-10 md:-left-24" label="Jawline" val="88" delay={1.4} />
+                  <FloatingChip className="bottom-[30%] -left-4 md:-left-14" label="Skin" val="80" delay={2.6} />
+                  <FloatingChip className="bottom-[9%] left-2 md:-left-6" label="Eyes" val="84" delay={0.8} />
+                </div>
               </div>
             </div>
           </div>
