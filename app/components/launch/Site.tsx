@@ -287,14 +287,27 @@ function Press() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
           {PRESS.map((p, i) => (
             <Reveal key={p.name} delay={(i % 4) * 0.06}>
-              <div className="group relative flex items-center justify-center overflow-hidden rounded-2xl h-[100px] md:h-[120px] px-4" style={{ background: D.card, border: `1px solid ${D.cardLine}` }}>
+              <div
+                className="group relative flex items-center justify-center overflow-hidden rounded-2xl h-[110px] md:h-[132px] px-4 cursor-default transition-all duration-300 hover:scale-[1.05] hover:z-10 hover:border-transparent hover:shadow-[0_0_46px_rgba(216,106,134,0.6)]"
+                style={{ background: D.card, border: `1px solid ${D.cardLine}` }}
+              >
+                {/* vivid fill on hover */}
+                <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ background: `linear-gradient(155deg, ${D.rose} 0%, ${D.roseDeep} 100%)` }} />
+                {/* deco rules */}
+                <div className="absolute left-5 right-5 top-4 opacity-0 transition-opacity duration-300 group-hover:opacity-40" style={{ borderTop: "1px dashed rgba(255,255,255,0.7)" }} />
+                <div className="absolute left-5 right-5 bottom-4 opacity-0 transition-opacity duration-300 group-hover:opacity-40" style={{ borderTop: "1px dashed rgba(255,255,255,0.7)" }} />
+                {/* wordmark */}
                 <span
-                  className="transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-1 text-[19px] md:text-[23px] font-semibold"
+                  className="relative transition-opacity duration-200 group-hover:opacity-0 text-[19px] md:text-[23px] font-semibold"
                   style={{ color: "rgba(246,241,234,0.5)", letterSpacing: p.serif ? "0.04em" : "-0.01em", fontFamily: p.serif ? "Georgia, 'Times New Roman', serif" : "inherit" }}
                 >
                   {p.name}
                 </span>
-                <span className="absolute inset-0 flex items-center justify-center px-5 text-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 text-[13px] md:text-[14px] leading-[1.45] italic" style={{ color: D.dim }}>
+                {/* quote pops in */}
+                <span
+                  className="absolute inset-0 z-10 flex items-center justify-center px-5 text-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 leading-[1.2]"
+                  style={{ color: "#fff", fontFamily: "Georgia, 'Times New Roman', serif", fontWeight: 600, fontSize: "clamp(14px,1.4vw,18px)" }}
+                >
                   {p.quote}
                 </span>
               </div>
