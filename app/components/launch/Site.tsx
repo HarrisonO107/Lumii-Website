@@ -276,62 +276,6 @@ function Showcase() {
   );
 }
 
-/* ─────────────────────────  PRESS GRID (placeholders)  ───────────────────────── */
-
-// TODO: PLACEHOLDER press — fake logos + fake quotes until real coverage exists.
-// Do not ship live as a truthful "as seen in" claim.
-const PRESS: { name: string; serif: boolean; quote: string; from: string; to: string; glow: string }[] = [
-  { name: "VOGUE", serif: true, quote: "“The beauty read every it-girl is quietly obsessed with.”", from: "#E0688A", to: "#B23E63", glow: "rgba(216,106,134,0.6)" },
-  { name: "ELLE", serif: true, quote: "“Finally, a glow-up you can actually measure.”", from: "#E0A84E", to: "#B2732E", glow: "rgba(224,168,78,0.55)" },
-  { name: "Cosmopolitan", serif: true, quote: "“The most precise face scan we’ve put in a pocket.”", from: "#E0795E", to: "#B2492E", glow: "rgba(224,121,94,0.55)" },
-  { name: "Harper’s BAZAAR", serif: true, quote: "“Skincare science, minus the guesswork.”", from: "#9B6BE0", to: "#6B3EB2", glow: "rgba(155,107,224,0.55)" },
-  { name: "TechCrunch", serif: false, quote: "“584 landmarks, one score. Lumii nails the read.”", from: "#4EBF7A", to: "#2E8B52", glow: "rgba(78,191,122,0.5)" },
-  { name: "The Verge", serif: false, quote: "“The rare beauty app that feels genuinely smart.”", from: "#5E8AE0", to: "#3E5EB2", glow: "rgba(94,138,224,0.55)" },
-  { name: "Refinery29", serif: false, quote: "“My whole group chat is on it now.”", from: "#C45EE0", to: "#8B2EB2", glow: "rgba(196,94,224,0.55)" },
-  { name: "Forbes", serif: true, quote: "“A standout in the AI-beauty wave.”", from: "#4EC4C4", to: "#2E8B8B", glow: "rgba(78,196,196,0.5)" },
-];
-
-function Press() {
-  return (
-    <section className="py-16 md:py-24" style={{ background: D.bg }}>
-      <div className="max-w-[1340px] mx-auto px-6 md:px-10">
-        <Reveal><p className="mono-label text-center mb-10" style={{ color: D.dim2 }}>As seen in</p></Reveal>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-          {PRESS.map((p, i) => (
-            <Reveal key={p.name} delay={(i % 4) * 0.06}>
-              <div
-                className="group relative flex items-center justify-center overflow-hidden rounded-2xl h-[110px] md:h-[132px] px-4 cursor-default transition-all duration-300 hover:scale-[1.05] hover:z-10 hover:border-transparent hover:shadow-[0_0_46px_var(--glow)]"
-                style={{ background: D.card, border: `1px solid ${D.cardLine}`, ["--glow" as string]: p.glow }}
-              >
-                {/* vivid fill on hover */}
-                <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ background: `linear-gradient(155deg, ${p.from} 0%, ${p.to} 100%)` }} />
-                {/* deco rules */}
-                <div className="absolute left-5 right-5 top-4 opacity-0 transition-opacity duration-300 group-hover:opacity-40" style={{ borderTop: "1px dashed rgba(255,255,255,0.7)" }} />
-                <div className="absolute left-5 right-5 bottom-4 opacity-0 transition-opacity duration-300 group-hover:opacity-40" style={{ borderTop: "1px dashed rgba(255,255,255,0.7)" }} />
-                {/* wordmark */}
-                <span
-                  className="relative transition-opacity duration-200 group-hover:opacity-0 text-[19px] md:text-[23px] font-semibold"
-                  style={{ color: "rgba(246,241,234,0.5)", letterSpacing: p.serif ? "0.04em" : "-0.01em", fontFamily: p.serif ? "Georgia, 'Times New Roman', serif" : "inherit" }}
-                >
-                  {p.name}
-                </span>
-                {/* quote pops in */}
-                <span
-                  className="absolute inset-0 z-10 flex items-center justify-center px-5 text-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 leading-[1.2]"
-                  style={{ color: "#fff", fontFamily: "Georgia, 'Times New Roman', serif", fontWeight: 600, fontSize: "clamp(14px,1.4vw,18px)" }}
-                >
-                  {p.quote}
-                </span>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-        <Reveal><p className="mono-label text-center mt-6" style={{ color: "rgba(246,241,234,0.22)" }}>Hover for the word on the street</p></Reveal>
-      </div>
-    </section>
-  );
-}
-
 /* ─────────────────────────  PREMIUM  ───────────────────────── */
 
 /* One metric row — number counts up, bar fills with a lit leading edge, on scroll-in. */
@@ -683,7 +627,6 @@ export default function Site() {
       <Nav />
       <Hero />
       <Intro />
-      <Press />
       <Showcase />
       <Premium />
       <Creators />
