@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Purchases, type Package } from "@revenuecat/purchases-js";
+import { Purchases, PackageType, type Package } from "@revenuecat/purchases-js";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -46,8 +46,12 @@ export default function Pro() {
   const [cycle, setCycle] = useState<"annual" | "monthly">("annual");
   const [busy, setBusy] = useState<string | null>(null);
   const [done, setDone] = useState<string | null>(null);
+  // temporary diagnostics — visit /pro?debug=1 to inspect what RevenueCat returns
+  const [showDebug, setShowDebug] = useState(false);
+  const [dbg, setDbg] = useState<{ offerings: string[]; current: string | null; used: string | null; packages: { id: string; type: string; price: string }[] } | null>(null);
 
   useEffect(() => {
+    setShowDebug(new URLSearchParams(window.location.search).has("debug"));
     (async () => {
       try {
         if (!KEY) throw new Error("Checkout key missing");
@@ -59,7 +63,14 @@ export default function Pro() {
         }
         const offerings = await Purchases.getSharedInstance().getOfferings();
         const web = offerings.all["web"] ?? offerings.current;
-        setPkgs(web?.availablePackages ?? []);
+        const list = web?.availablePackages ?? [];
+        setPkgs(list);
+        setDbg({
+          offerings: Object.keys(offerings.all),
+          current: offerings.current?.identifier ?? null,
+          used: web?.identifier ?? null,
+          packages: list.map((p) => ({ id: p.identifier, type: p.packageType, price: priceOf(p) })),
+        });
       } catch (e) {
         setErr(e instanceof Error ? e.message : "Couldn't load checkout");
       } finally {
@@ -68,9 +79,11 @@ export default function Pro() {
     })();
   }, []);
 
+  // match by package TYPE first (reliable), fall back to predefined identifier
   const find = (id: string) => pkgs.find((p) => p.identifier === id);
-  const monthly = find("$rc_monthly");
-  const annual = find("$rc_annual");
+  const byType = (t: PackageType, id: string) => pkgs.find((p) => p.packageType === t) ?? find(id);
+  const monthly = byType(PackageType.Monthly, "$rc_monthly");
+  const annual = byType(PackageType.Annual, "$rc_annual");
   const scans = [
     { p: find("$rc_custom_scan_single"), n: "1 scan", tag: "", best: false },
     { p: find("$rc_custom_scan_3pack"), n: "3 scans", tag: "Save ~16%", best: false },
@@ -95,6 +108,13 @@ export default function Pro() {
 
   return (
     <main className="relative min-h-screen overflow-x-clip" style={{ color: L.ink, background: "linear-gradient(180deg, #FDF5F3 0%, #F8EAE7 50%, #F3E0E2 100%)" }}>
+      {/* TEMP diagnostics — /pro?debug=1 */}
+      {showDebug && (
+        <pre className="fixed bottom-3 left-3 z-[200] max-w-[92vw] max-h-[60vh] overflow-auto rounded-lg p-3 text-[11px] leading-snug" style={{ background: "rgba(0,0,0,0.88)", color: "#7CFF9B", border: "1px solid #333" }}>
+          {`ready: ${ready}\nerr: ${err ?? "none"}\nkey: ${KEY ? KEY.slice(0, 8) + "…" : "MISSING"}\n` + JSON.stringify(dbg, null, 2)}
+        </pre>
+      )}
+
       {/* soft rose blooms */}
       <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 60% 45% at 50% -5%, rgba(231,184,194,0.55) 0%, transparent 60%), radial-gradient(ellipse 50% 40% at 90% 30%, rgba(194,86,111,0.18) 0%, transparent 60%)" }} />
 
@@ -120,7 +140,6 @@ export default function Pro() {
           <div className="flex justify-center mb-6">
             <div className="relative">
               <div className="rounded-full overflow-hidden" style={{ width: 92, height: 92, border: `2px solid ${L.line}`, boxShadow: `0 14px 40px -12px ${L.glow}` }}>
-                {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
                 <video src="/video/suki-avatar.mp4" autoPlay loop muted playsInline aria-hidden className="w-full h-full object-cover" style={{ objectPosition: "center 32%", transform: "scale(1.15)" }} />
               </div>
               <div className="absolute -right-3 -top-2 rounded-full px-2.5 py-1 text-[10px] font-bold tracking-wide" style={{ background: L.rose, color: "#fff", boxShadow: `0 6px 18px -6px ${L.glow}` }}>web only 🤍</div>
@@ -148,8 +167,30 @@ export default function Pro() {
           ))}
         </div>
 
+        {/* SCANS — web-exclusive deals lead, so it's the first thing they see */}
+        <div className="mt-12 mx-auto max-w-[820px]">
+          <div className="text-center">
+            <span className="inline-block rounded-full px-3 py-1 text-[11px] font-bold tracking-wide mb-4" style={{ background: L.rose, color: "#fff" }}>WEB EXCLUSIVE</span>
+            <h2 className="font-display text-[clamp(1.8rem,4vw,2.6rem)] tracking-[-0.02em]">Scan bundles you can <span style={{ color: L.rose }}>only get here.</span></h2>
+            <p className="mt-3 text-[15px]" style={{ color: L.dim }}>Stock up and pay less per scan. Bundles aren&apos;t sold in the app, only on the web.</p>
+          </div>
+          <div className="mt-8 grid sm:grid-cols-3 gap-4">
+            {scans.map(({ p, n, tag, best }) => (
+              <div key={n} className="relative rounded-[22px] p-6 flex flex-col text-center" style={{ ...glassStyle(best), border: `1px solid ${best ? L.rosePale : L.line}`, boxShadow: best ? `0 22px 50px -18px ${L.glow}` : glassStyle().boxShadow }}>
+                {best && <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 rounded-full px-2.5 py-1 text-[10px] font-bold tracking-wide whitespace-nowrap" style={{ background: L.rose, color: "#fff" }}>BEST VALUE</span>}
+                <div className="font-display text-[22px]">{n}</div>
+                <div className="mt-1 text-[12px]" style={{ color: L.rose, minHeight: 16 }}>{tag}</div>
+                <div className="mt-3 font-display text-[30px]">{ready ? priceOf(p) || "—" : "…"}</div>
+                <button onClick={() => buy(p)} disabled={!ready || !p || !!busy} className="mt-5 rounded-full px-5 py-2.5 text-[14px] font-semibold transition-transform active:scale-95 disabled:opacity-60" style={{ background: best ? L.rose : "rgba(39,25,31,0.06)", color: best ? "#fff" : L.ink }}>
+                  {busy === p?.identifier ? "Opening…" : "Buy"}
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* PRO */}
-        <div className="mt-12 rounded-[28px] p-6 md:p-9 mx-auto max-w-[760px]" style={glassStyle(true)}>
+        <div className="mt-16 rounded-[28px] p-6 md:p-9 mx-auto max-w-[760px]" style={glassStyle(true)}>
           <div className="flex items-center justify-between flex-wrap gap-4">
             <h2 className="font-display text-[24px]">Lumii Pro</h2>
             <div className="inline-flex rounded-full p-1" style={{ background: "rgba(39,25,31,0.06)" }}>
@@ -185,28 +226,6 @@ export default function Pro() {
             <span className="relative" style={{ fontSize: 16 }}>→</span>
           </motion.button>
           <p className="mono-label mt-4 text-center" style={{ color: L.dim2 }}>Apple&nbsp;Pay · cards · secure checkout · tax handled</p>
-        </div>
-
-        {/* SCANS */}
-        <div className="mt-16 mx-auto max-w-[820px]">
-          <div className="text-center">
-            <span className="inline-block rounded-full px-3 py-1 text-[11px] font-bold tracking-wide mb-4" style={{ background: L.rose, color: "#fff" }}>WEB EXCLUSIVE</span>
-            <h2 className="font-display text-[clamp(1.8rem,4vw,2.6rem)] tracking-[-0.02em]">Scan bundles you can <span style={{ color: L.rose }}>only get here.</span></h2>
-            <p className="mt-3 text-[15px]" style={{ color: L.dim }}>Stock up and pay less per scan. Bundles aren&apos;t sold in the app, only on the web.</p>
-          </div>
-          <div className="mt-8 grid sm:grid-cols-3 gap-4">
-            {scans.map(({ p, n, tag, best }) => (
-              <div key={n} className="relative rounded-[22px] p-6 flex flex-col text-center" style={{ ...glassStyle(best), border: `1px solid ${best ? L.rosePale : L.line}`, boxShadow: best ? `0 22px 50px -18px ${L.glow}` : glassStyle().boxShadow }}>
-                {best && <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 rounded-full px-2.5 py-1 text-[10px] font-bold tracking-wide whitespace-nowrap" style={{ background: L.rose, color: "#fff" }}>BEST VALUE</span>}
-                <div className="font-display text-[22px]">{n}</div>
-                <div className="mt-1 text-[12px]" style={{ color: L.rose, minHeight: 16 }}>{tag}</div>
-                <div className="mt-3 font-display text-[30px]">{ready ? priceOf(p) || "—" : "…"}</div>
-                <button onClick={() => buy(p)} disabled={!ready || !p || !!busy} className="mt-5 rounded-full px-5 py-2.5 text-[14px] font-semibold transition-transform active:scale-95 disabled:opacity-60" style={{ background: best ? L.rose : "rgba(39,25,31,0.06)", color: best ? "#fff" : L.ink }}>
-                  {busy === p?.identifier ? "Opening…" : "Buy"}
-                </button>
-              </div>
-            ))}
-          </div>
         </div>
 
         {/* warm sign-off */}

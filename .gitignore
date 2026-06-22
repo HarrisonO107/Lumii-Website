@@ -23,6 +23,8 @@
 # misc
 .DS_Store
 *.pem
+.headroom/
+.serena/
 
 # debug
 npm-debug.log*

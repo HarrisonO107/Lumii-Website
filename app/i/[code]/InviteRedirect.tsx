@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 // ── Store targets ────────────────────────────────────────────────────────────
 // Android listing resolves by package id. The iOS App Store listing isn't
@@ -29,8 +29,6 @@ function storeUrlFor(): string {
 }
 
 export default function InviteRedirect({ code }: { code: string }) {
-  const [store, setStore] = useState(SITE_URL);
-
   useEffect(() => {
     // Stash the code (best-effort) for any later web-based redeem path. NOTE:
     // true deferred deep-linking, the code auto-applying AFTER a fresh install
@@ -44,7 +42,6 @@ export default function InviteRedirect({ code }: { code: string }) {
     }
 
     const target = storeUrlFor();
-    setStore(target);
 
     // If the user taps "Open in app", the scheme navigation backgrounds this
     // tab, cancel the auto store-redirect so we don't yank them away from it.
@@ -68,6 +65,11 @@ export default function InviteRedirect({ code }: { code: string }) {
   // pops an "invalid address" dialog for users who don't have the app.
   const openInApp = () => {
     window.location.href = `lumii://i/${encodeURIComponent(code)}`;
+  };
+
+  const openStore = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    window.location.href = storeUrlFor();
   };
 
   return (
@@ -115,7 +117,8 @@ export default function InviteRedirect({ code }: { code: string }) {
         </div>
 
         <a
-          href={store}
+          href={SITE_URL}
+          onClick={openStore}
           className="block w-full rounded-full py-4 text-[15px] font-semibold transition-opacity hover:opacity-90"
           style={{ background: ROSE, color: "#FFFFFF" }}
         >

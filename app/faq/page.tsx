@@ -140,7 +140,7 @@ export default function FAQPage() {
             <span className="italic" style={{ color: "#F9A8C9" }}>answered.</span>
           </h1>
           <p className="text-[15px] text-white/40 font-light max-w-[420px] leading-[1.7]">
-            Everything you need to know about Lumii. Can't find what you're looking for? Reach out via our contact page.
+            Everything you need to know about Lumii. Can&apos;t find what you&apos;re looking for? Reach out via our contact page.
           </p>
         </motion.div>
       </section>
